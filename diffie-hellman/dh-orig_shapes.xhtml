@@ -1,0 +1,178 @@
+<?xml version="1.0"?>
+<!-- CPSA 4.4.6 -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+ <title>diffie-hellman</title>
+ <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+ <style>
+  svg.diagram { border-width: 1px; border-style: solid }
+ </style>
+</head>
+<body>
+
+<pre>(comment &quot;CPSA 4.4.6&quot;)
+(comment &quot;Extracted shapes&quot;)
+(herald &quot;diffie-hellman&quot; (algebra diffie-hellman))
+(comment &quot;CPSA 4.4.6&quot;)
+(comment &quot;All input read from dh-orig.scm&quot;)</pre>
+
+<p id="t0">Tree 0, POV <a href="#k0">0</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='129.840pt' height='79.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 129.840 79.920' font-size='12.000'>
+  <text
+   x='89.880' y='26.040'
+   style='font-weight: bold; text-anchor: middle; fill: blue;'
+   onclick='window.open(&quot;#k1&quot;, &quot;_self&quot;)'>1</text>
+  <line
+   x1='39.960' y1='39.960' x2='89.880' y2='39.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <text
+   x='39.960' y='26.040' style='text-anchor: middle; fill: black;'
+   onclick='window.open(&quot;#k0&quot;, &quot;_self&quot;)'>0</text>
+  </svg></div>
+
+<pre>(defprotocol dh diffie-hellman
+  (defrole alice
+    (vars (a b rndx) (n text))
+    (trace (send (exp (gen) a)) (recv (exp (gen) b))
+      (send (enc n (exp (gen) (mul a b))))))
+  (defrole bob
+    (vars (a b rndx) (n text))
+    (trace (recv (exp (gen) a)) (send (exp (gen) b))
+      (recv (enc n (exp (gen) (mul a b))))))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false)))))</pre>
+
+<p id="k0">Item <a href="#t0">0</a>, Child: <a href="#k1">1</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='179.880pt' height='304.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 179.880 304.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='139.920' y1='114.960' x2='139.920' y2='264.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='264.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <g><title>(enc n (exp (gen) (mul b a-0)))</title>
+   <circle style='fill: red;' cx='139.920' cy='264.960' r='6.000'/></g>
+  <g><title>(exp (gen) b)</title>
+   <circle cx='139.920' cy='189.960' r='6.000'/></g>
+  <g><title>(exp (gen) a-0)</title>
+   <circle style='fill: blue;' cx='139.920' cy='114.960' r='6.000'/></g>
+  <g><title>(enc n (exp (gen) (mul a b-0)))</title>
+   <circle cx='39.960' cy='264.960' r='6.000'/></g>
+  <g><title>(exp (gen) b-0)</title>
+   <circle style='fill: blue;' cx='39.960' cy='189.960' r='6.000'/></g>
+  <g><title>(exp (gen) a)</title>
+   <circle cx='39.960' cy='114.960' r='6.000'/></g>
+  <g><title>((n n) (a a-0) (b b))</title>
+   <text x='139.920' y='77.460' style='text-anchor: middle;'>bob</text>
+   </g>
+  <g><title>((n n) (a a) (b b-0))</title>
+   <text x='39.960' y='77.460' style='text-anchor: middle;'>alice</text>
+   </g>
+  <text x='89.940' y='39.960' style='text-anchor: middle;'>dh 0</text>
+  </svg></div>
+
+<pre>(defskeleton dh
+  (vars (n text) (a b b-0 a-0 rndx))
+  (defstrand alice 3 (n n) (a a) (b b-0))
+  (defstrand bob 3 (n n) (a a-0) (b b))
+  (pen-non-orig a b)
+  (uniq-orig n)
+  (traces
+    ((send (exp (gen) a)) (recv (exp (gen) b-0))
+      (send (enc n (exp (gen) (mul a b-0)))))
+    ((recv (exp (gen) a-0)) (send (exp (gen) b))
+      (recv (enc n (exp (gen) (mul b a-0))))))
+  (label 0)
+  (unrealized (1 2))
+  (preskeleton)
+  (origs (n (0 2)))
+  (comment &quot;Not a skeleton&quot;))</pre>
+
+<p id="k1">Item <a href="#t0">1</a>, Parent: <a href="#k0">0</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='179.880pt' height='304.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 179.880 304.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='139.920' y1='114.960' x2='139.920' y2='264.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='264.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <g><title>(enc n (exp (gen) (mul b a-0)))</title>
+   <circle style='fill: blue;' cx='139.920' cy='264.960' r='6.000'/></g>
+  <g><title>(exp (gen) b)</title>
+   <circle cx='139.920' cy='189.960' r='6.000'/></g>
+  <g><title>(exp (gen) a-0)</title>
+   <circle style='fill: blue;' cx='139.920' cy='114.960' r='6.000'/></g>
+  <path
+   d='M 39.960 264.960 Q 86.940 264.960 133.920 264.960'
+   style='stroke-dasharray: 6.000,2.400; stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(enc n (exp (gen) (mul a b-0)))</title>
+   <circle cx='39.960' cy='264.960' r='6.000'/></g>
+  <g><title>(exp (gen) b-0)</title>
+   <circle style='fill: blue;' cx='39.960' cy='189.960' r='6.000'/></g>
+  <g><title>(exp (gen) a)</title>
+   <circle cx='39.960' cy='114.960' r='6.000'/></g>
+  <g><title>((n n) (a a-0) (b b))</title>
+   <text x='139.920' y='77.460' style='text-anchor: middle;'>bob</text>
+   </g>
+  <g><title>((n n) (a a) (b b-0))</title>
+   <text x='39.960' y='77.460' style='text-anchor: middle;'>alice</text>
+   </g>
+  <text x='89.940' y='39.960' style='text-anchor: middle;'>dh 1</text>
+  </svg></div>
+
+<pre>(defskeleton dh
+  (vars (n text) (a b b-0 a-0 rndx))
+  (defstrand alice 3 (n n) (a a) (b b-0))
+  (defstrand bob 3 (n n) (a a-0) (b b))
+  (precedes ((0 2) (1 2)))
+  (pen-non-orig a b)
+  (uniq-orig n)
+  (traces
+    ((send (exp (gen) a)) (recv (exp (gen) b-0))
+      (send (enc n (exp (gen) (mul a b-0)))))
+    ((recv (exp (gen) a-0)) (send (exp (gen) b))
+      (recv (enc n (exp (gen) (mul b a-0))))))
+  (label 1)
+  (parent 0)
+  (realized)
+  (shape)
+  (maps ((0 1) ((a a) (b b) (n n) (b-0 b-0) (a-0 a-0))))
+  (origs (n (0 2))))</pre>
+
+</body>
+</html>

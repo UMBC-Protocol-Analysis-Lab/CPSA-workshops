@@ -1,0 +1,58 @@
+(herald "diffie-hellman" (algebra diffie-hellman))
+
+(comment "CPSA 4.4.6")
+(comment "All input read from dh-orig.scm")
+
+(defprotocol dh diffie-hellman
+  (defrole alice
+    (vars (a b rndx) (n text))
+    (trace (send (exp (gen) a)) (recv (exp (gen) b))
+      (send (enc n (exp (gen) (mul a b))))))
+  (defrole bob
+    (vars (a b rndx) (n text))
+    (trace (recv (exp (gen) a)) (send (exp (gen) b))
+      (recv (enc n (exp (gen) (mul a b))))))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false)))))
+
+(defskeleton dh
+  (vars (n text) (a b b-0 a-0 rndx))
+  (defstrand alice 3 (n n) (a a) (b b-0))
+  (defstrand bob 3 (n n) (a a-0) (b b))
+  (pen-non-orig a b)
+  (uniq-orig n)
+  (traces
+    ((send (exp (gen) a)) (recv (exp (gen) b-0))
+      (send (enc n (exp (gen) (mul a b-0)))))
+    ((recv (exp (gen) a-0)) (send (exp (gen) b))
+      (recv (enc n (exp (gen) (mul b a-0))))))
+  (label 0)
+  (unrealized (1 2))
+  (preskeleton)
+  (origs (n (0 2)))
+  (comment "Not a skeleton"))
+
+(defskeleton dh
+  (vars (n text) (a b b-0 a-0 rndx))
+  (defstrand alice 3 (n n) (a a) (b b-0))
+  (defstrand bob 3 (n n) (a a-0) (b b))
+  (precedes ((0 2) (1 2)))
+  (pen-non-orig a b)
+  (uniq-orig n)
+  (traces
+    ((send (exp (gen) a)) (recv (exp (gen) b-0))
+      (send (enc n (exp (gen) (mul a b-0)))))
+    ((recv (exp (gen) a-0)) (send (exp (gen) b))
+      (recv (enc n (exp (gen) (mul b a-0))))))
+  (label 1)
+  (parent 0)
+  (realized)
+  (shape)
+  (maps ((0 1) ((a a) (b b) (n n) (b-0 b-0) (a-0 a-0))))
+  (origs (n (0 2))))
+
+(comment "Nothing left to do")

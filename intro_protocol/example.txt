@@ -1,0 +1,64 @@
+(herald "PAL Module 2 example protocol")
+
+(comment "CPSA 4.4.6")
+(comment "All input read from example.scm")
+
+(defprotocol example basic
+  (defrole alice
+    (vars (a b name))
+    (trace (send (cat "Hello, I am" a ",are you" b))
+      (recv (cat "Hello, I am," b ",you are" a))))
+  (defrole bob
+    (vars (a b name))
+    (trace (recv (cat "Hello, I am" a ",are you" b))
+      (send (cat "Hello, I am," b ",you are" a))))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false)))))
+
+(defskeleton example
+  (vars (a b name))
+  (defstrand alice 2 (a a) (b b))
+  (traces
+    ((send (cat "Hello, I am" a ",are you" b))
+      (recv (cat "Hello, I am," b ",you are" a))))
+  (label 0)
+  (realized)
+  (shape)
+  (maps ((0) ((a a) (b b))))
+  (origs))
+
+(comment "Nothing left to do")
+
+(defprotocol example basic
+  (defrole alice
+    (vars (a b name))
+    (trace (send (cat "Hello, I am" a ",are you" b))
+      (recv (cat "Hello, I am," b ",you are" a))))
+  (defrole bob
+    (vars (a b name))
+    (trace (recv (cat "Hello, I am" a ",are you" b))
+      (send (cat "Hello, I am," b ",you are" a))))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false)))))
+
+(defskeleton example
+  (vars (a b name))
+  (defstrand bob 2 (a a) (b b))
+  (traces
+    ((recv (cat "Hello, I am" a ",are you" b))
+      (send (cat "Hello, I am," b ",you are" a))))
+  (label 1)
+  (realized)
+  (shape)
+  (maps ((0) ((a a) (b b))))
+  (origs))
+
+(comment "Nothing left to do")
