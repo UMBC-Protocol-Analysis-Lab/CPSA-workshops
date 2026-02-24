@@ -1,0 +1,457 @@
+<?xml version="1.0"?>
+<!-- CPSA 4.4.6 -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+ <title>SRP protocol with leak of verifier that also allows leak of b</title>
+ <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+ <style>
+  svg.diagram { border-width: 1px; border-style: solid }
+ </style>
+</head>
+<body>
+
+<pre>(herald &quot;SRP protocol with leak of verifier that also allows leak of b&quot;
+  (algebra diffie-hellman) (bound 40) (limit 8000))
+(comment &quot;CPSA 4.4.6&quot;)
+(comment &quot;All input read from srp3.scm&quot;)
+(comment &quot;Step count limited to 8000&quot;)
+(comment &quot;Strand count bounded at 40&quot;)</pre>
+
+<p id="top">Trees: <a href="#t0">0</a> <a href="#t1">1</a>.</p>
+
+<p id="t0">Tree <a href="#top">0</a>, POV <a href="#k0">0</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='79.920pt' height='79.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 79.920 79.920' font-size='12.000'>
+  <text
+   x='39.960' y='26.040'
+   style='font-weight: bold; text-anchor: middle; fill: blue;'
+   onclick='window.open(&quot;#k0&quot;, &quot;_self&quot;)'>0</text>
+  </svg></div>
+
+<pre>(defprotocol srp diffie-hellman
+  (defrole client-init
+    (vars (s text) (x rndx) (client server name) (client-state locn))
+    (trace (stor client-state (cat &quot;Client state&quot; s x client server))
+      (send (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))))
+    (uniq-gen s x)
+    (gen-st client-state))
+  (defrole server-init
+    (vars (s text) (x expt) (client server name) (server-state locn))
+    (trace
+      (recv (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat &quot;Server record&quot; s (exp (gen) x) client server))
+      (send (exp (gen) x)))
+    (gen-st server-state))
+  (defrole client
+    (vars (client server name) (a rndx) (b u x expt) (s text)
+      (client-state locn))
+    (trace (send client) (recv s)
+      (load client-state (cat &quot;Client state&quot; s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))))
+    (uniq-gen a)
+    (absent (a x)))
+  (defrole server
+    (vars (client server name) (a x expt) (b u rndx) (s text)
+      (server-state locn))
+    (trace (recv client)
+      (load server-state
+        (cat &quot;Server record&quot; s (exp (gen) x) client server)) (send s)
+      (recv (exp (gen) a))
+      (send (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (recv
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul x b u)))))
+      (send
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul x b u))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul x b u))))))
+    (uniq-gen b u)
+    (absent (b a) (b x) (u a) (u x)))
+  (defrule at-most-one-server-init-per-client
+    (forall ((z0 z1 strd) (client server name))
+      (implies
+        (and (p &quot;server-init&quot; z0 (idx 1)) (p &quot;server-init&quot; z1 (idx 1))
+          (p &quot;server-init&quot; &quot;client&quot; z0 client)
+          (p &quot;server-init&quot; &quot;client&quot; z1 client)
+          (p &quot;server-init&quot; &quot;server&quot; z0 server)
+          (p &quot;server-init&quot; &quot;server&quot; z1 server))
+        (= z0 z1))))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false))))
+  (defgenrule scissorsRule
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (trans z2 i2)
+          (leads-to z0 i0 z1 i1) (leads-to z0 i0 z2 i2))
+        (and (= z1 z2) (= i1 i2)))))
+  (defgenrule cakeRule
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (leads-to z0 i0 z1 i1)
+          (leads-to z0 i0 z2 i2) (prec z1 i1 z2 i2)) (false))))
+  (defgenrule no-interruption
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (leads-to z0 i0 z2 i2) (trans z1 i1)
+          (same-locn z0 i0 z1 i1) (prec z0 i0 z1 i1) (prec z1 i1 z2 i2))
+        (false))))
+  (defgenrule discreteAfter
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (trans z2 i2)
+          (leads-to z0 i0 z1 i1) (same-locn z0 i0 z2 i2)
+          (prec z0 i0 z2 i2))
+        (or (and (= z1 z2) (= i1 i2)) (prec z1 i1 z2 i2)))))
+  (defgenrule discreteBefore
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (same-locn z0 i0 z1 i1)
+          (leads-to z1 i1 z2 i2) (prec z0 i0 z2 i2))
+        (or (and (= z0 z1) (= i0 i1)) (prec z0 i0 z1 i1)))))
+  (defgenrule trRl_client-init-at-0
+    (forall ((z strd))
+      (implies (p &quot;client-init&quot; z (idx 1)) (trans z (idx 0)))))
+  (defgenrule trRl_server-init-at-1
+    (forall ((z strd))
+      (implies (p &quot;server-init&quot; z (idx 2)) (trans z (idx 1)))))
+  (defgenrule eff-client-3
+    (forall ((i indx) (z1 z strd))
+      (implies (and (p &quot;client&quot; z (idx 4)) (prec z (idx 3) z1 i))
+        (or (= z z1)
+          (and (p &quot;client&quot; z (idx 3)) (prec z (idx 2) z1 i))))))
+  (defgenrule eff-server-2
+    (forall ((i indx) (z1 z strd))
+      (implies (and (p &quot;server&quot; z (idx 3)) (prec z (idx 2) z1 i))
+        (or (= z z1)
+          (and (p &quot;server&quot; z (idx 2)) (prec z (idx 1) z1 i))))))
+  (defgenrule gen-st-client-init-0
+    (forall ((z strd) (client-state locn))
+      (implies
+        (and (p &quot;client-init&quot; z (idx 1))
+          (p &quot;client-init&quot; &quot;client-state&quot; z client-state))
+        (gen-st client-state))))
+  (defgenrule gen-st-server-init-0
+    (forall ((z strd) (server-state locn))
+      (implies
+        (and (p &quot;server-init&quot; z (idx 2))
+          (p &quot;server-init&quot; &quot;server-state&quot; z server-state))
+        (gen-st server-state))))
+  (comment
+    &quot;This version of the SRP protocol includes the leak of the verifier to the adversary,&quot;)
+  (comment
+    &quot;but does not require that b is not equal to u. This allows CPSA to explore the possibility&quot;)
+  (comment
+    &quot;that the adversary can also acquire the value b. This should only be possible if the&quot;)
+  (comment
+    &quot;authentication mechanism on the server were compromised and can be checked with listener&quot;)
+  (comment &quot;strands for b in the actual protocol without the leaks.&quot;))</pre>
+
+<p id="k0">Item <a href="#t0">0</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='79.920pt' height='604.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 79.920 604.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='564.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <g>
+   <title>(hash (exp (gen) a) (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u (hash (exp (gen) (mul b a)) (exp (gen) (mul x b u)))) (hash (exp (gen) (mul b a)) (exp (gen) (mul x b u))))</title>
+   <circle style='fill: blue;' cx='39.960' cy='564.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u (hash (exp (gen) (mul b a)) (exp (gen) (mul x b u))))</title>
+   <circle cx='39.960' cy='489.960' r='6.000'/></g>
+  <g><title>(cat (enc (exp (gen) b) (exp (gen) x)) u)</title>
+   <circle style='fill: blue;' cx='39.960' cy='414.960' r='6.000'/></g>
+  <g><title>(exp (gen) a)</title>
+   <circle cx='39.960' cy='339.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg client-state (cat pt &quot;Client state&quot; s x client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='39.960' cy='264.960' r='6.000'/>
+   </g>
+  <g><title>s</title>
+   <circle style='fill: blue;' cx='39.960' cy='189.960' r='6.000'/></g>
+  <g><title>client</title><circle cx='39.960' cy='114.960' r='6.000'/>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (client-state client-state) (a a) (b b) (u u) (x x))</title>
+   <text
+    x='39.960' y='77.460' style='text-anchor: middle;'>client</text></g>
+  <text x='39.960' y='39.960' style='text-anchor: middle;'>srp 0</text>
+  </svg></div>
+
+<pre>(defskeleton srp
+  (vars (s text) (client server name) (pt pval) (client-state locn)
+    (x b u expt) (a rndx))
+  (defstrand client 7 (s s) (client client) (server server)
+    (client-state client-state) (a a) (b b) (u u) (x x))
+  (non-orig (ltk client server))
+  (uniq-gen a)
+  (absent (a x))
+  (traces
+    ((send client) (recv s)
+      (load client-state (cat pt &quot;Client state&quot; s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul b a)) (exp (gen) (mul x b u)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul b a)) (exp (gen) (mul x b u))))
+          (hash (exp (gen) (mul b a)) (exp (gen) (mul x b u)))))))
+  (label 0)
+  (realized)
+  (shape)
+  (maps
+    ((0)
+      ((client client) (server server) (x x) (b b) (u u) (a a)
+        (client-state client-state) (s s))))
+  (origs)
+  (ugens (a (0 3))))</pre>
+
+<p id="t1">Tree <a href="#top">1</a>, POV <a href="#k1">1</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='79.920pt' height='79.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 79.920 79.920' font-size='12.000'>
+  <text
+   x='39.960' y='26.040'
+   style='font-weight: bold; text-anchor: middle; fill: blue;'
+   onclick='window.open(&quot;#k1&quot;, &quot;_self&quot;)'>1</text>
+  </svg></div>
+
+<pre>(defprotocol srp diffie-hellman
+  (defrole client-init
+    (vars (s text) (x rndx) (client server name) (client-state locn))
+    (trace (stor client-state (cat &quot;Client state&quot; s x client server))
+      (send (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))))
+    (uniq-gen s x)
+    (gen-st client-state))
+  (defrole server-init
+    (vars (s text) (x expt) (client server name) (server-state locn))
+    (trace
+      (recv (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat &quot;Server record&quot; s (exp (gen) x) client server))
+      (send (exp (gen) x)))
+    (gen-st server-state))
+  (defrole client
+    (vars (client server name) (a rndx) (b u x expt) (s text)
+      (client-state locn))
+    (trace (send client) (recv s)
+      (load client-state (cat &quot;Client state&quot; s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))))
+    (uniq-gen a)
+    (absent (a x)))
+  (defrole server
+    (vars (client server name) (a x expt) (b u rndx) (s text)
+      (server-state locn))
+    (trace (recv client)
+      (load server-state
+        (cat &quot;Server record&quot; s (exp (gen) x) client server)) (send s)
+      (recv (exp (gen) a))
+      (send (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (recv
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul x b u)))))
+      (send
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul x b u))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul x b u))))))
+    (uniq-gen b u)
+    (absent (b a) (b x) (u a) (u x)))
+  (defrule at-most-one-server-init-per-client
+    (forall ((z0 z1 strd) (client server name))
+      (implies
+        (and (p &quot;server-init&quot; z0 (idx 1)) (p &quot;server-init&quot; z1 (idx 1))
+          (p &quot;server-init&quot; &quot;client&quot; z0 client)
+          (p &quot;server-init&quot; &quot;client&quot; z1 client)
+          (p &quot;server-init&quot; &quot;server&quot; z0 server)
+          (p &quot;server-init&quot; &quot;server&quot; z1 server))
+        (= z0 z1))))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false))))
+  (defgenrule scissorsRule
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (trans z2 i2)
+          (leads-to z0 i0 z1 i1) (leads-to z0 i0 z2 i2))
+        (and (= z1 z2) (= i1 i2)))))
+  (defgenrule cakeRule
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (leads-to z0 i0 z1 i1)
+          (leads-to z0 i0 z2 i2) (prec z1 i1 z2 i2)) (false))))
+  (defgenrule no-interruption
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (leads-to z0 i0 z2 i2) (trans z1 i1)
+          (same-locn z0 i0 z1 i1) (prec z0 i0 z1 i1) (prec z1 i1 z2 i2))
+        (false))))
+  (defgenrule discreteAfter
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (trans z2 i2)
+          (leads-to z0 i0 z1 i1) (same-locn z0 i0 z2 i2)
+          (prec z0 i0 z2 i2))
+        (or (and (= z1 z2) (= i1 i2)) (prec z1 i1 z2 i2)))))
+  (defgenrule discreteBefore
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (same-locn z0 i0 z1 i1)
+          (leads-to z1 i1 z2 i2) (prec z0 i0 z2 i2))
+        (or (and (= z0 z1) (= i0 i1)) (prec z0 i0 z1 i1)))))
+  (defgenrule trRl_client-init-at-0
+    (forall ((z strd))
+      (implies (p &quot;client-init&quot; z (idx 1)) (trans z (idx 0)))))
+  (defgenrule trRl_server-init-at-1
+    (forall ((z strd))
+      (implies (p &quot;server-init&quot; z (idx 2)) (trans z (idx 1)))))
+  (defgenrule eff-client-3
+    (forall ((i indx) (z1 z strd))
+      (implies (and (p &quot;client&quot; z (idx 4)) (prec z (idx 3) z1 i))
+        (or (= z z1)
+          (and (p &quot;client&quot; z (idx 3)) (prec z (idx 2) z1 i))))))
+  (defgenrule eff-server-2
+    (forall ((i indx) (z1 z strd))
+      (implies (and (p &quot;server&quot; z (idx 3)) (prec z (idx 2) z1 i))
+        (or (= z z1)
+          (and (p &quot;server&quot; z (idx 2)) (prec z (idx 1) z1 i))))))
+  (defgenrule gen-st-client-init-0
+    (forall ((z strd) (client-state locn))
+      (implies
+        (and (p &quot;client-init&quot; z (idx 1))
+          (p &quot;client-init&quot; &quot;client-state&quot; z client-state))
+        (gen-st client-state))))
+  (defgenrule gen-st-server-init-0
+    (forall ((z strd) (server-state locn))
+      (implies
+        (and (p &quot;server-init&quot; z (idx 2))
+          (p &quot;server-init&quot; &quot;server-state&quot; z server-state))
+        (gen-st server-state))))
+  (comment
+    &quot;This version of the SRP protocol includes the leak of the verifier to the adversary,&quot;)
+  (comment
+    &quot;but does not require that b is not equal to u. This allows CPSA to explore the possibility&quot;)
+  (comment
+    &quot;that the adversary can also acquire the value b. This should only be possible if the&quot;)
+  (comment
+    &quot;authentication mechanism on the server were compromised and can be checked with listener&quot;)
+  (comment &quot;strands for b in the actual protocol without the leaks.&quot;))</pre>
+
+<p id="k1">Item <a href="#t1">1</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='79.920pt' height='529.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 79.920 529.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='489.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <g>
+   <title>(hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u (hash (exp (gen) (mul b a)) (exp (gen) (mul u b x))))</title>
+   <circle style='fill: blue;' cx='39.960' cy='489.960' r='6.000'/></g>
+  <g><title>(cat (enc (exp (gen) b) (exp (gen) x)) u)</title>
+   <circle cx='39.960' cy='414.960' r='6.000'/></g>
+  <g><title>(exp (gen) a)</title>
+   <circle style='fill: blue;' cx='39.960' cy='339.960' r='6.000'/></g>
+  <g><title>s</title><circle cx='39.960' cy='264.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg server-state (cat pt &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='39.960' cy='189.960' r='6.000'/>
+   </g>
+  <g><title>client</title>
+   <circle style='fill: blue;' cx='39.960' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (a a) (x x) (b b) (u u))</title>
+   <text
+    x='39.960' y='77.460' style='text-anchor: middle;'>server</text></g>
+  <text x='39.960' y='39.960' style='text-anchor: middle;'>srp 1</text>
+  </svg></div>
+
+<pre>(defskeleton srp
+  (vars (s text) (client server name) (pt pval) (server-state locn)
+    (u b a x rndx))
+  (defstrand server 6 (s s) (client client) (server server)
+    (server-state server-state) (a a) (x x) (b b) (u u))
+  (non-orig (ltk client server))
+  (uniq-gen u b)
+  (absent (u a) (u x) (b a) (b x))
+  (traces
+    ((recv client)
+      (load server-state
+        (cat pt &quot;Server record&quot; s (exp (gen) x) client server)) (send s)
+      (recv (exp (gen) a))
+      (send (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (recv
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul b a)) (exp (gen) (mul u b x)))))))
+  (label 1)
+  (realized)
+  (shape)
+  (maps
+    ((0)
+      ((client client) (server server) (u u) (b b) (a a) (x x)
+        (server-state server-state) (s s))))
+  (origs)
+  (ugens (b (0 4)) (u (0 4))))</pre>
+
+</body>
+</html>

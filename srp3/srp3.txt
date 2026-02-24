@@ -1,0 +1,335 @@
+(herald "SRP protocol with leak of verifier that also allows leak of b"
+  (algebra diffie-hellman) (bound 40) (limit 8000))
+
+(comment "CPSA 4.4.6")
+(comment "All input read from srp3.scm")
+(comment "Step count limited to 8000")
+(comment "Strand count bounded at 40")
+
+(defprotocol srp diffie-hellman
+  (defrole client-init
+    (vars (s text) (x rndx) (client server name) (client-state locn))
+    (trace (stor client-state (cat "Client state" s x client server))
+      (send (enc "Enroll" s (exp (gen) x) client (ltk client server))))
+    (uniq-gen s x)
+    (gen-st client-state))
+  (defrole server-init
+    (vars (s text) (x expt) (client server name) (server-state locn))
+    (trace
+      (recv (enc "Enroll" s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat "Server record" s (exp (gen) x) client server))
+      (send (exp (gen) x)))
+    (gen-st server-state))
+  (defrole client
+    (vars (client server name) (a rndx) (b u x expt) (s text)
+      (client-state locn))
+    (trace (send client) (recv s)
+      (load client-state (cat "Client state" s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))))
+    (uniq-gen a)
+    (absent (a x)))
+  (defrole server
+    (vars (client server name) (a x expt) (b u rndx) (s text)
+      (server-state locn))
+    (trace (recv client)
+      (load server-state
+        (cat "Server record" s (exp (gen) x) client server)) (send s)
+      (recv (exp (gen) a))
+      (send (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (recv
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul x b u)))))
+      (send
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul x b u))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul x b u))))))
+    (uniq-gen b u)
+    (absent (b a) (b x) (u a) (u x)))
+  (defrule at-most-one-server-init-per-client
+    (forall ((z0 z1 strd) (client server name))
+      (implies
+        (and (p "server-init" z0 (idx 1)) (p "server-init" z1 (idx 1))
+          (p "server-init" "client" z0 client)
+          (p "server-init" "client" z1 client)
+          (p "server-init" "server" z0 server)
+          (p "server-init" "server" z1 server))
+        (= z0 z1))))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false))))
+  (defgenrule scissorsRule
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (trans z2 i2)
+          (leads-to z0 i0 z1 i1) (leads-to z0 i0 z2 i2))
+        (and (= z1 z2) (= i1 i2)))))
+  (defgenrule cakeRule
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (leads-to z0 i0 z1 i1)
+          (leads-to z0 i0 z2 i2) (prec z1 i1 z2 i2)) (false))))
+  (defgenrule no-interruption
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (leads-to z0 i0 z2 i2) (trans z1 i1)
+          (same-locn z0 i0 z1 i1) (prec z0 i0 z1 i1) (prec z1 i1 z2 i2))
+        (false))))
+  (defgenrule discreteAfter
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (trans z2 i2)
+          (leads-to z0 i0 z1 i1) (same-locn z0 i0 z2 i2)
+          (prec z0 i0 z2 i2))
+        (or (and (= z1 z2) (= i1 i2)) (prec z1 i1 z2 i2)))))
+  (defgenrule discreteBefore
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (same-locn z0 i0 z1 i1)
+          (leads-to z1 i1 z2 i2) (prec z0 i0 z2 i2))
+        (or (and (= z0 z1) (= i0 i1)) (prec z0 i0 z1 i1)))))
+  (defgenrule trRl_client-init-at-0
+    (forall ((z strd))
+      (implies (p "client-init" z (idx 1)) (trans z (idx 0)))))
+  (defgenrule trRl_server-init-at-1
+    (forall ((z strd))
+      (implies (p "server-init" z (idx 2)) (trans z (idx 1)))))
+  (defgenrule eff-client-3
+    (forall ((i indx) (z1 z strd))
+      (implies (and (p "client" z (idx 4)) (prec z (idx 3) z1 i))
+        (or (= z z1)
+          (and (p "client" z (idx 3)) (prec z (idx 2) z1 i))))))
+  (defgenrule eff-server-2
+    (forall ((i indx) (z1 z strd))
+      (implies (and (p "server" z (idx 3)) (prec z (idx 2) z1 i))
+        (or (= z z1)
+          (and (p "server" z (idx 2)) (prec z (idx 1) z1 i))))))
+  (defgenrule gen-st-client-init-0
+    (forall ((z strd) (client-state locn))
+      (implies
+        (and (p "client-init" z (idx 1))
+          (p "client-init" "client-state" z client-state))
+        (gen-st client-state))))
+  (defgenrule gen-st-server-init-0
+    (forall ((z strd) (server-state locn))
+      (implies
+        (and (p "server-init" z (idx 2))
+          (p "server-init" "server-state" z server-state))
+        (gen-st server-state))))
+  (comment
+    "This version of the SRP protocol includes the leak of the verifier to the adversary,")
+  (comment
+    "but does not require that b is not equal to u. This allows CPSA to explore the possibility")
+  (comment
+    "that the adversary can also acquire the value b. This should only be possible if the")
+  (comment
+    "authentication mechanism on the server were compromised and can be checked with listener")
+  (comment "strands for b in the actual protocol without the leaks."))
+
+(defskeleton srp
+  (vars (s text) (client server name) (pt pval) (client-state locn)
+    (x b u expt) (a rndx))
+  (defstrand client 7 (s s) (client client) (server server)
+    (client-state client-state) (a a) (b b) (u u) (x x))
+  (non-orig (ltk client server))
+  (uniq-gen a)
+  (absent (a x))
+  (traces
+    ((send client) (recv s)
+      (load client-state (cat pt "Client state" s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul b a)) (exp (gen) (mul x b u)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul b a)) (exp (gen) (mul x b u))))
+          (hash (exp (gen) (mul b a)) (exp (gen) (mul x b u)))))))
+  (label 0)
+  (realized)
+  (shape)
+  (maps
+    ((0)
+      ((client client) (server server) (x x) (b b) (u u) (a a)
+        (client-state client-state) (s s))))
+  (origs)
+  (ugens (a (0 3))))
+
+(comment "Nothing left to do")
+
+(defprotocol srp diffie-hellman
+  (defrole client-init
+    (vars (s text) (x rndx) (client server name) (client-state locn))
+    (trace (stor client-state (cat "Client state" s x client server))
+      (send (enc "Enroll" s (exp (gen) x) client (ltk client server))))
+    (uniq-gen s x)
+    (gen-st client-state))
+  (defrole server-init
+    (vars (s text) (x expt) (client server name) (server-state locn))
+    (trace
+      (recv (enc "Enroll" s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat "Server record" s (exp (gen) x) client server))
+      (send (exp (gen) x)))
+    (gen-st server-state))
+  (defrole client
+    (vars (client server name) (a rndx) (b u x expt) (s text)
+      (client-state locn))
+    (trace (send client) (recv s)
+      (load client-state (cat "Client state" s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))))
+    (uniq-gen a)
+    (absent (a x)))
+  (defrole server
+    (vars (client server name) (a x expt) (b u rndx) (s text)
+      (server-state locn))
+    (trace (recv client)
+      (load server-state
+        (cat "Server record" s (exp (gen) x) client server)) (send s)
+      (recv (exp (gen) a))
+      (send (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (recv
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul x b u)))))
+      (send
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul x b u))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul x b u))))))
+    (uniq-gen b u)
+    (absent (b a) (b x) (u a) (u x)))
+  (defrule at-most-one-server-init-per-client
+    (forall ((z0 z1 strd) (client server name))
+      (implies
+        (and (p "server-init" z0 (idx 1)) (p "server-init" z1 (idx 1))
+          (p "server-init" "client" z0 client)
+          (p "server-init" "client" z1 client)
+          (p "server-init" "server" z0 server)
+          (p "server-init" "server" z1 server))
+        (= z0 z1))))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false))))
+  (defgenrule scissorsRule
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (trans z2 i2)
+          (leads-to z0 i0 z1 i1) (leads-to z0 i0 z2 i2))
+        (and (= z1 z2) (= i1 i2)))))
+  (defgenrule cakeRule
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (leads-to z0 i0 z1 i1)
+          (leads-to z0 i0 z2 i2) (prec z1 i1 z2 i2)) (false))))
+  (defgenrule no-interruption
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (leads-to z0 i0 z2 i2) (trans z1 i1)
+          (same-locn z0 i0 z1 i1) (prec z0 i0 z1 i1) (prec z1 i1 z2 i2))
+        (false))))
+  (defgenrule discreteAfter
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (trans z2 i2)
+          (leads-to z0 i0 z1 i1) (same-locn z0 i0 z2 i2)
+          (prec z0 i0 z2 i2))
+        (or (and (= z1 z2) (= i1 i2)) (prec z1 i1 z2 i2)))))
+  (defgenrule discreteBefore
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (same-locn z0 i0 z1 i1)
+          (leads-to z1 i1 z2 i2) (prec z0 i0 z2 i2))
+        (or (and (= z0 z1) (= i0 i1)) (prec z0 i0 z1 i1)))))
+  (defgenrule trRl_client-init-at-0
+    (forall ((z strd))
+      (implies (p "client-init" z (idx 1)) (trans z (idx 0)))))
+  (defgenrule trRl_server-init-at-1
+    (forall ((z strd))
+      (implies (p "server-init" z (idx 2)) (trans z (idx 1)))))
+  (defgenrule eff-client-3
+    (forall ((i indx) (z1 z strd))
+      (implies (and (p "client" z (idx 4)) (prec z (idx 3) z1 i))
+        (or (= z z1)
+          (and (p "client" z (idx 3)) (prec z (idx 2) z1 i))))))
+  (defgenrule eff-server-2
+    (forall ((i indx) (z1 z strd))
+      (implies (and (p "server" z (idx 3)) (prec z (idx 2) z1 i))
+        (or (= z z1)
+          (and (p "server" z (idx 2)) (prec z (idx 1) z1 i))))))
+  (defgenrule gen-st-client-init-0
+    (forall ((z strd) (client-state locn))
+      (implies
+        (and (p "client-init" z (idx 1))
+          (p "client-init" "client-state" z client-state))
+        (gen-st client-state))))
+  (defgenrule gen-st-server-init-0
+    (forall ((z strd) (server-state locn))
+      (implies
+        (and (p "server-init" z (idx 2))
+          (p "server-init" "server-state" z server-state))
+        (gen-st server-state))))
+  (comment
+    "This version of the SRP protocol includes the leak of the verifier to the adversary,")
+  (comment
+    "but does not require that b is not equal to u. This allows CPSA to explore the possibility")
+  (comment
+    "that the adversary can also acquire the value b. This should only be possible if the")
+  (comment
+    "authentication mechanism on the server were compromised and can be checked with listener")
+  (comment "strands for b in the actual protocol without the leaks."))
+
+(defskeleton srp
+  (vars (s text) (client server name) (pt pval) (server-state locn)
+    (u b a x rndx))
+  (defstrand server 6 (s s) (client client) (server server)
+    (server-state server-state) (a a) (x x) (b b) (u u))
+  (non-orig (ltk client server))
+  (uniq-gen u b)
+  (absent (u a) (u x) (b a) (b x))
+  (traces
+    ((recv client)
+      (load server-state
+        (cat pt "Server record" s (exp (gen) x) client server)) (send s)
+      (recv (exp (gen) a))
+      (send (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (recv
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul b a)) (exp (gen) (mul u b x)))))))
+  (label 1)
+  (realized)
+  (shape)
+  (maps
+    ((0)
+      ((client client) (server server) (u u) (b b) (a a) (x x)
+        (server-state server-state) (s s))))
+  (origs)
+  (ugens (b (0 4)) (u (0 4))))
+
+(comment "Nothing left to do")
