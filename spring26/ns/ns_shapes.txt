@@ -1,0 +1,116 @@
+(comment "CPSA 4.4.6")
+(comment "Extracted shapes")
+
+(herald "Needham-Schroeder")
+
+(comment "CPSA 4.4.6")
+
+(comment "All input read from ns.scm")
+
+(defprotocol need-schroe basic
+  (defrole alice
+    (vars (a b name) (Na Nb text))
+    (trace (send (enc Na a (pubk b))) (recv (enc Na Nb (pubk a)))
+      (send (enc Nb (pubk b)))))
+  (defrole bob
+    (vars (a b name) (Na Nb text))
+    (trace (recv (enc Na a (pubk b))) (send (enc Na Nb (pubk a)))
+      (recv (enc Nb (pubk b)))))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false)))))
+
+(defskeleton need-schroe
+  (vars (Nonce_a Nb text) (alice bob name))
+  (defstrand alice 3 (Na Nonce_a) (Nb Nb) (a alice) (b bob))
+  (non-orig (privk alice) (privk bob))
+  (uniq-orig Nonce_a)
+  (traces
+    ((send (enc Nonce_a alice (pubk bob)))
+      (recv (enc Nonce_a Nb (pubk alice))) (send (enc Nb (pubk bob)))))
+  (label 0)
+  (unrealized (0 1))
+  (origs (Nonce_a (0 0)))
+  (comment "1 in cohort - 1 not yet seen"))
+
+(defskeleton need-schroe
+  (vars (Nonce_a Nb text) (alice bob name))
+  (defstrand alice 3 (Na Nonce_a) (Nb Nb) (a alice) (b bob))
+  (defstrand bob 2 (Na Nonce_a) (Nb Nb) (a alice) (b bob))
+  (precedes ((0 0) (1 0)) ((1 1) (0 1)))
+  (non-orig (privk alice) (privk bob))
+  (uniq-orig Nonce_a)
+  (operation nonce-test (contracted (Nb-0 Nb)) Nonce_a (0 1)
+    (enc Nonce_a Nb (pubk alice)) (enc Nonce_a alice (pubk bob)))
+  (strand-map 0 1)
+  (traces
+    ((send (enc Nonce_a alice (pubk bob)))
+      (recv (enc Nonce_a Nb (pubk alice))) (send (enc Nb (pubk bob))))
+    ((recv (enc Nonce_a alice (pubk bob)))
+      (send (enc Nonce_a Nb (pubk alice)))))
+  (label 2)
+  (parent 0)
+  (realized)
+  (shape)
+  (maps ((0) ((alice alice) (bob bob) (Nonce_a Nonce_a) (Nb Nb))))
+  (origs (Nonce_a (0 0))))
+
+(comment "Nothing left to do")
+
+(defprotocol need-schroe basic
+  (defrole alice
+    (vars (a b name) (Na Nb text))
+    (trace (send (enc Na a (pubk b))) (recv (enc Na Nb (pubk a)))
+      (send (enc Nb (pubk b)))))
+  (defrole bob
+    (vars (a b name) (Na Nb text))
+    (trace (recv (enc Na a (pubk b))) (send (enc Na Nb (pubk a)))
+      (recv (enc Nb (pubk b)))))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false)))))
+
+(defskeleton need-schroe
+  (vars (Nonce_b Na text) (alice bob name))
+  (defstrand bob 3 (Na Na) (Nb Nonce_b) (a alice) (b bob))
+  (non-orig (privk alice) (privk bob))
+  (uniq-orig Nonce_b)
+  (traces
+    ((recv (enc Na alice (pubk bob)))
+      (send (enc Na Nonce_b (pubk alice)))
+      (recv (enc Nonce_b (pubk bob)))))
+  (label 3)
+  (unrealized (0 2))
+  (origs (Nonce_b (0 1)))
+  (comment "1 in cohort - 1 not yet seen"))
+
+(defskeleton need-schroe
+  (vars (Nonce_b Na text) (alice bob b name))
+  (defstrand bob 3 (Na Na) (Nb Nonce_b) (a alice) (b bob))
+  (defstrand alice 3 (Na Na) (Nb Nonce_b) (a alice) (b b))
+  (precedes ((0 1) (1 1)) ((1 2) (0 2)))
+  (non-orig (privk alice) (privk bob))
+  (uniq-orig Nonce_b)
+  (operation nonce-test (added-strand alice 3) Nonce_b (0 2)
+    (enc Na Nonce_b (pubk alice)))
+  (strand-map 0)
+  (traces
+    ((recv (enc Na alice (pubk bob)))
+      (send (enc Na Nonce_b (pubk alice)))
+      (recv (enc Nonce_b (pubk bob))))
+    ((send (enc Na alice (pubk b))) (recv (enc Na Nonce_b (pubk alice)))
+      (send (enc Nonce_b (pubk b)))))
+  (label 4)
+  (parent 3)
+  (realized)
+  (shape)
+  (maps ((0) ((alice alice) (bob bob) (Nonce_b Nonce_b) (Na Na))))
+  (origs (Nonce_b (0 1))))
+
+(comment "Nothing left to do")
