@@ -6,7 +6,7 @@ For more information on these trainings and CPSA, visit our website [here](https
 
 
 ## Week 0 - Installing CPSA
-To install CPSA, follow the instructions in the CPSA installation instructions file, linked [here](CPSA_INSTALL.md).
+To install CPSA, follow the instructions in the CPSA installation instructions file, linked [here](https://hackage.haskell.org/package/cpsa-4.4.7#readme).
 Once CPSA is installed, make sure everything is working by running `cpsa4 -v`.
 You should see something like `CPSA 4.4.7`, corresponding to the current version of CPSA.
 These training use CPSA 4, and we advise users use CPSA major version 4.4 for the best experience following these trainings.
