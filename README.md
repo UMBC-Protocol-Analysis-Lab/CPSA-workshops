@@ -1,7 +1,7 @@
 # CPSA workshops
 
 This repository contains the code for the UMBC Protocol Analysis Lab's CPSA workshops.
-For more information on these trainings and CPSA, visit our website [here](cisa.umbc.edu).
+For more information on these trainings and CPSA, visit our website [here](https://cisa.umbc.edu).
 
 
 
