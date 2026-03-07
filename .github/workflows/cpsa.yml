@@ -32,16 +32,11 @@ jobs:
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
           ${{ runner.os }}-
-
-    - name: Install dependencies
-      run: |
-        cabal update
-        cabal build --only-dependencies --enable-tests --enable-benchmarks
-    - name: Build
-      run: cabal build --enable-tests --enable-benchmarks all
       
     - name: Install CPSA
-      run: cabal install cpsa
+      run: |
+        cabal update
+        cabal install cpsa
       
     - name: Add cabal bin to PATH
       run: echo "$HOME/.cabal/bin" >> $GITHUB_PATH
