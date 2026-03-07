@@ -104,6 +104,6 @@
   (non-orig (ltk client server))
 )
 
-(defskeleton srp (vars (client server name) (u b rndx) (a x rndx) (server-state locn) (s text))
-    (deflistener b)
+(defskeleton srp (vars (client server name) (u b a x rndx) (server-state locn) (s text))
+  (deflistener b)
 )
