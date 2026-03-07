@@ -7,14 +7,14 @@
 
 (defprotocol srp diffie-hellman
   (defrole client-init
-    (vars (s text) (x rndx) (client server name) (client-state locn)) 
+    (vars (s text) (x rndx) (client server name) (client-state locn))
     (trace
      (stor client-state (cat "Client state" s x client server))
      (send (enc "Enroll" s (exp (gen) x) client (ltk client server)))
      )
+
     (uniq-gen s x)
-    (gen-st client-state)
-    )
+  )
 
   (defrole server-init
     (vars (s text) (x expt) (client server name) (server-state locn))
@@ -23,11 +23,11 @@
      (stor server-state (cat "Server record" s (exp (gen) x) client server))
      (send (exp (gen) x)) ;Leak of the verifier to the intruder
 	)
-	(gen-st server-state)
-    )
+  )
+
 
   (defrole client
-    (vars (client server name) (a rndx) (b u x expt) (s text) (client-state locn))     
+    (vars (client server name) (a rndx) (b u x expt) (s text) (client-state locn))
     (trace
      (send client)
      (recv s)
@@ -41,7 +41,9 @@
 		 (hash (exp (gen) a)
 		       (enc (exp (gen) b) (exp (gen) x)) u
 		       (hash (exp (gen) (mul b a)) (exp (gen) (mul b u x))))
-		 (hash (exp (gen) (mul b a)) (exp (gen) (mul b u x))))))
+		 (hash (exp (gen) (mul b a)) (exp (gen) (mul b u x)))))
+	)
+
     (uniq-gen a)
     )
 
@@ -60,7 +62,9 @@
 		 (hash (exp (gen) a)
 		       (enc (exp (gen) b) (exp (gen) x)) u
 		       (hash (exp (gen) (mul a b)) (exp (exp (gen) x) (mul u b))))
-		 (hash (exp (gen) (mul a b)) (exp (exp (gen) x) (mul u b))))))
+		 (hash (exp (gen) (mul a b)) (exp (exp (gen) x) (mul u b)))))
+     )
+
     (uniq-gen u b)
     )
 
@@ -78,7 +82,7 @@
             )
      )
    )
-  
+
   (comment "This version of the SRP protocol includes the leak of the verifier to the adversary,")
   (comment "but does not require that b is not equal to u. This allows CPSA to explore the possibility")
   (comment "that the adversary can also acquire the value b. This should only be possible if the")
@@ -86,14 +90,20 @@
   (comment "strands for b in the actual protocol without the leaks.")
 )
 
-(defskeleton srp
-  (vars (client server name) (x b u expt) (a rndx) (client-state locn) (s text))
-  (defstrand client 7 (server server) (client client) (x x) (b b) (u u) (a a) (client-state client-state))
+(defskeleton srp (vars (client server name) (b u expt) (a x rndx) (client-state locn) (s text))
+  (defstrandmax client-init (client client) (server server) (client-state client-state) (x x))
+  (defstrandmax client (server server) (client client) (x x) (b b) (u u) (a a) (client-state client-state))
+
   (non-orig (ltk client server))
 )
 
-(defskeleton srp
-  (vars (client server name) (u b rndx) (a x rndx) (server-state locn) (s text))
-  (defstrand server 6 (server server) (client client) (x x) (b b) (u u) (a a) (server-state server-state))
+(defskeleton srp (vars (client server name) (u b a x rndx) (server-state locn) (s text))
+  (defstrandmax server-init (client client) (server server) (server-state server-state) (s s))
+  (defstrandmax server (server server) (client client) (s s) (x x) (b b) (u u) (a a) (server-state server-state))
+
   (non-orig (ltk client server))
+)
+
+(defskeleton srp (vars (client server name) (u b rndx) (a x rndx) (server-state locn) (s text))
+    (deflistener b)
 )
