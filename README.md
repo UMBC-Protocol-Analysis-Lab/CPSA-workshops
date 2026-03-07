@@ -1,12 +1,12 @@
 # CPSA workshops
 
 This repository contains the code for the UMBC Protocol Analysis Lab's CPSA workshops.
-For more information on these trainings and CPSA, visit our website [here](cisa.umbc.edu).
+For more information on these trainings and CPSA, visit our website [here](https://cisa.umbc.edu).
 
 
 
 ## Week 0 - Installing CPSA
-To install CPSA, follow the instructions in the CPSA installation instructions file, linked [here](CPSA_INSTALL.md).
+To install CPSA, follow the instructions in the CPSA installation instructions file, linked [here](https://hackage.haskell.org/package/cpsa-4.4.7#readme).
 Note that you will need to install [Haskell](https://www.haskell.org/) to use the `cabal` package manager.
 Once CPSA is installed, make sure everything is working by running `cpsa4 -v`.
 You should see something like `CPSA 4.4.7`, corresponding to the current version of CPSA.
