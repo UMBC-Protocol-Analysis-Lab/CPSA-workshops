@@ -21,6 +21,11 @@ jobs:
         ghc-version: '9.14.1'
         cabal-version: '3.16.1.0'
 
+    - name: Install CPSA
+      run: |
+        cabal update
+        cabal install cpsa
+
     - name: Cache
       uses: actions/cache@v3
       env:
@@ -32,11 +37,6 @@ jobs:
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
           ${{ runner.os }}-
-      
-    - name: Install CPSA
-      run: |
-        cabal update
-        cabal install cpsa
       
     - name: Add cabal bin to PATH
       run: echo "$HOME/.cabal/bin" >> $GITHUB_PATH
