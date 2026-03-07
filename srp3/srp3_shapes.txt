@@ -1,0 +1,1384 @@
+(comment "CPSA 4.4.6")
+(comment "Extracted shapes")
+
+(herald "SRP protocol with leak of verifier that also allows leak of b"
+  (algebra diffie-hellman) (bound 40) (limit 8000))
+
+(comment "CPSA 4.4.6")
+
+(comment "All input read from srp3.scm")
+
+(comment "Step count limited to 8000")
+
+(comment "Strand count bounded at 40")
+
+(defprotocol srp diffie-hellman
+  (defrole client-init
+    (vars (s text) (x rndx) (client server name) (client-state locn))
+    (trace (stor client-state (cat "Client state" s x client server))
+      (send (enc "Enroll" s (exp (gen) x) client (ltk client server))))
+    (uniq-gen s x))
+  (defrole server-init
+    (vars (s text) (x expt) (client server name) (server-state locn))
+    (trace
+      (recv (enc "Enroll" s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat "Server record" s (exp (gen) x) client server))
+      (send (exp (gen) x))))
+  (defrole client
+    (vars (client server name) (a rndx) (b u x expt) (s text)
+      (client-state locn))
+    (trace (send client) (recv s)
+      (load client-state (cat "Client state" s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))))
+    (uniq-gen a)
+    (absent (a x)))
+  (defrole server
+    (vars (client server name) (a x expt) (b u rndx) (s text)
+      (server-state locn))
+    (trace (recv client)
+      (load server-state
+        (cat "Server record" s (exp (gen) x) client server)) (send s)
+      (recv (exp (gen) a))
+      (send (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (recv
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul x b u)))))
+      (send
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul x b u))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul x b u))))))
+    (uniq-gen b u)
+    (absent (b a) (b x) (u a) (u x)))
+  (defrule at-most-one-server-init-per-client
+    (forall ((z0 z1 strd) (client server name))
+      (implies
+        (and (p "server-init" z0 (idx 1)) (p "server-init" z1 (idx 1))
+          (p "server-init" "client" z0 client)
+          (p "server-init" "client" z1 client)
+          (p "server-init" "server" z0 server)
+          (p "server-init" "server" z1 server))
+        (= z0 z1))))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false))))
+  (defgenrule scissorsRule
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (trans z2 i2)
+          (leads-to z0 i0 z1 i1) (leads-to z0 i0 z2 i2))
+        (and (= z1 z2) (= i1 i2)))))
+  (defgenrule cakeRule
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (leads-to z0 i0 z1 i1)
+          (leads-to z0 i0 z2 i2) (prec z1 i1 z2 i2)) (false))))
+  (defgenrule no-interruption
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (leads-to z0 i0 z2 i2) (trans z1 i1)
+          (same-locn z0 i0 z1 i1) (prec z0 i0 z1 i1) (prec z1 i1 z2 i2))
+        (false))))
+  (defgenrule discreteAfter
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (trans z2 i2)
+          (leads-to z0 i0 z1 i1) (same-locn z0 i0 z2 i2)
+          (prec z0 i0 z2 i2))
+        (or (and (= z1 z2) (= i1 i2)) (prec z1 i1 z2 i2)))))
+  (defgenrule discreteBefore
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (same-locn z0 i0 z1 i1)
+          (leads-to z1 i1 z2 i2) (prec z0 i0 z2 i2))
+        (or (and (= z0 z1) (= i0 i1)) (prec z0 i0 z1 i1)))))
+  (defgenrule trRl_client-init-at-0
+    (forall ((z strd))
+      (implies (p "client-init" z (idx 1)) (trans z (idx 0)))))
+  (defgenrule trRl_server-init-at-1
+    (forall ((z strd))
+      (implies (p "server-init" z (idx 2)) (trans z (idx 1)))))
+  (defgenrule eff-client-3
+    (forall ((i indx) (z1 z strd))
+      (implies (and (p "client" z (idx 4)) (prec z (idx 3) z1 i))
+        (or (= z z1)
+          (and (p "client" z (idx 3)) (prec z (idx 2) z1 i))))))
+  (defgenrule eff-server-2
+    (forall ((i indx) (z1 z strd))
+      (implies (and (p "server" z (idx 3)) (prec z (idx 2) z1 i))
+        (or (= z z1)
+          (and (p "server" z (idx 2)) (prec z (idx 1) z1 i))))))
+  (comment
+    "This version of the SRP protocol includes the leak of the verifier to the adversary,")
+  (comment
+    "but does not require that b is not equal to u. This allows CPSA to explore the possibility")
+  (comment
+    "that the adversary can also acquire the value b. This should only be possible if the")
+  (comment
+    "authentication mechanism on the server were compromised and can be checked with listener")
+  (comment "strands for b in the actual protocol without the leaks."))
+
+(defskeleton srp
+  (vars (s s-0 text) (client server name) (pt pt-0 pval)
+    (client-state locn) (b u expt) (a x rndx))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x))
+  (defstrand client 7 (s s-0) (client client) (server server)
+    (client-state client-state) (a a) (b b) (u u) (x x))
+  (non-orig (ltk client server))
+  (uniq-gen s a x)
+  (absent (a x))
+  (traces
+    ((stor client-state (cat pt "Client state" s x client server))
+      (send (enc "Enroll" s (exp (gen) x) client (ltk client server))))
+    ((send client) (recv s-0)
+      (load client-state (cat pt-0 "Client state" s-0 x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul b a)) (exp (gen) (mul b u x)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul b a)) (exp (gen) (mul b u x))))
+          (hash (exp (gen) (mul b a)) (exp (gen) (mul b u x)))))))
+  (label 0)
+  (unrealized (1 2) (1 4) (1 6))
+  (preskeleton)
+  (origs (pt (0 0)))
+  (ugens (a (1 3)) (x (0 0)) (s (0 0)))
+  (comment "Not a skeleton"))
+
+(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pval)
+    (client-state server-state locn) (a b x u rndx))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x))
+  (defstrand client 7 (s s) (client client) (server server)
+    (client-state client-state) (a a) (b b) (u u) (x x))
+  (defstrand server-init 2 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (defstrand server 7 (s s) (client client) (server server)
+    (server-state server-state) (a a) (x x) (b b) (u u))
+  (precedes ((0 1) (2 0)) ((1 3) (3 3)) ((1 5) (3 5)) ((2 1) (3 1))
+    ((3 2) (1 1)) ((3 4) (1 4)) ((3 6) (1 6)))
+  (non-orig (ltk client server))
+  (uniq-gen s a b x u)
+  (absent (a x) (b a) (b x) (u a) (u x))
+  (leads-to ((0 0) (1 2)) ((2 1) (3 1)))
+  (operation encryption-test (displaced 4 1 client 6)
+    (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+      (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u)))) (3 5))
+  (strand-map 0 1 2 3)
+  (traces
+    ((stor client-state (cat pt "Client state" s x client server))
+      (send (enc "Enroll" s (exp (gen) x) client (ltk client server))))
+    ((send client) (recv s)
+      (load client-state (cat pt "Client state" s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u))))))
+    ((recv (enc "Enroll" s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat pt-0 "Server record" s (exp (gen) x) client server)))
+    ((recv client)
+      (load server-state
+        (cat pt-0 "Server record" s (exp (gen) x) client server))
+      (send s) (recv (exp (gen) a))
+      (send (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (recv
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u)))))
+      (send
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u)))))))
+  (label 17)
+  (parent 0)
+  (realized)
+  (shape)
+  (maps
+    ((0 1)
+      ((client client) (server server) (b b) (u u) (a a) (x x)
+        (client-state client-state) (s s) (s-0 s))))
+  (origs (pt (0 0)) (pt-0 (2 1)))
+  (ugens (a (1 3)) (u (3 4)) (b (3 4)) (s (0 0)) (x (0 0))))
+
+(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pval)
+    (client-state server-state locn) (b u expt) (a x rndx))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x))
+  (defstrand client 7 (s s) (client client) (server server)
+    (client-state client-state) (a a) (b b) (u u) (x x))
+  (defstrand server 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (defstrand server-init 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (precedes ((0 1) (3 0)) ((2 2) (1 1)) ((3 1) (2 1)) ((3 2) (1 4)))
+  (non-orig (ltk client server))
+  (uniq-gen s a x)
+  (absent (a x))
+  (leads-to ((0 0) (1 2)) ((3 1) (2 1)))
+  (rule trRl_client-init-at-0 trRl_server-init-at-1)
+  (operation generalization deleted (3 0))
+  (strand-map 0 1 2 4)
+  (traces
+    ((stor client-state (cat pt "Client state" s x client server))
+      (send (enc "Enroll" s (exp (gen) x) client (ltk client server))))
+    ((send client) (recv s)
+      (load client-state (cat pt "Client state" s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul b a)) (exp (gen) (mul b u x)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul b a)) (exp (gen) (mul b u x))))
+          (hash (exp (gen) (mul b a)) (exp (gen) (mul b u x))))))
+    ((recv client)
+      (load server-state
+        (cat pt-0 "Server record" s (exp (gen) x) client server))
+      (send s))
+    ((recv (enc "Enroll" s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat pt-0 "Server record" s (exp (gen) x) client server))
+      (send (exp (gen) x))))
+  (label 77)
+  (parent 0)
+  (realized)
+  (shape)
+  (maps
+    ((0 1)
+      ((client client) (server server) (b b) (u u) (a a) (x x)
+        (client-state client-state) (s s) (s-0 s))))
+  (origs (pt-0 (3 1)) (pt (0 0)))
+  (ugens (s (0 0)) (x (0 0)) (a (1 3))))
+
+(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pval)
+    (client-state server-state locn) (a b x u rndx))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x))
+  (defstrand client 7 (s s) (client client) (server server)
+    (client-state client-state) (a a) (b b) (u u) (x x))
+  (defstrand server 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (defstrand server-init 2 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (defstrand server 7 (s s) (client client) (server server)
+    (server-state server-state) (a a) (x x) (b b) (u u))
+  (precedes ((0 1) (3 0)) ((1 3) (4 3)) ((1 5) (4 5)) ((2 2) (1 1))
+    ((3 1) (2 1)) ((3 1) (4 1)) ((4 4) (1 4)) ((4 6) (1 6)))
+  (non-orig (ltk client server))
+  (uniq-gen s a b x u)
+  (absent (a x) (b a) (b x) (u a) (u x))
+  (leads-to ((0 0) (1 2)) ((3 1) (2 1)) ((3 1) (4 1)))
+  (operation encryption-test (displaced 5 1 client 6)
+    (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+      (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u)))) (4 5))
+  (strand-map 0 1 2 3 4)
+  (traces
+    ((stor client-state (cat pt "Client state" s x client server))
+      (send (enc "Enroll" s (exp (gen) x) client (ltk client server))))
+    ((send client) (recv s)
+      (load client-state (cat pt "Client state" s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u))))))
+    ((recv client)
+      (load server-state
+        (cat pt-0 "Server record" s (exp (gen) x) client server))
+      (send s))
+    ((recv (enc "Enroll" s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat pt-0 "Server record" s (exp (gen) x) client server)))
+    ((recv client)
+      (load server-state
+        (cat pt-0 "Server record" s (exp (gen) x) client server))
+      (send s) (recv (exp (gen) a))
+      (send (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (recv
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u)))))
+      (send
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u)))))))
+  (label 93)
+  (parent 0)
+  (realized)
+  (shape)
+  (maps
+    ((0 1)
+      ((client client) (server server) (b b) (u u) (a a) (x x)
+        (client-state client-state) (s s) (s-0 s))))
+  (origs (pt-0 (3 1)) (pt (0 0)))
+  (ugens (a (1 3)) (u (4 4)) (b (4 4)) (s (0 0)) (x (0 0))))
+
+(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pval)
+    (client-state server-state locn) (a b x u rndx))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x))
+  (defstrand client 7 (s s) (client client) (server server)
+    (client-state client-state) (a a) (b b) (u u) (x x))
+  (defstrand server 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (defstrand server-init 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (precedes ((0 1) (3 0)) ((2 2) (1 1)) ((3 1) (2 1)) ((3 2) (1 4)))
+  (non-orig (ltk client server))
+  (uniq-gen s a x)
+  (absent (a x))
+  (leads-to ((0 0) (1 2)) ((3 1) (2 1)))
+  (rule trRl_client-init-at-0 trRl_server-init-at-1)
+  (operation generalization deleted (4 0))
+  (strand-map 0 1 2 3)
+  (traces
+    ((stor client-state (cat pt "Client state" s x client server))
+      (send (enc "Enroll" s (exp (gen) x) client (ltk client server))))
+    ((send client) (recv s)
+      (load client-state (cat pt "Client state" s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u))))))
+    ((recv client)
+      (load server-state
+        (cat pt-0 "Server record" s (exp (gen) x) client server))
+      (send s))
+    ((recv (enc "Enroll" s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat pt-0 "Server record" s (exp (gen) x) client server))
+      (send (exp (gen) x))))
+  (label 129)
+  (parent 0)
+  (realized)
+  (shape)
+  (maps
+    ((0 1)
+      ((client client) (server server) (b b) (u u) (a a) (x x)
+        (client-state client-state) (s s) (s-0 s))))
+  (origs (pt-0 (3 1)) (pt (0 0)))
+  (ugens (a (1 3)) (s (0 0)) (x (0 0))))
+
+(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pval)
+    (client-state server-state locn) (a rndx) (a-0 expt) (u x rndx))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x))
+  (defstrand client 7 (s s) (client client) (server server)
+    (client-state client-state) (a a) (b u) (u (rec u)) (x x))
+  (defstrand server 5 (s s) (client client) (server server)
+    (server-state server-state) (a a-0) (x x) (b u) (u u))
+  (defstrand server-init 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (precedes ((0 1) (3 0)) ((2 2) (1 1)) ((2 4) (1 4)) ((3 1) (2 1))
+    ((3 2) (1 6)))
+  (non-orig (ltk client server))
+  (uniq-gen s a u x)
+  (absent (a x) (u a-0) (u x))
+  (leads-to ((0 0) (1 2)) ((3 1) (2 1)))
+  (rule trRl_client-init-at-0 trRl_server-init-at-1)
+  (operation generalization deleted (3 0))
+  (strand-map 0 1 2 4)
+  (traces
+    ((stor client-state (cat pt "Client state" s x client server))
+      (send (enc "Enroll" s (exp (gen) x) client (ltk client server))))
+    ((send client) (recv s)
+      (load client-state (cat pt "Client state" s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) u) (exp (gen) x)) (rec u)))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) (rec u)
+          (hash (exp (gen) (mul a u)) (exp (gen) x))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) (rec u)
+            (hash (exp (gen) (mul a u)) (exp (gen) x)))
+          (hash (exp (gen) (mul a u)) (exp (gen) x)))))
+    ((recv client)
+      (load server-state
+        (cat pt-0 "Server record" s (exp (gen) x) client server))
+      (send s) (recv (exp (gen) a-0))
+      (send (cat (enc (exp (gen) u) (exp (gen) x)) u)))
+    ((recv (enc "Enroll" s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat pt-0 "Server record" s (exp (gen) x) client server))
+      (send (exp (gen) x))))
+  (label 440)
+  (parent 0)
+  (realized)
+  (shape)
+  (maps
+    ((0 1)
+      ((client client) (server server) (b u) (u (rec u)) (a a) (x x)
+        (client-state client-state) (s s) (s-0 s))))
+  (origs (pt-0 (3 1)) (pt (0 0)))
+  (ugens (s (0 0)) (x (0 0)) (u (2 4)) (a (1 3))))
+
+(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pval)
+    (client-state server-state locn) (a u x rndx))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x))
+  (defstrand client 7 (s s) (client client) (server server)
+    (client-state client-state) (a a) (b u) (u u) (x x))
+  (defstrand server 5 (s s) (client client) (server server)
+    (server-state server-state) (a a) (x x) (b u) (u u))
+  (defstrand server-init 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (precedes ((0 1) (3 0)) ((1 3) (2 3)) ((2 2) (1 1)) ((2 4) (1 4))
+    ((3 1) (2 1)) ((3 2) (1 6)))
+  (non-orig (ltk client server))
+  (uniq-gen s a u x)
+  (absent (a x) (u a) (u x))
+  (leads-to ((0 0) (1 2)) ((3 1) (2 1)))
+  (rule trRl_client-init-at-0 trRl_server-init-at-1)
+  (operation generalization deleted (3 0))
+  (strand-map 0 1 2 4)
+  (traces
+    ((stor client-state (cat pt "Client state" s x client server))
+      (send (enc "Enroll" s (exp (gen) x) client (ltk client server))))
+    ((send client) (recv s)
+      (load client-state (cat pt "Client state" s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) u) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) u
+          (hash (exp (gen) (mul a u)) (exp (gen) (mul u u x)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) u
+            (hash (exp (gen) (mul a u)) (exp (gen) (mul u u x))))
+          (hash (exp (gen) (mul a u)) (exp (gen) (mul u u x))))))
+    ((recv client)
+      (load server-state
+        (cat pt-0 "Server record" s (exp (gen) x) client server))
+      (send s) (recv (exp (gen) a))
+      (send (cat (enc (exp (gen) u) (exp (gen) x)) u)))
+    ((recv (enc "Enroll" s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat pt-0 "Server record" s (exp (gen) x) client server))
+      (send (exp (gen) x))))
+  (label 641)
+  (parent 0)
+  (realized)
+  (shape)
+  (maps
+    ((0 1)
+      ((client client) (server server) (b u) (u u) (a a) (x x)
+        (client-state client-state) (s s) (s-0 s))))
+  (origs (pt-0 (3 1)) (pt (0 0)))
+  (ugens (u (2 4)) (s (0 0)) (x (0 0)) (a (1 3))))
+
+(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pval)
+    (client-state server-state locn) (a rndx) (a-0 expt) (u rndx)
+    (w expt) (x rndx))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x))
+  (defstrand client 7 (s s) (client client) (server server)
+    (client-state client-state) (a a) (b u) (u (mul (rec u) w)) (x x))
+  (defstrand server 5 (s s) (client client) (server server)
+    (server-state server-state) (a a-0) (x x) (b u) (u u))
+  (defstrand server-init 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (precedes ((0 1) (3 0)) ((2 2) (1 1)) ((2 4) (1 4)) ((3 1) (2 1))
+    ((3 2) (1 6)))
+  (non-orig (ltk client server))
+  (uniq-gen s a u x)
+  (absent (a x) (u a-0) (u x))
+  (leads-to ((0 0) (1 2)) ((3 1) (2 1)))
+  (rule trRl_client-init-at-0 trRl_server-init-at-1)
+  (operation generalization deleted (3 0))
+  (strand-map 0 1 2 4)
+  (traces
+    ((stor client-state (cat pt "Client state" s x client server))
+      (send (enc "Enroll" s (exp (gen) x) client (ltk client server))))
+    ((send client) (recv s)
+      (load client-state (cat pt "Client state" s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) u) (exp (gen) x)) (mul (rec u) w)))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x))
+          (mul (rec u) w)
+          (hash (exp (gen) (mul a u)) (exp (gen) (mul w x)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x))
+            (mul (rec u) w)
+            (hash (exp (gen) (mul a u)) (exp (gen) (mul w x))))
+          (hash (exp (gen) (mul a u)) (exp (gen) (mul w x))))))
+    ((recv client)
+      (load server-state
+        (cat pt-0 "Server record" s (exp (gen) x) client server))
+      (send s) (recv (exp (gen) a-0))
+      (send (cat (enc (exp (gen) u) (exp (gen) x)) u)))
+    ((recv (enc "Enroll" s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat pt-0 "Server record" s (exp (gen) x) client server))
+      (send (exp (gen) x))))
+  (label 644)
+  (parent 0)
+  (realized)
+  (shape)
+  (maps
+    ((0 1)
+      ((client client) (server server) (b u) (u (mul (rec u) w)) (a a)
+        (x x) (client-state client-state) (s s) (s-0 s))))
+  (origs (pt-0 (3 1)) (pt (0 0)))
+  (ugens (s (0 0)) (x (0 0)) (u (2 4)) (a (1 3))))
+
+(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pval)
+    (client-state server-state locn) (x a u rndx))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x))
+  (defstrand client 7 (s s) (client client) (server server)
+    (client-state client-state) (a a) (b u) (u u) (x x))
+  (defstrand server 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (defstrand server-init 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (precedes ((0 1) (3 0)) ((2 2) (1 1)) ((3 1) (2 1)) ((3 2) (1 4)))
+  (non-orig (ltk client server))
+  (uniq-gen s x a)
+  (absent (a x))
+  (leads-to ((0 0) (1 2)) ((3 1) (2 1)))
+  (rule trRl_client-init-at-0 trRl_server-init-at-1)
+  (operation generalization deleted (4 0))
+  (strand-map 0 1 2 3)
+  (traces
+    ((stor client-state (cat pt "Client state" s x client server))
+      (send (enc "Enroll" s (exp (gen) x) client (ltk client server))))
+    ((send client) (recv s)
+      (load client-state (cat pt "Client state" s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) u) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) u
+          (hash (exp (gen) (mul a u)) (exp (gen) (mul x u u)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) u
+            (hash (exp (gen) (mul a u)) (exp (gen) (mul x u u))))
+          (hash (exp (gen) (mul a u)) (exp (gen) (mul x u u))))))
+    ((recv client)
+      (load server-state
+        (cat pt-0 "Server record" s (exp (gen) x) client server))
+      (send s))
+    ((recv (enc "Enroll" s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat pt-0 "Server record" s (exp (gen) x) client server))
+      (send (exp (gen) x))))
+  (label 645)
+  (parent 0)
+  (realized)
+  (shape)
+  (maps
+    ((0 1)
+      ((client client) (server server) (b u) (u u) (a a) (x x)
+        (client-state client-state) (s s) (s-0 s))))
+  (origs (pt-0 (3 1)) (pt (0 0)))
+  (ugens (s (0 0)) (x (0 0)) (a (1 3))))
+
+(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pval)
+    (client-state server-state locn) (a rndx) (u expt) (x u-0 rndx))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x))
+  (defstrand client 7 (s s) (client client) (server server)
+    (client-state client-state) (a a) (b u-0) (u u) (x x))
+  (defstrand server 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (defstrand server-init 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (precedes ((0 1) (3 0)) ((2 2) (1 1)) ((3 1) (2 1)) ((3 2) (1 4)))
+  (non-orig (ltk client server))
+  (uniq-gen s a x)
+  (absent (a x))
+  (leads-to ((0 0) (1 2)) ((3 1) (2 1)))
+  (rule trRl_client-init-at-0 trRl_server-init-at-1)
+  (operation generalization deleted (4 0))
+  (strand-map 0 1 2 3)
+  (traces
+    ((stor client-state (cat pt "Client state" s x client server))
+      (send (enc "Enroll" s (exp (gen) x) client (ltk client server))))
+    ((send client) (recv s)
+      (load client-state (cat pt "Client state" s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) u-0) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) u-0) (exp (gen) x)) u
+          (hash (exp (gen) (mul a u-0)) (exp (gen) (mul u x u-0)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) u-0) (exp (gen) x)) u
+            (hash (exp (gen) (mul a u-0)) (exp (gen) (mul u x u-0))))
+          (hash (exp (gen) (mul a u-0)) (exp (gen) (mul u x u-0))))))
+    ((recv client)
+      (load server-state
+        (cat pt-0 "Server record" s (exp (gen) x) client server))
+      (send s))
+    ((recv (enc "Enroll" s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat pt-0 "Server record" s (exp (gen) x) client server))
+      (send (exp (gen) x))))
+  (label 646)
+  (parent 0)
+  (realized)
+  (shape)
+  (maps
+    ((0 1)
+      ((client client) (server server) (b u-0) (u u) (a a) (x x)
+        (client-state client-state) (s s) (s-0 s))))
+  (origs (pt-0 (3 1)) (pt (0 0)))
+  (ugens (a (1 3)) (s (0 0)) (x (0 0))))
+
+(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pval)
+    (client-state server-state locn) (a rndx) (a-0 expt) (u x rndx))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x))
+  (defstrand client 7 (s s) (client client) (server server)
+    (client-state client-state) (a a) (b u) (u (rec u)) (x x))
+  (defstrand server 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (defstrand server 5 (s s) (client client) (server server)
+    (server-state server-state) (a a-0) (x x) (b u) (u u))
+  (defstrand server-init 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (precedes ((0 1) (4 0)) ((2 2) (1 1)) ((3 4) (1 4)) ((4 1) (2 1))
+    ((4 1) (3 1)) ((4 2) (1 6)))
+  (non-orig (ltk client server))
+  (uniq-gen s a u x)
+  (absent (a x) (u a-0) (u x))
+  (leads-to ((0 0) (1 2)) ((4 1) (2 1)) ((4 1) (3 1)))
+  (rule trRl_client-init-at-0 trRl_server-init-at-1)
+  (operation generalization deleted (4 0))
+  (strand-map 0 1 2 3 5)
+  (traces
+    ((stor client-state (cat pt "Client state" s x client server))
+      (send (enc "Enroll" s (exp (gen) x) client (ltk client server))))
+    ((send client) (recv s)
+      (load client-state (cat pt "Client state" s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) u) (exp (gen) x)) (rec u)))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) (rec u)
+          (hash (exp (gen) (mul a u)) (exp (gen) x))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) (rec u)
+            (hash (exp (gen) (mul a u)) (exp (gen) x)))
+          (hash (exp (gen) (mul a u)) (exp (gen) x)))))
+    ((recv client)
+      (load server-state
+        (cat pt-0 "Server record" s (exp (gen) x) client server))
+      (send s))
+    ((recv client)
+      (load server-state
+        (cat pt-0 "Server record" s (exp (gen) x) client server))
+      (send s) (recv (exp (gen) a-0))
+      (send (cat (enc (exp (gen) u) (exp (gen) x)) u)))
+    ((recv (enc "Enroll" s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat pt-0 "Server record" s (exp (gen) x) client server))
+      (send (exp (gen) x))))
+  (label 768)
+  (parent 0)
+  (realized)
+  (shape)
+  (maps
+    ((0 1)
+      ((client client) (server server) (b u) (u (rec u)) (a a) (x x)
+        (client-state client-state) (s s) (s-0 s))))
+  (origs (pt-0 (4 1)) (pt (0 0)))
+  (ugens (s (0 0)) (x (0 0)) (u (3 4)) (a (1 3))))
+
+(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pval)
+    (client-state server-state locn) (a u x rndx))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x))
+  (defstrand client 7 (s s) (client client) (server server)
+    (client-state client-state) (a a) (b u) (u u) (x x))
+  (defstrand server 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (defstrand server 5 (s s) (client client) (server server)
+    (server-state server-state) (a a) (x x) (b u) (u u))
+  (defstrand server-init 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (precedes ((0 1) (4 0)) ((1 3) (3 3)) ((2 2) (1 1)) ((3 4) (1 4))
+    ((4 1) (2 1)) ((4 1) (3 1)) ((4 2) (1 6)))
+  (non-orig (ltk client server))
+  (uniq-gen s a u x)
+  (absent (a x) (u a) (u x))
+  (leads-to ((0 0) (1 2)) ((4 1) (2 1)) ((4 1) (3 1)))
+  (rule trRl_client-init-at-0 trRl_server-init-at-1)
+  (operation generalization deleted (4 0))
+  (strand-map 0 1 2 3 5)
+  (traces
+    ((stor client-state (cat pt "Client state" s x client server))
+      (send (enc "Enroll" s (exp (gen) x) client (ltk client server))))
+    ((send client) (recv s)
+      (load client-state (cat pt "Client state" s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) u) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) u
+          (hash (exp (gen) (mul a u)) (exp (gen) (mul u u x)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) u
+            (hash (exp (gen) (mul a u)) (exp (gen) (mul u u x))))
+          (hash (exp (gen) (mul a u)) (exp (gen) (mul u u x))))))
+    ((recv client)
+      (load server-state
+        (cat pt-0 "Server record" s (exp (gen) x) client server))
+      (send s))
+    ((recv client)
+      (load server-state
+        (cat pt-0 "Server record" s (exp (gen) x) client server))
+      (send s) (recv (exp (gen) a))
+      (send (cat (enc (exp (gen) u) (exp (gen) x)) u)))
+    ((recv (enc "Enroll" s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat pt-0 "Server record" s (exp (gen) x) client server))
+      (send (exp (gen) x))))
+  (label 915)
+  (parent 0)
+  (realized)
+  (shape)
+  (maps
+    ((0 1)
+      ((client client) (server server) (b u) (u u) (a a) (x x)
+        (client-state client-state) (s s) (s-0 s))))
+  (origs (pt-0 (4 1)) (pt (0 0)))
+  (ugens (u (3 4)) (s (0 0)) (x (0 0)) (a (1 3))))
+
+(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pval)
+    (client-state server-state locn) (a rndx) (a-0 expt) (u rndx)
+    (w expt) (x rndx))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x))
+  (defstrand client 7 (s s) (client client) (server server)
+    (client-state client-state) (a a) (b u) (u (mul (rec u) w)) (x x))
+  (defstrand server 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (defstrand server 5 (s s) (client client) (server server)
+    (server-state server-state) (a a-0) (x x) (b u) (u u))
+  (defstrand server-init 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (precedes ((0 1) (4 0)) ((2 2) (1 1)) ((3 4) (1 4)) ((4 1) (2 1))
+    ((4 1) (3 1)) ((4 2) (1 6)))
+  (non-orig (ltk client server))
+  (uniq-gen s a u x)
+  (absent (a x) (u a-0) (u x))
+  (leads-to ((0 0) (1 2)) ((4 1) (2 1)) ((4 1) (3 1)))
+  (rule trRl_client-init-at-0 trRl_server-init-at-1)
+  (operation generalization deleted (4 0))
+  (strand-map 0 1 2 3 5)
+  (traces
+    ((stor client-state (cat pt "Client state" s x client server))
+      (send (enc "Enroll" s (exp (gen) x) client (ltk client server))))
+    ((send client) (recv s)
+      (load client-state (cat pt "Client state" s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) u) (exp (gen) x)) (mul (rec u) w)))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x))
+          (mul (rec u) w)
+          (hash (exp (gen) (mul a u)) (exp (gen) (mul w x)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x))
+            (mul (rec u) w)
+            (hash (exp (gen) (mul a u)) (exp (gen) (mul w x))))
+          (hash (exp (gen) (mul a u)) (exp (gen) (mul w x))))))
+    ((recv client)
+      (load server-state
+        (cat pt-0 "Server record" s (exp (gen) x) client server))
+      (send s))
+    ((recv client)
+      (load server-state
+        (cat pt-0 "Server record" s (exp (gen) x) client server))
+      (send s) (recv (exp (gen) a-0))
+      (send (cat (enc (exp (gen) u) (exp (gen) x)) u)))
+    ((recv (enc "Enroll" s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat pt-0 "Server record" s (exp (gen) x) client server))
+      (send (exp (gen) x))))
+  (label 947)
+  (parent 0)
+  (realized)
+  (shape)
+  (maps
+    ((0 1)
+      ((client client) (server server) (b u) (u (mul (rec u) w)) (a a)
+        (x x) (client-state client-state) (s s) (s-0 s))))
+  (origs (pt-0 (4 1)) (pt (0 0)))
+  (ugens (s (0 0)) (x (0 0)) (u (3 4)) (a (1 3))))
+
+(comment "Nothing left to do")
+
+(defprotocol srp diffie-hellman
+  (defrole client-init
+    (vars (s text) (x rndx) (client server name) (client-state locn))
+    (trace (stor client-state (cat "Client state" s x client server))
+      (send (enc "Enroll" s (exp (gen) x) client (ltk client server))))
+    (uniq-gen s x))
+  (defrole server-init
+    (vars (s text) (x expt) (client server name) (server-state locn))
+    (trace
+      (recv (enc "Enroll" s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat "Server record" s (exp (gen) x) client server))
+      (send (exp (gen) x))))
+  (defrole client
+    (vars (client server name) (a rndx) (b u x expt) (s text)
+      (client-state locn))
+    (trace (send client) (recv s)
+      (load client-state (cat "Client state" s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))))
+    (uniq-gen a)
+    (absent (a x)))
+  (defrole server
+    (vars (client server name) (a x expt) (b u rndx) (s text)
+      (server-state locn))
+    (trace (recv client)
+      (load server-state
+        (cat "Server record" s (exp (gen) x) client server)) (send s)
+      (recv (exp (gen) a))
+      (send (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (recv
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul x b u)))))
+      (send
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul x b u))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul x b u))))))
+    (uniq-gen b u)
+    (absent (b a) (b x) (u a) (u x)))
+  (defrule at-most-one-server-init-per-client
+    (forall ((z0 z1 strd) (client server name))
+      (implies
+        (and (p "server-init" z0 (idx 1)) (p "server-init" z1 (idx 1))
+          (p "server-init" "client" z0 client)
+          (p "server-init" "client" z1 client)
+          (p "server-init" "server" z0 server)
+          (p "server-init" "server" z1 server))
+        (= z0 z1))))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false))))
+  (defgenrule scissorsRule
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (trans z2 i2)
+          (leads-to z0 i0 z1 i1) (leads-to z0 i0 z2 i2))
+        (and (= z1 z2) (= i1 i2)))))
+  (defgenrule cakeRule
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (leads-to z0 i0 z1 i1)
+          (leads-to z0 i0 z2 i2) (prec z1 i1 z2 i2)) (false))))
+  (defgenrule no-interruption
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (leads-to z0 i0 z2 i2) (trans z1 i1)
+          (same-locn z0 i0 z1 i1) (prec z0 i0 z1 i1) (prec z1 i1 z2 i2))
+        (false))))
+  (defgenrule discreteAfter
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (trans z2 i2)
+          (leads-to z0 i0 z1 i1) (same-locn z0 i0 z2 i2)
+          (prec z0 i0 z2 i2))
+        (or (and (= z1 z2) (= i1 i2)) (prec z1 i1 z2 i2)))))
+  (defgenrule discreteBefore
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (same-locn z0 i0 z1 i1)
+          (leads-to z1 i1 z2 i2) (prec z0 i0 z2 i2))
+        (or (and (= z0 z1) (= i0 i1)) (prec z0 i0 z1 i1)))))
+  (defgenrule trRl_client-init-at-0
+    (forall ((z strd))
+      (implies (p "client-init" z (idx 1)) (trans z (idx 0)))))
+  (defgenrule trRl_server-init-at-1
+    (forall ((z strd))
+      (implies (p "server-init" z (idx 2)) (trans z (idx 1)))))
+  (defgenrule eff-client-3
+    (forall ((i indx) (z1 z strd))
+      (implies (and (p "client" z (idx 4)) (prec z (idx 3) z1 i))
+        (or (= z z1)
+          (and (p "client" z (idx 3)) (prec z (idx 2) z1 i))))))
+  (defgenrule eff-server-2
+    (forall ((i indx) (z1 z strd))
+      (implies (and (p "server" z (idx 3)) (prec z (idx 2) z1 i))
+        (or (= z z1)
+          (and (p "server" z (idx 2)) (prec z (idx 1) z1 i))))))
+  (comment
+    "This version of the SRP protocol includes the leak of the verifier to the adversary,")
+  (comment
+    "but does not require that b is not equal to u. This allows CPSA to explore the possibility")
+  (comment
+    "that the adversary can also acquire the value b. This should only be possible if the")
+  (comment
+    "authentication mechanism on the server were compromised and can be checked with listener")
+  (comment "strands for b in the actual protocol without the leaks."))
+
+(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pval) (server-state locn)
+    (u b a x rndx) (x-0 expt))
+  (defstrand server-init 3 (s s) (client client) (server server)
+    (server-state server-state) (x x-0))
+  (defstrand server 7 (s s) (client client) (server server)
+    (server-state server-state) (a a) (x x) (b b) (u u))
+  (non-orig (ltk client server))
+  (uniq-gen u b)
+  (absent (u a) (u x) (b a) (b x))
+  (traces
+    ((recv (enc "Enroll" s (exp (gen) x-0) client (ltk client server)))
+      (stor server-state
+        (cat pt "Server record" s (exp (gen) x-0) client server))
+      (send (exp (gen) x-0)))
+    ((recv client)
+      (load server-state
+        (cat pt-0 "Server record" s (exp (gen) x) client server))
+      (send s) (recv (exp (gen) a))
+      (send (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (recv
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul b a)) (exp (gen) (mul u b x)))))
+      (send
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul b a)) (exp (gen) (mul u b x))))
+          (hash (exp (gen) (mul b a)) (exp (gen) (mul u b x)))))))
+  (label 1161)
+  (unrealized (0 0))
+  (origs (pt (0 1)))
+  (ugens (b (1 4)) (u (1 4)))
+  (comment "Not closed under rules"))
+
+(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pt-1 pval)
+    (server-state client-state locn) (u b a x x-0 rndx))
+  (defstrand server-init 3 (s s) (client client) (server server)
+    (server-state server-state) (x x-0))
+  (defstrand server 7 (s s) (client client) (server server)
+    (server-state server-state) (a a) (x x) (b b) (u u))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x-0))
+  (defstrand server 3 (s s) (client client) (server server)
+    (server-state server-state) (x x-0))
+  (precedes ((0 1) (3 1)) ((2 1) (0 0)) ((3 2) (1 1)))
+  (non-orig (ltk client server))
+  (uniq-gen s u b x-0)
+  (absent (u a) (u x) (b a) (b x))
+  (leads-to ((0 1) (3 1)))
+  (operation nonce-test (added-strand server 3) s (1 1)
+    (enc "Enroll" s (exp (gen) x-0) client (ltk client server))
+    (ch-msg server-state
+      (cat pt "Server record" s (exp (gen) x-0) client server))
+    (ch-msg client-state (cat pt-1 "Client state" s x-0 client server)))
+  (strand-map 0 1 2)
+  (traces
+    ((recv (enc "Enroll" s (exp (gen) x-0) client (ltk client server)))
+      (stor server-state
+        (cat pt "Server record" s (exp (gen) x-0) client server))
+      (send (exp (gen) x-0)))
+    ((recv client)
+      (load server-state
+        (cat pt-0 "Server record" s (exp (gen) x) client server))
+      (send s) (recv (exp (gen) a))
+      (send (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (recv
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul b a)) (exp (gen) (mul u b x)))))
+      (send
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul b a)) (exp (gen) (mul u b x))))
+          (hash (exp (gen) (mul b a)) (exp (gen) (mul u b x))))))
+    ((stor client-state (cat pt-1 "Client state" s x-0 client server))
+      (send
+        (enc "Enroll" s (exp (gen) x-0) client (ltk client server))))
+    ((recv client)
+      (load server-state
+        (cat pt "Server record" s (exp (gen) x-0) client server))
+      (send s)))
+  (label 1167)
+  (parent 1161)
+  (realized)
+  (shape)
+  (maps
+    ((0 1)
+      ((client client) (server server) (u u) (b b) (a a) (x x)
+        (server-state server-state) (s s) (x-0 x-0))))
+  (origs (pt (0 1)) (pt-1 (2 0)))
+  (ugens (s (2 0)) (x-0 (2 0)) (b (1 4)) (u (1 4))))
+
+(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pval)
+    (server-state client-state locn) (a b u x rndx))
+  (defstrand server-init 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (defstrand server 7 (s s) (client client) (server server)
+    (server-state server-state) (a a) (x x) (b b) (u u))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x))
+  (defstrand client 6 (s s) (client client) (server server)
+    (client-state client-state) (a a) (b b) (u u) (x x))
+  (precedes ((0 1) (1 1)) ((1 2) (3 1)) ((1 4) (3 4)) ((2 1) (0 0))
+    ((3 3) (1 3)) ((3 5) (1 5)))
+  (non-orig (ltk client server))
+  (uniq-gen s a b u x)
+  (absent (a x) (b a) (b x) (u a) (u x))
+  (leads-to ((0 1) (1 1)) ((2 0) (3 2)))
+  (operation nonce-test (displaced 4 1 server 3) s (3 1)
+    (enc "Enroll" s (exp (gen) x) client (ltk client server))
+    (ch-msg server-state
+      (cat pt "Server record" s (exp (gen) x) client server))
+    (ch-msg client-state (cat pt-0 "Client state" s x client server)))
+  (strand-map 0 1 2 3)
+  (traces
+    ((recv (enc "Enroll" s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat pt "Server record" s (exp (gen) x) client server))
+      (send (exp (gen) x)))
+    ((recv client)
+      (load server-state
+        (cat pt "Server record" s (exp (gen) x) client server)) (send s)
+      (recv (exp (gen) a))
+      (send (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (recv
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x)))))
+      (send
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))))
+    ((stor client-state (cat pt-0 "Client state" s x client server))
+      (send (enc "Enroll" s (exp (gen) x) client (ltk client server))))
+    ((send client) (recv s)
+      (load client-state (cat pt-0 "Client state" s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x)))))))
+  (label 1179)
+  (parent 1161)
+  (realized)
+  (shape)
+  (maps
+    ((0 1)
+      ((client client) (server server) (u u) (b b) (a a) (x x)
+        (server-state server-state) (s s) (x-0 x))))
+  (origs (pt (0 1)) (pt-0 (2 0)))
+  (ugens (s (2 0)) (x (2 0)) (a (3 3)) (b (1 4)) (u (1 4))))
+
+(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pval)
+    (server-state client-state locn) (a b u x rndx))
+  (defstrand server-init 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (defstrand server 7 (s s) (client client) (server server)
+    (server-state server-state) (a a) (x x) (b b) (u u))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x))
+  (defstrand client 6 (s s) (client client) (server server)
+    (client-state client-state) (a a) (b b) (u u) (x x))
+  (defstrand server 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (precedes ((0 1) (1 1)) ((0 1) (4 1)) ((1 4) (3 4)) ((2 1) (0 0))
+    ((3 3) (1 3)) ((3 5) (1 5)) ((4 2) (3 1)))
+  (non-orig (ltk client server))
+  (uniq-gen s a b u x)
+  (absent (a x) (b a) (b x) (u a) (u x))
+  (leads-to ((0 1) (1 1)) ((0 1) (4 1)) ((2 0) (3 2)))
+  (operation nonce-test (added-strand server 3) s (3 1)
+    (enc "Enroll" s (exp (gen) x) client (ltk client server))
+    (ch-msg server-state
+      (cat pt "Server record" s (exp (gen) x) client server))
+    (ch-msg client-state (cat pt-0 "Client state" s x client server)))
+  (strand-map 0 1 2 3)
+  (traces
+    ((recv (enc "Enroll" s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat pt "Server record" s (exp (gen) x) client server))
+      (send (exp (gen) x)))
+    ((recv client)
+      (load server-state
+        (cat pt "Server record" s (exp (gen) x) client server)) (send s)
+      (recv (exp (gen) a))
+      (send (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (recv
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x)))))
+      (send
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))))
+    ((stor client-state (cat pt-0 "Client state" s x client server))
+      (send (enc "Enroll" s (exp (gen) x) client (ltk client server))))
+    ((send client) (recv s)
+      (load client-state (cat pt-0 "Client state" s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))))
+    ((recv client)
+      (load server-state
+        (cat pt "Server record" s (exp (gen) x) client server))
+      (send s)))
+  (label 1180)
+  (parent 1161)
+  (realized)
+  (shape)
+  (maps
+    ((0 1)
+      ((client client) (server server) (u u) (b b) (a a) (x x)
+        (server-state server-state) (s s) (x-0 x))))
+  (origs (pt (0 1)) (pt-0 (2 0)))
+  (ugens (s (2 0)) (x (2 0)) (a (3 3)) (b (1 4)) (u (1 4))))
+
+(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pval)
+    (server-state client-state locn) (a u x rndx))
+  (defstrand server-init 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (defstrand server 7 (s s) (client client) (server server)
+    (server-state server-state) (a a) (x x) (b u) (u u))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x))
+  (precedes ((0 1) (1 1)) ((0 2) (1 5)) ((2 1) (0 0)))
+  (non-orig (ltk client server))
+  (uniq-gen s u x)
+  (absent (u a) (u x))
+  (leads-to ((0 1) (1 1)))
+  (rule trRl_client-init-at-0 trRl_server-init-at-1)
+  (operation generalization deleted (3 0))
+  (strand-map 0 1 2)
+  (traces
+    ((recv (enc "Enroll" s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat pt "Server record" s (exp (gen) x) client server))
+      (send (exp (gen) x)))
+    ((recv client)
+      (load server-state
+        (cat pt "Server record" s (exp (gen) x) client server)) (send s)
+      (recv (exp (gen) a))
+      (send (cat (enc (exp (gen) u) (exp (gen) x)) u))
+      (recv
+        (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) u
+          (hash (exp (gen) (mul a u)) (exp (gen) (mul u u x)))))
+      (send
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) u
+            (hash (exp (gen) (mul a u)) (exp (gen) (mul u u x))))
+          (hash (exp (gen) (mul a u)) (exp (gen) (mul u u x))))))
+    ((stor client-state (cat pt-0 "Client state" s x client server))
+      (send (enc "Enroll" s (exp (gen) x) client (ltk client server)))))
+  (label 1293)
+  (parent 1161)
+  (realized)
+  (shape)
+  (maps
+    ((0 1)
+      ((client client) (server server) (u u) (b u) (a a) (x x)
+        (server-state server-state) (s s) (x-0 x))))
+  (origs (pt (0 1)) (pt-0 (2 0)))
+  (ugens (u (1 4)) (s (2 0)) (x (2 0))))
+
+(comment "Nothing left to do")
+
+(defprotocol srp diffie-hellman
+  (defrole client-init
+    (vars (s text) (x rndx) (client server name) (client-state locn))
+    (trace (stor client-state (cat "Client state" s x client server))
+      (send (enc "Enroll" s (exp (gen) x) client (ltk client server))))
+    (uniq-gen s x))
+  (defrole server-init
+    (vars (s text) (x expt) (client server name) (server-state locn))
+    (trace
+      (recv (enc "Enroll" s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat "Server record" s (exp (gen) x) client server))
+      (send (exp (gen) x))))
+  (defrole client
+    (vars (client server name) (a rndx) (b u x expt) (s text)
+      (client-state locn))
+    (trace (send client) (recv s)
+      (load client-state (cat "Client state" s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))))
+    (uniq-gen a)
+    (absent (a x)))
+  (defrole server
+    (vars (client server name) (a x expt) (b u rndx) (s text)
+      (server-state locn))
+    (trace (recv client)
+      (load server-state
+        (cat "Server record" s (exp (gen) x) client server)) (send s)
+      (recv (exp (gen) a))
+      (send (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (recv
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul x b u)))))
+      (send
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul x b u))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul x b u))))))
+    (uniq-gen b u)
+    (absent (b a) (b x) (u a) (u x)))
+  (defrule at-most-one-server-init-per-client
+    (forall ((z0 z1 strd) (client server name))
+      (implies
+        (and (p "server-init" z0 (idx 1)) (p "server-init" z1 (idx 1))
+          (p "server-init" "client" z0 client)
+          (p "server-init" "client" z1 client)
+          (p "server-init" "server" z0 server)
+          (p "server-init" "server" z1 server))
+        (= z0 z1))))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false))))
+  (defgenrule scissorsRule
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (trans z2 i2)
+          (leads-to z0 i0 z1 i1) (leads-to z0 i0 z2 i2))
+        (and (= z1 z2) (= i1 i2)))))
+  (defgenrule cakeRule
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (leads-to z0 i0 z1 i1)
+          (leads-to z0 i0 z2 i2) (prec z1 i1 z2 i2)) (false))))
+  (defgenrule no-interruption
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (leads-to z0 i0 z2 i2) (trans z1 i1)
+          (same-locn z0 i0 z1 i1) (prec z0 i0 z1 i1) (prec z1 i1 z2 i2))
+        (false))))
+  (defgenrule discreteAfter
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (trans z2 i2)
+          (leads-to z0 i0 z1 i1) (same-locn z0 i0 z2 i2)
+          (prec z0 i0 z2 i2))
+        (or (and (= z1 z2) (= i1 i2)) (prec z1 i1 z2 i2)))))
+  (defgenrule discreteBefore
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (same-locn z0 i0 z1 i1)
+          (leads-to z1 i1 z2 i2) (prec z0 i0 z2 i2))
+        (or (and (= z0 z1) (= i0 i1)) (prec z0 i0 z1 i1)))))
+  (defgenrule trRl_client-init-at-0
+    (forall ((z strd))
+      (implies (p "client-init" z (idx 1)) (trans z (idx 0)))))
+  (defgenrule trRl_server-init-at-1
+    (forall ((z strd))
+      (implies (p "server-init" z (idx 2)) (trans z (idx 1)))))
+  (defgenrule eff-client-3
+    (forall ((i indx) (z1 z strd))
+      (implies (and (p "client" z (idx 4)) (prec z (idx 3) z1 i))
+        (or (= z z1)
+          (and (p "client" z (idx 3)) (prec z (idx 2) z1 i))))))
+  (defgenrule eff-server-2
+    (forall ((i indx) (z1 z strd))
+      (implies (and (p "server" z (idx 3)) (prec z (idx 2) z1 i))
+        (or (= z z1)
+          (and (p "server" z (idx 2)) (prec z (idx 1) z1 i))))))
+  (comment
+    "This version of the SRP protocol includes the leak of the verifier to the adversary,")
+  (comment
+    "but does not require that b is not equal to u. This allows CPSA to explore the possibility")
+  (comment
+    "that the adversary can also acquire the value b. This should only be possible if the")
+  (comment
+    "authentication mechanism on the server were compromised and can be checked with listener")
+  (comment "strands for b in the actual protocol without the leaks."))
+
+(defskeleton srp
+  (vars (b rndx))
+  (deflistener b)
+  (traces ((recv b) (send b)))
+  (label 1394)
+  (realized)
+  (shape)
+  (maps ((0) ((b b))))
+  (origs))
+
+(comment "Nothing left to do")

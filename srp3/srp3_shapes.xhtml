@@ -1,0 +1,3570 @@
+<?xml version="1.0"?>
+<!-- CPSA 4.4.6 -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+ <title>SRP protocol with leak of verifier that also allows leak of b</title>
+ <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+ <style>
+  svg.diagram { border-width: 1px; border-style: solid }
+ </style>
+</head>
+<body>
+
+<pre>(comment &quot;CPSA 4.4.6&quot;)
+(comment &quot;Extracted shapes&quot;)
+(herald &quot;SRP protocol with leak of verifier that also allows leak of b&quot;
+  (algebra diffie-hellman) (bound 40) (limit 8000))
+(comment &quot;CPSA 4.4.6&quot;)
+(comment &quot;All input read from srp3.scm&quot;)
+(comment &quot;Step count limited to 8000&quot;)
+(comment &quot;Strand count bounded at 40&quot;)</pre>
+
+<p id="top">Trees: <a href="#t0">0</a> <a href="#t1161">1161</a> <a href="#t1394">1394</a>.</p>
+
+<p id="t0">Tree <a href="#top">0</a>, POV <a href="#k0">0</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='129.840pt' height='904.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 129.840 904.920' font-size='12.000'>
+  <text
+   x='89.880' y='851.040'
+   style='font-weight: bold; text-anchor: middle; fill: blue;'
+   onclick='window.open(&quot;#k947&quot;, &quot;_self&quot;)'>947</text>
+  <line
+   x1='39.960' y1='452.460' x2='89.880' y2='864.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <text
+   x='89.880' y='776.040'
+   style='font-weight: bold; text-anchor: middle; fill: blue;'
+   onclick='window.open(&quot;#k915&quot;, &quot;_self&quot;)'>915</text>
+  <line
+   x1='39.960' y1='452.460' x2='89.880' y2='789.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <text
+   x='89.880' y='701.040'
+   style='font-weight: bold; text-anchor: middle; fill: blue;'
+   onclick='window.open(&quot;#k768&quot;, &quot;_self&quot;)'>768</text>
+  <line
+   x1='39.960' y1='452.460' x2='89.880' y2='714.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <text
+   x='89.880' y='626.040'
+   style='font-weight: bold; text-anchor: middle; fill: blue;'
+   onclick='window.open(&quot;#k646&quot;, &quot;_self&quot;)'>646</text>
+  <line
+   x1='39.960' y1='452.460' x2='89.880' y2='639.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <text
+   x='89.880' y='551.040'
+   style='font-weight: bold; text-anchor: middle; fill: blue;'
+   onclick='window.open(&quot;#k645&quot;, &quot;_self&quot;)'>645</text>
+  <line
+   x1='39.960' y1='452.460' x2='89.880' y2='564.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <text
+   x='89.880' y='476.040'
+   style='font-weight: bold; text-anchor: middle; fill: blue;'
+   onclick='window.open(&quot;#k644&quot;, &quot;_self&quot;)'>644</text>
+  <line
+   x1='39.960' y1='452.460' x2='89.880' y2='489.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <text
+   x='89.880' y='401.040'
+   style='font-weight: bold; text-anchor: middle; fill: blue;'
+   onclick='window.open(&quot;#k641&quot;, &quot;_self&quot;)'>641</text>
+  <line
+   x1='39.960' y1='452.460' x2='89.880' y2='414.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <text
+   x='89.880' y='326.040'
+   style='font-weight: bold; text-anchor: middle; fill: blue;'
+   onclick='window.open(&quot;#k440&quot;, &quot;_self&quot;)'>440</text>
+  <line
+   x1='39.960' y1='452.460' x2='89.880' y2='339.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <text
+   x='89.880' y='251.040'
+   style='font-weight: bold; text-anchor: middle; fill: blue;'
+   onclick='window.open(&quot;#k129&quot;, &quot;_self&quot;)'>129</text>
+  <line
+   x1='39.960' y1='452.460' x2='89.880' y2='264.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <text
+   x='89.880' y='176.040'
+   style='font-weight: bold; text-anchor: middle; fill: blue;'
+   onclick='window.open(&quot;#k93&quot;, &quot;_self&quot;)'>93</text>
+  <line
+   x1='39.960' y1='452.460' x2='89.880' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <text
+   x='89.880' y='101.040'
+   style='font-weight: bold; text-anchor: middle; fill: blue;'
+   onclick='window.open(&quot;#k77&quot;, &quot;_self&quot;)'>77</text>
+  <line
+   x1='39.960' y1='452.460' x2='89.880' y2='114.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <text
+   x='89.880' y='26.040'
+   style='font-weight: bold; text-anchor: middle; fill: blue;'
+   onclick='window.open(&quot;#k17&quot;, &quot;_self&quot;)'>17</text>
+  <line
+   x1='39.960' y1='452.460' x2='89.880' y2='39.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <text
+   x='39.960' y='438.540' style='text-anchor: middle; fill: black;'
+   onclick='window.open(&quot;#k0&quot;, &quot;_self&quot;)'>0</text>
+  </svg></div>
+
+<pre>(defprotocol srp diffie-hellman
+  (defrole client-init
+    (vars (s text) (x rndx) (client server name) (client-state locn))
+    (trace (stor client-state (cat &quot;Client state&quot; s x client server))
+      (send (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))))
+    (uniq-gen s x))
+  (defrole server-init
+    (vars (s text) (x expt) (client server name) (server-state locn))
+    (trace
+      (recv (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat &quot;Server record&quot; s (exp (gen) x) client server))
+      (send (exp (gen) x))))
+  (defrole client
+    (vars (client server name) (a rndx) (b u x expt) (s text)
+      (client-state locn))
+    (trace (send client) (recv s)
+      (load client-state (cat &quot;Client state&quot; s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))))
+    (uniq-gen a)
+    (absent (a x)))
+  (defrole server
+    (vars (client server name) (a x expt) (b u rndx) (s text)
+      (server-state locn))
+    (trace (recv client)
+      (load server-state
+        (cat &quot;Server record&quot; s (exp (gen) x) client server)) (send s)
+      (recv (exp (gen) a))
+      (send (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (recv
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul x b u)))))
+      (send
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul x b u))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul x b u))))))
+    (uniq-gen b u)
+    (absent (b a) (b x) (u a) (u x)))
+  (defrule at-most-one-server-init-per-client
+    (forall ((z0 z1 strd) (client server name))
+      (implies
+        (and (p &quot;server-init&quot; z0 (idx 1)) (p &quot;server-init&quot; z1 (idx 1))
+          (p &quot;server-init&quot; &quot;client&quot; z0 client)
+          (p &quot;server-init&quot; &quot;client&quot; z1 client)
+          (p &quot;server-init&quot; &quot;server&quot; z0 server)
+          (p &quot;server-init&quot; &quot;server&quot; z1 server))
+        (= z0 z1))))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false))))
+  (defgenrule scissorsRule
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (trans z2 i2)
+          (leads-to z0 i0 z1 i1) (leads-to z0 i0 z2 i2))
+        (and (= z1 z2) (= i1 i2)))))
+  (defgenrule cakeRule
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (leads-to z0 i0 z1 i1)
+          (leads-to z0 i0 z2 i2) (prec z1 i1 z2 i2)) (false))))
+  (defgenrule no-interruption
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (leads-to z0 i0 z2 i2) (trans z1 i1)
+          (same-locn z0 i0 z1 i1) (prec z0 i0 z1 i1) (prec z1 i1 z2 i2))
+        (false))))
+  (defgenrule discreteAfter
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (trans z2 i2)
+          (leads-to z0 i0 z1 i1) (same-locn z0 i0 z2 i2)
+          (prec z0 i0 z2 i2))
+        (or (and (= z1 z2) (= i1 i2)) (prec z1 i1 z2 i2)))))
+  (defgenrule discreteBefore
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (same-locn z0 i0 z1 i1)
+          (leads-to z1 i1 z2 i2) (prec z0 i0 z2 i2))
+        (or (and (= z0 z1) (= i0 i1)) (prec z0 i0 z1 i1)))))
+  (defgenrule trRl_client-init-at-0
+    (forall ((z strd))
+      (implies (p &quot;client-init&quot; z (idx 1)) (trans z (idx 0)))))
+  (defgenrule trRl_server-init-at-1
+    (forall ((z strd))
+      (implies (p &quot;server-init&quot; z (idx 2)) (trans z (idx 1)))))
+  (defgenrule eff-client-3
+    (forall ((i indx) (z1 z strd))
+      (implies (and (p &quot;client&quot; z (idx 4)) (prec z (idx 3) z1 i))
+        (or (= z z1)
+          (and (p &quot;client&quot; z (idx 3)) (prec z (idx 2) z1 i))))))
+  (defgenrule eff-server-2
+    (forall ((i indx) (z1 z strd))
+      (implies (and (p &quot;server&quot; z (idx 3)) (prec z (idx 2) z1 i))
+        (or (= z z1)
+          (and (p &quot;server&quot; z (idx 2)) (prec z (idx 1) z1 i))))))
+  (comment
+    &quot;This version of the SRP protocol includes the leak of the verifier to the adversary,&quot;)
+  (comment
+    &quot;but does not require that b is not equal to u. This allows CPSA to explore the possibility&quot;)
+  (comment
+    &quot;that the adversary can also acquire the value b. This should only be possible if the&quot;)
+  (comment
+    &quot;authentication mechanism on the server were compromised and can be checked with listener&quot;)
+  (comment &quot;strands for b in the actual protocol without the leaks.&quot;))</pre>
+
+<p id="k0">Item <a href="#t0">0</a>, Children: <a href="#k17">17</a> <a href="#k77">77</a> <a href="#k93">93</a> <a href="#k129">129</a> <a href="#k440">440</a> <a href="#k641">641</a> <a href="#k644">644</a> <a href="#k645">645</a> <a href="#k646">646</a> <a href="#k768">768</a> <a href="#k915">915</a> <a href="#k947">947</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='179.880pt' height='604.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 179.880 604.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='139.920' y1='114.960' x2='139.920' y2='564.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <g>
+   <title>(hash (exp (gen) a) (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u (hash (exp (gen) (mul b a)) (exp (gen) (mul b u x)))) (hash (exp (gen) (mul b a)) (exp (gen) (mul b u x))))</title>
+   <circle style='fill: red;' cx='139.920' cy='564.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u (hash (exp (gen) (mul b a)) (exp (gen) (mul b u x))))</title>
+   <circle cx='139.920' cy='489.960' r='6.000'/></g>
+  <g><title>(cat (enc (exp (gen) b) (exp (gen) x)) u)</title>
+   <circle style='fill: red;' cx='139.920' cy='414.960' r='6.000'/></g>
+  <g><title>(exp (gen) a)</title>
+   <circle cx='139.920' cy='339.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg client-state (cat pt-0 &quot;Client state&quot; s-0 x client server))</title>
+   <circle style='fill: orange;' cx='139.920' cy='264.960' r='6.000'/>
+   </g>
+  <g><title>s-0</title>
+   <circle style='fill: blue;' cx='139.920' cy='189.960' r='6.000'/></g>
+  <g><title>client</title><circle cx='139.920' cy='114.960' r='6.000'/>
+   </g>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))</title>
+   <circle cx='39.960' cy='189.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg client-state (cat pt &quot;Client state&quot; s x client server))</title>
+   <circle style='fill: gray;' cx='39.960' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>((s s-0) (client client) (server server) (client-state client-state) (a a) (b b) (u u) (x x))</title>
+   <text
+    x='139.920' y='77.460' style='text-anchor: middle;'>client</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (client-state client-state) (x x))</title>
+   <text
+    x='39.960' y='77.460'
+    style='text-anchor: middle;'>client-init</text></g>
+  <text x='89.940' y='39.960' style='text-anchor: middle;'>srp 0</text>
+  </svg></div>
+
+<pre>(defskeleton srp
+  (vars (s s-0 text) (client server name) (pt pt-0 pval)
+    (client-state locn) (b u expt) (a x rndx))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x))
+  (defstrand client 7 (s s-0) (client client) (server server)
+    (client-state client-state) (a a) (b b) (u u) (x x))
+  (non-orig (ltk client server))
+  (uniq-gen s a x)
+  (absent (a x))
+  (traces
+    ((stor client-state (cat pt &quot;Client state&quot; s x client server))
+      (send (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))))
+    ((send client) (recv s-0)
+      (load client-state (cat pt-0 &quot;Client state&quot; s-0 x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul b a)) (exp (gen) (mul b u x)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul b a)) (exp (gen) (mul b u x))))
+          (hash (exp (gen) (mul b a)) (exp (gen) (mul b u x)))))))
+  (label 0)
+  (unrealized (1 2) (1 4) (1 6))
+  (preskeleton)
+  (origs (pt (0 0)))
+  (ugens (a (1 3)) (x (0 0)) (s (0 0)))
+  (comment &quot;Not a skeleton&quot;))</pre>
+
+<p id="k17">Item <a href="#t0">17</a>, Parent: <a href="#k0">0</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='379.800pt' height='754.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 379.800 754.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='339.840' y1='189.960' x2='339.840' y2='714.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='239.880' y1='189.960' x2='239.880' y2='264.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='139.920' y1='264.960' x2='139.920' y2='714.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <path
+   d='M 339.840 714.960 Q 242.880 677.460 145.920 714.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(hash (exp (gen) a) (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u)))) (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u))))</title>
+   <circle cx='339.840' cy='714.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u))))</title>
+   <circle style='fill: blue;' cx='339.840' cy='639.960' r='6.000'/></g>
+  <path
+   d='M 339.840 564.960 Q 242.880 527.460 145.920 564.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(cat (enc (exp (gen) b) (exp (gen) x)) u)</title>
+   <circle cx='339.840' cy='564.960' r='6.000'/></g>
+  <g><title>(exp (gen) a)</title>
+   <circle style='fill: blue;' cx='339.840' cy='489.960' r='6.000'/></g>
+  <path
+   d='M 339.840 339.960 Q 242.880 302.460 145.920 339.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>s</title><circle cx='339.840' cy='339.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg server-state (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='339.840' cy='264.960' r='6.000'/>
+   </g>
+  <g><title>client</title>
+   <circle style='fill: blue;' cx='339.840' cy='189.960' r='6.000'/></g>
+  <path
+   d='M 239.880 264.960 Q 286.860 264.960 333.840 264.960'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(ch-msg server-state (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle style='fill: gray;' cx='239.880' cy='264.960' r='6.000'/></g>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))</title>
+   <circle style='fill: blue;' cx='239.880' cy='189.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u)))) (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u))))</title>
+   <circle style='fill: blue;' cx='139.920' cy='714.960' r='6.000'/></g>
+  <path
+   d='M 139.920 639.960 Q 236.880 602.460 333.840 639.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u))))</title>
+   <circle cx='139.920' cy='639.960' r='6.000'/></g>
+  <g><title>(cat (enc (exp (gen) b) (exp (gen) x)) u)</title>
+   <circle style='fill: blue;' cx='139.920' cy='564.960' r='6.000'/></g>
+  <path
+   d='M 139.920 489.960 Q 236.880 452.460 333.840 489.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(exp (gen) a)</title>
+   <circle cx='139.920' cy='489.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg client-state (cat pt &quot;Client state&quot; s x client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='139.920' cy='414.960' r='6.000'/>
+   </g>
+  <g><title>s</title>
+   <circle style='fill: blue;' cx='139.920' cy='339.960' r='6.000'/></g>
+  <g><title>client</title><circle cx='139.920' cy='264.960' r='6.000'/>
+   </g>
+  <path
+   d='M 39.960 189.960 Q 136.920 152.460 233.880 189.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))</title>
+   <circle cx='39.960' cy='189.960' r='6.000'/></g>
+  <path
+   d='M 39.960 114.960 Q 88.992 262.114 138.023 409.268'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(ch-msg client-state (cat pt &quot;Client state&quot; s x client server))</title>
+   <circle style='fill: gray;' cx='39.960' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (a a) (x x) (b b) (u u))</title>
+   <text
+    x='339.840' y='77.460' style='text-anchor: middle;'>server</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (x x))</title>
+   <text
+    x='239.880' y='77.460'
+    style='text-anchor: middle;'>server-init</text></g>
+  <g>
+   <title>((s s) (client client) (server server) (client-state client-state) (a a) (b b) (u u) (x x))</title>
+   <text
+    x='139.920' y='77.460' style='text-anchor: middle;'>client</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (client-state client-state) (x x))</title>
+   <text
+    x='39.960' y='77.460'
+    style='text-anchor: middle;'>client-init</text></g>
+  <text
+   x='189.900' y='39.960' style='text-anchor: middle;'>srp 17</text>
+  </svg></div>
+
+<pre>(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pval)
+    (client-state server-state locn) (a b x u rndx))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x))
+  (defstrand client 7 (s s) (client client) (server server)
+    (client-state client-state) (a a) (b b) (u u) (x x))
+  (defstrand server-init 2 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (defstrand server 7 (s s) (client client) (server server)
+    (server-state server-state) (a a) (x x) (b b) (u u))
+  (precedes ((0 1) (2 0)) ((1 3) (3 3)) ((1 5) (3 5)) ((2 1) (3 1))
+    ((3 2) (1 1)) ((3 4) (1 4)) ((3 6) (1 6)))
+  (non-orig (ltk client server))
+  (uniq-gen s a b x u)
+  (absent (a x) (b a) (b x) (u a) (u x))
+  (leads-to ((0 0) (1 2)) ((2 1) (3 1)))
+  (operation encryption-test (displaced 4 1 client 6)
+    (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+      (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u)))) (3 5))
+  (strand-map 0 1 2 3)
+  (traces
+    ((stor client-state (cat pt &quot;Client state&quot; s x client server))
+      (send (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))))
+    ((send client) (recv s)
+      (load client-state (cat pt &quot;Client state&quot; s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u))))))
+    ((recv (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server)))
+    ((recv client)
+      (load server-state
+        (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))
+      (send s) (recv (exp (gen) a))
+      (send (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (recv
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u)))))
+      (send
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u)))))))
+  (label 17)
+  (parent 0)
+  (realized)
+  (shape)
+  (maps
+    ((0 1)
+      ((client client) (server server) (b b) (u u) (a a) (x x)
+        (client-state client-state) (s s) (s-0 s))))
+  (origs (pt (0 0)) (pt-0 (2 1)))
+  (ugens (a (1 3)) (u (3 4)) (b (3 4)) (s (0 0)) (x (0 0))))</pre>
+
+<p id="k77">Item <a href="#t0">77</a>, Parent: <a href="#k0">0</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='379.800pt' height='754.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 379.800 754.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='339.840' y1='189.960' x2='339.840' y2='339.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='239.880' y1='189.960' x2='239.880' y2='339.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='139.920' y1='264.960' x2='139.920' y2='714.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <path
+   d='M 339.840 339.960 Q 241.873 412.717 143.905 560.475'
+   style='stroke-dasharray: 6.000,2.400; stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(exp (gen) x)</title>
+   <circle cx='339.840' cy='339.960' r='6.000'/></g>
+  <path
+   d='M 339.840 264.960 Q 292.860 264.960 245.880 264.960'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(ch-msg server-state (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle style='fill: gray;' cx='339.840' cy='264.960' r='6.000'/></g>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))</title>
+   <circle style='fill: blue;' cx='339.840' cy='189.960' r='6.000'/></g>
+  <path
+   d='M 239.880 339.960 Q 192.900 339.960 145.920 339.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>s</title><circle cx='239.880' cy='339.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg server-state (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='239.880' cy='264.960' r='6.000'/>
+   </g>
+  <g><title>client</title>
+   <circle style='fill: blue;' cx='239.880' cy='189.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u (hash (exp (gen) (mul b a)) (exp (gen) (mul b u x)))) (hash (exp (gen) (mul b a)) (exp (gen) (mul b u x))))</title>
+   <circle style='fill: blue;' cx='139.920' cy='714.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u (hash (exp (gen) (mul b a)) (exp (gen) (mul b u x))))</title>
+   <circle cx='139.920' cy='639.960' r='6.000'/></g>
+  <g><title>(cat (enc (exp (gen) b) (exp (gen) x)) u)</title>
+   <circle style='fill: blue;' cx='139.920' cy='564.960' r='6.000'/></g>
+  <g><title>(exp (gen) a)</title>
+   <circle cx='139.920' cy='489.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg client-state (cat pt &quot;Client state&quot; s x client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='139.920' cy='414.960' r='6.000'/>
+   </g>
+  <g><title>s</title>
+   <circle style='fill: blue;' cx='139.920' cy='339.960' r='6.000'/></g>
+  <g><title>client</title><circle cx='139.920' cy='264.960' r='6.000'/>
+   </g>
+  <path
+   d='M 39.960 189.960 Q 186.900 152.460 333.840 189.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))</title>
+   <circle cx='39.960' cy='189.960' r='6.000'/></g>
+  <path
+   d='M 39.960 114.960 Q 88.992 262.114 138.023 409.268'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(ch-msg client-state (cat pt &quot;Client state&quot; s x client server))</title>
+   <circle style='fill: gray;' cx='39.960' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (x x))</title>
+   <text
+    x='339.840' y='77.460'
+    style='text-anchor: middle;'>server-init</text></g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (x x))</title>
+   <text
+    x='239.880' y='77.460' style='text-anchor: middle;'>server</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (client-state client-state) (a a) (b b) (u u) (x x))</title>
+   <text
+    x='139.920' y='77.460' style='text-anchor: middle;'>client</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (client-state client-state) (x x))</title>
+   <text
+    x='39.960' y='77.460'
+    style='text-anchor: middle;'>client-init</text></g>
+  <text
+   x='189.900' y='39.960' style='text-anchor: middle;'>srp 77</text>
+  </svg></div>
+
+<pre>(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pval)
+    (client-state server-state locn) (b u expt) (a x rndx))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x))
+  (defstrand client 7 (s s) (client client) (server server)
+    (client-state client-state) (a a) (b b) (u u) (x x))
+  (defstrand server 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (defstrand server-init 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (precedes ((0 1) (3 0)) ((2 2) (1 1)) ((3 1) (2 1)) ((3 2) (1 4)))
+  (non-orig (ltk client server))
+  (uniq-gen s a x)
+  (absent (a x))
+  (leads-to ((0 0) (1 2)) ((3 1) (2 1)))
+  (rule trRl_client-init-at-0 trRl_server-init-at-1)
+  (operation generalization deleted (3 0))
+  (strand-map 0 1 2 4)
+  (traces
+    ((stor client-state (cat pt &quot;Client state&quot; s x client server))
+      (send (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))))
+    ((send client) (recv s)
+      (load client-state (cat pt &quot;Client state&quot; s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul b a)) (exp (gen) (mul b u x)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul b a)) (exp (gen) (mul b u x))))
+          (hash (exp (gen) (mul b a)) (exp (gen) (mul b u x))))))
+    ((recv client)
+      (load server-state
+        (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))
+      (send s))
+    ((recv (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))
+      (send (exp (gen) x))))
+  (label 77)
+  (parent 0)
+  (realized)
+  (shape)
+  (maps
+    ((0 1)
+      ((client client) (server server) (b b) (u u) (a a) (x x)
+        (client-state client-state) (s s) (s-0 s))))
+  (origs (pt-0 (3 1)) (pt (0 0)))
+  (ugens (s (0 0)) (x (0 0)) (a (1 3))))</pre>
+
+<p id="k93">Item <a href="#t0">93</a>, Parent: <a href="#k0">0</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='479.760pt' height='754.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 479.760 754.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='439.800' y1='264.960' x2='439.800' y2='714.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='339.840' y1='189.960' x2='339.840' y2='264.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='239.880' y1='189.960' x2='239.880' y2='339.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='139.920' y1='264.960' x2='139.920' y2='714.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <path
+   d='M 439.800 714.960 Q 292.860 677.460 145.920 714.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(hash (exp (gen) a) (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u)))) (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u))))</title>
+   <circle cx='439.800' cy='714.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u))))</title>
+   <circle style='fill: blue;' cx='439.800' cy='639.960' r='6.000'/></g>
+  <path
+   d='M 439.800 564.960 Q 292.860 527.460 145.920 564.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(cat (enc (exp (gen) b) (exp (gen) x)) u)</title>
+   <circle cx='439.800' cy='564.960' r='6.000'/></g>
+  <g><title>(exp (gen) a)</title>
+   <circle style='fill: blue;' cx='439.800' cy='489.960' r='6.000'/></g>
+  <g><title>s</title><circle cx='439.800' cy='414.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg server-state (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='439.800' cy='339.960' r='6.000'/>
+   </g>
+  <g><title>client</title>
+   <circle style='fill: blue;' cx='439.800' cy='264.960' r='6.000'/></g>
+  <path
+   d='M 339.840 264.960 Q 292.860 264.960 245.880 264.960'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <path
+   d='M 339.840 264.960 Q 387.420 300.660 435.001 336.359'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(ch-msg server-state (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle style='fill: gray;' cx='339.840' cy='264.960' r='6.000'/></g>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))</title>
+   <circle style='fill: blue;' cx='339.840' cy='189.960' r='6.000'/></g>
+  <path
+   d='M 239.880 339.960 Q 192.900 339.960 145.920 339.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>s</title><circle cx='239.880' cy='339.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg server-state (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='239.880' cy='264.960' r='6.000'/>
+   </g>
+  <g><title>client</title>
+   <circle style='fill: blue;' cx='239.880' cy='189.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u)))) (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u))))</title>
+   <circle style='fill: blue;' cx='139.920' cy='714.960' r='6.000'/></g>
+  <path
+   d='M 139.920 639.960 Q 286.860 602.460 433.800 639.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u))))</title>
+   <circle cx='139.920' cy='639.960' r='6.000'/></g>
+  <g><title>(cat (enc (exp (gen) b) (exp (gen) x)) u)</title>
+   <circle style='fill: blue;' cx='139.920' cy='564.960' r='6.000'/></g>
+  <path
+   d='M 139.920 489.960 Q 286.860 452.460 433.800 489.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(exp (gen) a)</title>
+   <circle cx='139.920' cy='489.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg client-state (cat pt &quot;Client state&quot; s x client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='139.920' cy='414.960' r='6.000'/>
+   </g>
+  <g><title>s</title>
+   <circle style='fill: blue;' cx='139.920' cy='339.960' r='6.000'/></g>
+  <g><title>client</title><circle cx='139.920' cy='264.960' r='6.000'/>
+   </g>
+  <path
+   d='M 39.960 189.960 Q 186.900 152.460 333.840 189.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))</title>
+   <circle cx='39.960' cy='189.960' r='6.000'/></g>
+  <path
+   d='M 39.960 114.960 Q 88.992 262.114 138.023 409.268'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(ch-msg client-state (cat pt &quot;Client state&quot; s x client server))</title>
+   <circle style='fill: gray;' cx='39.960' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (a a) (x x) (b b) (u u))</title>
+   <text
+    x='439.800' y='77.460' style='text-anchor: middle;'>server</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (x x))</title>
+   <text
+    x='339.840' y='77.460'
+    style='text-anchor: middle;'>server-init</text></g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (x x))</title>
+   <text
+    x='239.880' y='77.460' style='text-anchor: middle;'>server</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (client-state client-state) (a a) (b b) (u u) (x x))</title>
+   <text
+    x='139.920' y='77.460' style='text-anchor: middle;'>client</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (client-state client-state) (x x))</title>
+   <text
+    x='39.960' y='77.460'
+    style='text-anchor: middle;'>client-init</text></g>
+  <text
+   x='239.880' y='39.960' style='text-anchor: middle;'>srp 93</text>
+  </svg></div>
+
+<pre>(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pval)
+    (client-state server-state locn) (a b x u rndx))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x))
+  (defstrand client 7 (s s) (client client) (server server)
+    (client-state client-state) (a a) (b b) (u u) (x x))
+  (defstrand server 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (defstrand server-init 2 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (defstrand server 7 (s s) (client client) (server server)
+    (server-state server-state) (a a) (x x) (b b) (u u))
+  (precedes ((0 1) (3 0)) ((1 3) (4 3)) ((1 5) (4 5)) ((2 2) (1 1))
+    ((3 1) (2 1)) ((3 1) (4 1)) ((4 4) (1 4)) ((4 6) (1 6)))
+  (non-orig (ltk client server))
+  (uniq-gen s a b x u)
+  (absent (a x) (b a) (b x) (u a) (u x))
+  (leads-to ((0 0) (1 2)) ((3 1) (2 1)) ((3 1) (4 1)))
+  (operation encryption-test (displaced 5 1 client 6)
+    (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+      (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u)))) (4 5))
+  (strand-map 0 1 2 3 4)
+  (traces
+    ((stor client-state (cat pt &quot;Client state&quot; s x client server))
+      (send (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))))
+    ((send client) (recv s)
+      (load client-state (cat pt &quot;Client state&quot; s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u))))))
+    ((recv client)
+      (load server-state
+        (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))
+      (send s))
+    ((recv (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server)))
+    ((recv client)
+      (load server-state
+        (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))
+      (send s) (recv (exp (gen) a))
+      (send (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (recv
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u)))))
+      (send
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u)))))))
+  (label 93)
+  (parent 0)
+  (realized)
+  (shape)
+  (maps
+    ((0 1)
+      ((client client) (server server) (b b) (u u) (a a) (x x)
+        (client-state client-state) (s s) (s-0 s))))
+  (origs (pt-0 (3 1)) (pt (0 0)))
+  (ugens (a (1 3)) (u (4 4)) (b (4 4)) (s (0 0)) (x (0 0))))</pre>
+
+<p id="k129">Item <a href="#t0">129</a>, Parent: <a href="#k0">0</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='379.800pt' height='754.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 379.800 754.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='339.840' y1='189.960' x2='339.840' y2='339.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='239.880' y1='189.960' x2='239.880' y2='339.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='139.920' y1='264.960' x2='139.920' y2='714.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <path
+   d='M 339.840 339.960 Q 241.873 412.717 143.905 560.475'
+   style='stroke-dasharray: 6.000,2.400; stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(exp (gen) x)</title>
+   <circle cx='339.840' cy='339.960' r='6.000'/></g>
+  <path
+   d='M 339.840 264.960 Q 292.860 264.960 245.880 264.960'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(ch-msg server-state (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle style='fill: gray;' cx='339.840' cy='264.960' r='6.000'/></g>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))</title>
+   <circle style='fill: blue;' cx='339.840' cy='189.960' r='6.000'/></g>
+  <path
+   d='M 239.880 339.960 Q 192.900 339.960 145.920 339.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>s</title><circle cx='239.880' cy='339.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg server-state (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='239.880' cy='264.960' r='6.000'/>
+   </g>
+  <g><title>client</title>
+   <circle style='fill: blue;' cx='239.880' cy='189.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u)))) (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u))))</title>
+   <circle style='fill: blue;' cx='139.920' cy='714.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u))))</title>
+   <circle cx='139.920' cy='639.960' r='6.000'/></g>
+  <g><title>(cat (enc (exp (gen) b) (exp (gen) x)) u)</title>
+   <circle style='fill: blue;' cx='139.920' cy='564.960' r='6.000'/></g>
+  <g><title>(exp (gen) a)</title>
+   <circle cx='139.920' cy='489.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg client-state (cat pt &quot;Client state&quot; s x client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='139.920' cy='414.960' r='6.000'/>
+   </g>
+  <g><title>s</title>
+   <circle style='fill: blue;' cx='139.920' cy='339.960' r='6.000'/></g>
+  <g><title>client</title><circle cx='139.920' cy='264.960' r='6.000'/>
+   </g>
+  <path
+   d='M 39.960 189.960 Q 186.900 152.460 333.840 189.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))</title>
+   <circle cx='39.960' cy='189.960' r='6.000'/></g>
+  <path
+   d='M 39.960 114.960 Q 88.992 262.114 138.023 409.268'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(ch-msg client-state (cat pt &quot;Client state&quot; s x client server))</title>
+   <circle style='fill: gray;' cx='39.960' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (x x))</title>
+   <text
+    x='339.840' y='77.460'
+    style='text-anchor: middle;'>server-init</text></g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (x x))</title>
+   <text
+    x='239.880' y='77.460' style='text-anchor: middle;'>server</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (client-state client-state) (a a) (b b) (u u) (x x))</title>
+   <text
+    x='139.920' y='77.460' style='text-anchor: middle;'>client</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (client-state client-state) (x x))</title>
+   <text
+    x='39.960' y='77.460'
+    style='text-anchor: middle;'>client-init</text></g>
+  <text
+   x='189.900' y='39.960' style='text-anchor: middle;'>srp 129</text>
+  </svg></div>
+
+<pre>(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pval)
+    (client-state server-state locn) (a b x u rndx))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x))
+  (defstrand client 7 (s s) (client client) (server server)
+    (client-state client-state) (a a) (b b) (u u) (x x))
+  (defstrand server 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (defstrand server-init 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (precedes ((0 1) (3 0)) ((2 2) (1 1)) ((3 1) (2 1)) ((3 2) (1 4)))
+  (non-orig (ltk client server))
+  (uniq-gen s a x)
+  (absent (a x))
+  (leads-to ((0 0) (1 2)) ((3 1) (2 1)))
+  (rule trRl_client-init-at-0 trRl_server-init-at-1)
+  (operation generalization deleted (4 0))
+  (strand-map 0 1 2 3)
+  (traces
+    ((stor client-state (cat pt &quot;Client state&quot; s x client server))
+      (send (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))))
+    ((send client) (recv s)
+      (load client-state (cat pt &quot;Client state&quot; s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b x u))))))
+    ((recv client)
+      (load server-state
+        (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))
+      (send s))
+    ((recv (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))
+      (send (exp (gen) x))))
+  (label 129)
+  (parent 0)
+  (realized)
+  (shape)
+  (maps
+    ((0 1)
+      ((client client) (server server) (b b) (u u) (a a) (x x)
+        (client-state client-state) (s s) (s-0 s))))
+  (origs (pt-0 (3 1)) (pt (0 0)))
+  (ugens (a (1 3)) (s (0 0)) (x (0 0))))</pre>
+
+<p id="k440">Item <a href="#t0">440</a>, Parent: <a href="#k0">0</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='379.800pt' height='754.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 379.800 754.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='339.840' y1='189.960' x2='339.840' y2='339.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='239.880' y1='189.960' x2='239.880' y2='489.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='139.920' y1='264.960' x2='139.920' y2='714.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <path
+   d='M 339.840 339.960 Q 241.291 487.313 142.743 709.665'
+   style='stroke-dasharray: 6.000,2.400; stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(exp (gen) x)</title>
+   <circle cx='339.840' cy='339.960' r='6.000'/></g>
+  <path
+   d='M 339.840 264.960 Q 292.860 264.960 245.880 264.960'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(ch-msg server-state (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle style='fill: gray;' cx='339.840' cy='264.960' r='6.000'/></g>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))</title>
+   <circle style='fill: blue;' cx='339.840' cy='189.960' r='6.000'/></g>
+  <path
+   d='M 239.880 489.960 Q 192.300 525.660 144.719 561.359'
+   style='stroke-dasharray: 6.000,2.400; stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(cat (enc (exp (gen) u) (exp (gen) x)) u)</title>
+   <circle cx='239.880' cy='489.960' r='6.000'/></g>
+  <g><title>(exp (gen) a-0)</title>
+   <circle style='fill: blue;' cx='239.880' cy='414.960' r='6.000'/></g>
+  <path
+   d='M 239.880 339.960 Q 192.900 339.960 145.920 339.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>s</title><circle cx='239.880' cy='339.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg server-state (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='239.880' cy='264.960' r='6.000'/>
+   </g>
+  <g><title>client</title>
+   <circle style='fill: blue;' cx='239.880' cy='189.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) (rec u) (hash (exp (gen) (mul a u)) (exp (gen) x))) (hash (exp (gen) (mul a u)) (exp (gen) x)))</title>
+   <circle style='fill: blue;' cx='139.920' cy='714.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) (rec u) (hash (exp (gen) (mul a u)) (exp (gen) x)))</title>
+   <circle cx='139.920' cy='639.960' r='6.000'/></g>
+  <g><title>(cat (enc (exp (gen) u) (exp (gen) x)) (rec u))</title>
+   <circle style='fill: blue;' cx='139.920' cy='564.960' r='6.000'/></g>
+  <g><title>(exp (gen) a)</title>
+   <circle cx='139.920' cy='489.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg client-state (cat pt &quot;Client state&quot; s x client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='139.920' cy='414.960' r='6.000'/>
+   </g>
+  <g><title>s</title>
+   <circle style='fill: blue;' cx='139.920' cy='339.960' r='6.000'/></g>
+  <g><title>client</title><circle cx='139.920' cy='264.960' r='6.000'/>
+   </g>
+  <path
+   d='M 39.960 189.960 Q 186.900 152.460 333.840 189.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))</title>
+   <circle cx='39.960' cy='189.960' r='6.000'/></g>
+  <path
+   d='M 39.960 114.960 Q 88.992 262.114 138.023 409.268'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(ch-msg client-state (cat pt &quot;Client state&quot; s x client server))</title>
+   <circle style='fill: gray;' cx='39.960' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (x x))</title>
+   <text
+    x='339.840' y='77.460'
+    style='text-anchor: middle;'>server-init</text></g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (a a-0) (x x) (b u) (u u))</title>
+   <text
+    x='239.880' y='77.460' style='text-anchor: middle;'>server</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (client-state client-state) (a a) (b u) (u (rec u)) (x x))</title>
+   <text
+    x='139.920' y='77.460' style='text-anchor: middle;'>client</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (client-state client-state) (x x))</title>
+   <text
+    x='39.960' y='77.460'
+    style='text-anchor: middle;'>client-init</text></g>
+  <text
+   x='189.900' y='39.960' style='text-anchor: middle;'>srp 440</text>
+  </svg></div>
+
+<pre>(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pval)
+    (client-state server-state locn) (a rndx) (a-0 expt) (u x rndx))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x))
+  (defstrand client 7 (s s) (client client) (server server)
+    (client-state client-state) (a a) (b u) (u (rec u)) (x x))
+  (defstrand server 5 (s s) (client client) (server server)
+    (server-state server-state) (a a-0) (x x) (b u) (u u))
+  (defstrand server-init 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (precedes ((0 1) (3 0)) ((2 2) (1 1)) ((2 4) (1 4)) ((3 1) (2 1))
+    ((3 2) (1 6)))
+  (non-orig (ltk client server))
+  (uniq-gen s a u x)
+  (absent (a x) (u a-0) (u x))
+  (leads-to ((0 0) (1 2)) ((3 1) (2 1)))
+  (rule trRl_client-init-at-0 trRl_server-init-at-1)
+  (operation generalization deleted (3 0))
+  (strand-map 0 1 2 4)
+  (traces
+    ((stor client-state (cat pt &quot;Client state&quot; s x client server))
+      (send (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))))
+    ((send client) (recv s)
+      (load client-state (cat pt &quot;Client state&quot; s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) u) (exp (gen) x)) (rec u)))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) (rec u)
+          (hash (exp (gen) (mul a u)) (exp (gen) x))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) (rec u)
+            (hash (exp (gen) (mul a u)) (exp (gen) x)))
+          (hash (exp (gen) (mul a u)) (exp (gen) x)))))
+    ((recv client)
+      (load server-state
+        (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))
+      (send s) (recv (exp (gen) a-0))
+      (send (cat (enc (exp (gen) u) (exp (gen) x)) u)))
+    ((recv (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))
+      (send (exp (gen) x))))
+  (label 440)
+  (parent 0)
+  (realized)
+  (shape)
+  (maps
+    ((0 1)
+      ((client client) (server server) (b u) (u (rec u)) (a a) (x x)
+        (client-state client-state) (s s) (s-0 s))))
+  (origs (pt-0 (3 1)) (pt (0 0)))
+  (ugens (s (0 0)) (x (0 0)) (u (2 4)) (a (1 3))))</pre>
+
+<p id="k641">Item <a href="#t0">641</a>, Parent: <a href="#k0">0</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='379.800pt' height='754.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 379.800 754.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='339.840' y1='189.960' x2='339.840' y2='339.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='239.880' y1='189.960' x2='239.880' y2='564.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='139.920' y1='264.960' x2='139.920' y2='714.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <path
+   d='M 339.840 339.960 Q 241.291 487.313 142.743 709.665'
+   style='stroke-dasharray: 6.000,2.400; stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(exp (gen) x)</title>
+   <circle cx='339.840' cy='339.960' r='6.000'/></g>
+  <path
+   d='M 339.840 264.960 Q 292.860 264.960 245.880 264.960'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(ch-msg server-state (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle style='fill: gray;' cx='339.840' cy='264.960' r='6.000'/></g>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))</title>
+   <circle style='fill: blue;' cx='339.840' cy='189.960' r='6.000'/></g>
+  <path
+   d='M 239.880 564.960 Q 192.900 564.960 145.920 564.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(cat (enc (exp (gen) u) (exp (gen) x)) u)</title>
+   <circle cx='239.880' cy='564.960' r='6.000'/></g>
+  <g><title>(exp (gen) a)</title>
+   <circle style='fill: blue;' cx='239.880' cy='489.960' r='6.000'/></g>
+  <path
+   d='M 239.880 339.960 Q 192.900 339.960 145.920 339.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>s</title><circle cx='239.880' cy='339.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg server-state (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='239.880' cy='264.960' r='6.000'/>
+   </g>
+  <g><title>client</title>
+   <circle style='fill: blue;' cx='239.880' cy='189.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) u (hash (exp (gen) (mul a u)) (exp (gen) (mul u u x)))) (hash (exp (gen) (mul a u)) (exp (gen) (mul u u x))))</title>
+   <circle style='fill: blue;' cx='139.920' cy='714.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) u (hash (exp (gen) (mul a u)) (exp (gen) (mul u u x))))</title>
+   <circle cx='139.920' cy='639.960' r='6.000'/></g>
+  <g><title>(cat (enc (exp (gen) u) (exp (gen) x)) u)</title>
+   <circle style='fill: blue;' cx='139.920' cy='564.960' r='6.000'/></g>
+  <path
+   d='M 139.920 489.960 Q 186.900 489.960 233.880 489.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(exp (gen) a)</title>
+   <circle cx='139.920' cy='489.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg client-state (cat pt &quot;Client state&quot; s x client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='139.920' cy='414.960' r='6.000'/>
+   </g>
+  <g><title>s</title>
+   <circle style='fill: blue;' cx='139.920' cy='339.960' r='6.000'/></g>
+  <g><title>client</title><circle cx='139.920' cy='264.960' r='6.000'/>
+   </g>
+  <path
+   d='M 39.960 189.960 Q 186.900 152.460 333.840 189.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))</title>
+   <circle cx='39.960' cy='189.960' r='6.000'/></g>
+  <path
+   d='M 39.960 114.960 Q 88.992 262.114 138.023 409.268'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(ch-msg client-state (cat pt &quot;Client state&quot; s x client server))</title>
+   <circle style='fill: gray;' cx='39.960' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (x x))</title>
+   <text
+    x='339.840' y='77.460'
+    style='text-anchor: middle;'>server-init</text></g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (a a) (x x) (b u) (u u))</title>
+   <text
+    x='239.880' y='77.460' style='text-anchor: middle;'>server</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (client-state client-state) (a a) (b u) (u u) (x x))</title>
+   <text
+    x='139.920' y='77.460' style='text-anchor: middle;'>client</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (client-state client-state) (x x))</title>
+   <text
+    x='39.960' y='77.460'
+    style='text-anchor: middle;'>client-init</text></g>
+  <text
+   x='189.900' y='39.960' style='text-anchor: middle;'>srp 641</text>
+  </svg></div>
+
+<pre>(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pval)
+    (client-state server-state locn) (a u x rndx))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x))
+  (defstrand client 7 (s s) (client client) (server server)
+    (client-state client-state) (a a) (b u) (u u) (x x))
+  (defstrand server 5 (s s) (client client) (server server)
+    (server-state server-state) (a a) (x x) (b u) (u u))
+  (defstrand server-init 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (precedes ((0 1) (3 0)) ((1 3) (2 3)) ((2 2) (1 1)) ((2 4) (1 4))
+    ((3 1) (2 1)) ((3 2) (1 6)))
+  (non-orig (ltk client server))
+  (uniq-gen s a u x)
+  (absent (a x) (u a) (u x))
+  (leads-to ((0 0) (1 2)) ((3 1) (2 1)))
+  (rule trRl_client-init-at-0 trRl_server-init-at-1)
+  (operation generalization deleted (3 0))
+  (strand-map 0 1 2 4)
+  (traces
+    ((stor client-state (cat pt &quot;Client state&quot; s x client server))
+      (send (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))))
+    ((send client) (recv s)
+      (load client-state (cat pt &quot;Client state&quot; s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) u) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) u
+          (hash (exp (gen) (mul a u)) (exp (gen) (mul u u x)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) u
+            (hash (exp (gen) (mul a u)) (exp (gen) (mul u u x))))
+          (hash (exp (gen) (mul a u)) (exp (gen) (mul u u x))))))
+    ((recv client)
+      (load server-state
+        (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))
+      (send s) (recv (exp (gen) a))
+      (send (cat (enc (exp (gen) u) (exp (gen) x)) u)))
+    ((recv (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))
+      (send (exp (gen) x))))
+  (label 641)
+  (parent 0)
+  (realized)
+  (shape)
+  (maps
+    ((0 1)
+      ((client client) (server server) (b u) (u u) (a a) (x x)
+        (client-state client-state) (s s) (s-0 s))))
+  (origs (pt-0 (3 1)) (pt (0 0)))
+  (ugens (u (2 4)) (s (0 0)) (x (0 0)) (a (1 3))))</pre>
+
+<p id="k644">Item <a href="#t0">644</a>, Parent: <a href="#k0">0</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='379.800pt' height='754.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 379.800 754.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='339.840' y1='189.960' x2='339.840' y2='339.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='239.880' y1='189.960' x2='239.880' y2='489.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='139.920' y1='264.960' x2='139.920' y2='714.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <path
+   d='M 339.840 339.960 Q 241.291 487.313 142.743 709.665'
+   style='stroke-dasharray: 6.000,2.400; stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(exp (gen) x)</title>
+   <circle cx='339.840' cy='339.960' r='6.000'/></g>
+  <path
+   d='M 339.840 264.960 Q 292.860 264.960 245.880 264.960'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(ch-msg server-state (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle style='fill: gray;' cx='339.840' cy='264.960' r='6.000'/></g>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))</title>
+   <circle style='fill: blue;' cx='339.840' cy='189.960' r='6.000'/></g>
+  <path
+   d='M 239.880 489.960 Q 192.300 525.660 144.719 561.359'
+   style='stroke-dasharray: 6.000,2.400; stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(cat (enc (exp (gen) u) (exp (gen) x)) u)</title>
+   <circle cx='239.880' cy='489.960' r='6.000'/></g>
+  <g><title>(exp (gen) a-0)</title>
+   <circle style='fill: blue;' cx='239.880' cy='414.960' r='6.000'/></g>
+  <path
+   d='M 239.880 339.960 Q 192.900 339.960 145.920 339.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>s</title><circle cx='239.880' cy='339.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg server-state (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='239.880' cy='264.960' r='6.000'/>
+   </g>
+  <g><title>client</title>
+   <circle style='fill: blue;' cx='239.880' cy='189.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) (mul (rec u) w) (hash (exp (gen) (mul a u)) (exp (gen) (mul w x)))) (hash (exp (gen) (mul a u)) (exp (gen) (mul w x))))</title>
+   <circle style='fill: blue;' cx='139.920' cy='714.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) (mul (rec u) w) (hash (exp (gen) (mul a u)) (exp (gen) (mul w x))))</title>
+   <circle cx='139.920' cy='639.960' r='6.000'/></g>
+  <g>
+   <title>(cat (enc (exp (gen) u) (exp (gen) x)) (mul (rec u) w))</title>
+   <circle style='fill: blue;' cx='139.920' cy='564.960' r='6.000'/></g>
+  <g><title>(exp (gen) a)</title>
+   <circle cx='139.920' cy='489.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg client-state (cat pt &quot;Client state&quot; s x client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='139.920' cy='414.960' r='6.000'/>
+   </g>
+  <g><title>s</title>
+   <circle style='fill: blue;' cx='139.920' cy='339.960' r='6.000'/></g>
+  <g><title>client</title><circle cx='139.920' cy='264.960' r='6.000'/>
+   </g>
+  <path
+   d='M 39.960 189.960 Q 186.900 152.460 333.840 189.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))</title>
+   <circle cx='39.960' cy='189.960' r='6.000'/></g>
+  <path
+   d='M 39.960 114.960 Q 88.992 262.114 138.023 409.268'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(ch-msg client-state (cat pt &quot;Client state&quot; s x client server))</title>
+   <circle style='fill: gray;' cx='39.960' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (x x))</title>
+   <text
+    x='339.840' y='77.460'
+    style='text-anchor: middle;'>server-init</text></g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (a a-0) (x x) (b u) (u u))</title>
+   <text
+    x='239.880' y='77.460' style='text-anchor: middle;'>server</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (client-state client-state) (a a) (b u) (u (mul (rec u) w)) (x x))</title>
+   <text
+    x='139.920' y='77.460' style='text-anchor: middle;'>client</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (client-state client-state) (x x))</title>
+   <text
+    x='39.960' y='77.460'
+    style='text-anchor: middle;'>client-init</text></g>
+  <text
+   x='189.900' y='39.960' style='text-anchor: middle;'>srp 644</text>
+  </svg></div>
+
+<pre>(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pval)
+    (client-state server-state locn) (a rndx) (a-0 expt) (u rndx)
+    (w expt) (x rndx))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x))
+  (defstrand client 7 (s s) (client client) (server server)
+    (client-state client-state) (a a) (b u) (u (mul (rec u) w)) (x x))
+  (defstrand server 5 (s s) (client client) (server server)
+    (server-state server-state) (a a-0) (x x) (b u) (u u))
+  (defstrand server-init 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (precedes ((0 1) (3 0)) ((2 2) (1 1)) ((2 4) (1 4)) ((3 1) (2 1))
+    ((3 2) (1 6)))
+  (non-orig (ltk client server))
+  (uniq-gen s a u x)
+  (absent (a x) (u a-0) (u x))
+  (leads-to ((0 0) (1 2)) ((3 1) (2 1)))
+  (rule trRl_client-init-at-0 trRl_server-init-at-1)
+  (operation generalization deleted (3 0))
+  (strand-map 0 1 2 4)
+  (traces
+    ((stor client-state (cat pt &quot;Client state&quot; s x client server))
+      (send (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))))
+    ((send client) (recv s)
+      (load client-state (cat pt &quot;Client state&quot; s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) u) (exp (gen) x)) (mul (rec u) w)))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x))
+          (mul (rec u) w)
+          (hash (exp (gen) (mul a u)) (exp (gen) (mul w x)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x))
+            (mul (rec u) w)
+            (hash (exp (gen) (mul a u)) (exp (gen) (mul w x))))
+          (hash (exp (gen) (mul a u)) (exp (gen) (mul w x))))))
+    ((recv client)
+      (load server-state
+        (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))
+      (send s) (recv (exp (gen) a-0))
+      (send (cat (enc (exp (gen) u) (exp (gen) x)) u)))
+    ((recv (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))
+      (send (exp (gen) x))))
+  (label 644)
+  (parent 0)
+  (realized)
+  (shape)
+  (maps
+    ((0 1)
+      ((client client) (server server) (b u) (u (mul (rec u) w)) (a a)
+        (x x) (client-state client-state) (s s) (s-0 s))))
+  (origs (pt-0 (3 1)) (pt (0 0)))
+  (ugens (s (0 0)) (x (0 0)) (u (2 4)) (a (1 3))))</pre>
+
+<p id="k645">Item <a href="#t0">645</a>, Parent: <a href="#k0">0</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='379.800pt' height='754.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 379.800 754.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='339.840' y1='189.960' x2='339.840' y2='339.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='239.880' y1='189.960' x2='239.880' y2='339.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='139.920' y1='264.960' x2='139.920' y2='714.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <path
+   d='M 339.840 339.960 Q 241.873 412.717 143.905 560.475'
+   style='stroke-dasharray: 6.000,2.400; stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(exp (gen) x)</title>
+   <circle cx='339.840' cy='339.960' r='6.000'/></g>
+  <path
+   d='M 339.840 264.960 Q 292.860 264.960 245.880 264.960'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(ch-msg server-state (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle style='fill: gray;' cx='339.840' cy='264.960' r='6.000'/></g>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))</title>
+   <circle style='fill: blue;' cx='339.840' cy='189.960' r='6.000'/></g>
+  <path
+   d='M 239.880 339.960 Q 192.900 339.960 145.920 339.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>s</title><circle cx='239.880' cy='339.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg server-state (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='239.880' cy='264.960' r='6.000'/>
+   </g>
+  <g><title>client</title>
+   <circle style='fill: blue;' cx='239.880' cy='189.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) u (hash (exp (gen) (mul a u)) (exp (gen) (mul x u u)))) (hash (exp (gen) (mul a u)) (exp (gen) (mul x u u))))</title>
+   <circle style='fill: blue;' cx='139.920' cy='714.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) u (hash (exp (gen) (mul a u)) (exp (gen) (mul x u u))))</title>
+   <circle cx='139.920' cy='639.960' r='6.000'/></g>
+  <g><title>(cat (enc (exp (gen) u) (exp (gen) x)) u)</title>
+   <circle style='fill: blue;' cx='139.920' cy='564.960' r='6.000'/></g>
+  <g><title>(exp (gen) a)</title>
+   <circle cx='139.920' cy='489.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg client-state (cat pt &quot;Client state&quot; s x client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='139.920' cy='414.960' r='6.000'/>
+   </g>
+  <g><title>s</title>
+   <circle style='fill: blue;' cx='139.920' cy='339.960' r='6.000'/></g>
+  <g><title>client</title><circle cx='139.920' cy='264.960' r='6.000'/>
+   </g>
+  <path
+   d='M 39.960 189.960 Q 186.900 152.460 333.840 189.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))</title>
+   <circle cx='39.960' cy='189.960' r='6.000'/></g>
+  <path
+   d='M 39.960 114.960 Q 88.992 262.114 138.023 409.268'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(ch-msg client-state (cat pt &quot;Client state&quot; s x client server))</title>
+   <circle style='fill: gray;' cx='39.960' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (x x))</title>
+   <text
+    x='339.840' y='77.460'
+    style='text-anchor: middle;'>server-init</text></g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (x x))</title>
+   <text
+    x='239.880' y='77.460' style='text-anchor: middle;'>server</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (client-state client-state) (a a) (b u) (u u) (x x))</title>
+   <text
+    x='139.920' y='77.460' style='text-anchor: middle;'>client</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (client-state client-state) (x x))</title>
+   <text
+    x='39.960' y='77.460'
+    style='text-anchor: middle;'>client-init</text></g>
+  <text
+   x='189.900' y='39.960' style='text-anchor: middle;'>srp 645</text>
+  </svg></div>
+
+<pre>(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pval)
+    (client-state server-state locn) (x a u rndx))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x))
+  (defstrand client 7 (s s) (client client) (server server)
+    (client-state client-state) (a a) (b u) (u u) (x x))
+  (defstrand server 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (defstrand server-init 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (precedes ((0 1) (3 0)) ((2 2) (1 1)) ((3 1) (2 1)) ((3 2) (1 4)))
+  (non-orig (ltk client server))
+  (uniq-gen s x a)
+  (absent (a x))
+  (leads-to ((0 0) (1 2)) ((3 1) (2 1)))
+  (rule trRl_client-init-at-0 trRl_server-init-at-1)
+  (operation generalization deleted (4 0))
+  (strand-map 0 1 2 3)
+  (traces
+    ((stor client-state (cat pt &quot;Client state&quot; s x client server))
+      (send (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))))
+    ((send client) (recv s)
+      (load client-state (cat pt &quot;Client state&quot; s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) u) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) u
+          (hash (exp (gen) (mul a u)) (exp (gen) (mul x u u)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) u
+            (hash (exp (gen) (mul a u)) (exp (gen) (mul x u u))))
+          (hash (exp (gen) (mul a u)) (exp (gen) (mul x u u))))))
+    ((recv client)
+      (load server-state
+        (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))
+      (send s))
+    ((recv (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))
+      (send (exp (gen) x))))
+  (label 645)
+  (parent 0)
+  (realized)
+  (shape)
+  (maps
+    ((0 1)
+      ((client client) (server server) (b u) (u u) (a a) (x x)
+        (client-state client-state) (s s) (s-0 s))))
+  (origs (pt-0 (3 1)) (pt (0 0)))
+  (ugens (s (0 0)) (x (0 0)) (a (1 3))))</pre>
+
+<p id="k646">Item <a href="#t0">646</a>, Parent: <a href="#k0">0</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='379.800pt' height='754.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 379.800 754.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='339.840' y1='189.960' x2='339.840' y2='339.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='239.880' y1='189.960' x2='239.880' y2='339.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='139.920' y1='264.960' x2='139.920' y2='714.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <path
+   d='M 339.840 339.960 Q 241.873 412.717 143.905 560.475'
+   style='stroke-dasharray: 6.000,2.400; stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(exp (gen) x)</title>
+   <circle cx='339.840' cy='339.960' r='6.000'/></g>
+  <path
+   d='M 339.840 264.960 Q 292.860 264.960 245.880 264.960'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(ch-msg server-state (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle style='fill: gray;' cx='339.840' cy='264.960' r='6.000'/></g>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))</title>
+   <circle style='fill: blue;' cx='339.840' cy='189.960' r='6.000'/></g>
+  <path
+   d='M 239.880 339.960 Q 192.900 339.960 145.920 339.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>s</title><circle cx='239.880' cy='339.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg server-state (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='239.880' cy='264.960' r='6.000'/>
+   </g>
+  <g><title>client</title>
+   <circle style='fill: blue;' cx='239.880' cy='189.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (hash (exp (gen) a) (enc (exp (gen) u-0) (exp (gen) x)) u (hash (exp (gen) (mul a u-0)) (exp (gen) (mul u x u-0)))) (hash (exp (gen) (mul a u-0)) (exp (gen) (mul u x u-0))))</title>
+   <circle style='fill: blue;' cx='139.920' cy='714.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (enc (exp (gen) u-0) (exp (gen) x)) u (hash (exp (gen) (mul a u-0)) (exp (gen) (mul u x u-0))))</title>
+   <circle cx='139.920' cy='639.960' r='6.000'/></g>
+  <g><title>(cat (enc (exp (gen) u-0) (exp (gen) x)) u)</title>
+   <circle style='fill: blue;' cx='139.920' cy='564.960' r='6.000'/></g>
+  <g><title>(exp (gen) a)</title>
+   <circle cx='139.920' cy='489.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg client-state (cat pt &quot;Client state&quot; s x client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='139.920' cy='414.960' r='6.000'/>
+   </g>
+  <g><title>s</title>
+   <circle style='fill: blue;' cx='139.920' cy='339.960' r='6.000'/></g>
+  <g><title>client</title><circle cx='139.920' cy='264.960' r='6.000'/>
+   </g>
+  <path
+   d='M 39.960 189.960 Q 186.900 152.460 333.840 189.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))</title>
+   <circle cx='39.960' cy='189.960' r='6.000'/></g>
+  <path
+   d='M 39.960 114.960 Q 88.992 262.114 138.023 409.268'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(ch-msg client-state (cat pt &quot;Client state&quot; s x client server))</title>
+   <circle style='fill: gray;' cx='39.960' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (x x))</title>
+   <text
+    x='339.840' y='77.460'
+    style='text-anchor: middle;'>server-init</text></g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (x x))</title>
+   <text
+    x='239.880' y='77.460' style='text-anchor: middle;'>server</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (client-state client-state) (a a) (b u-0) (u u) (x x))</title>
+   <text
+    x='139.920' y='77.460' style='text-anchor: middle;'>client</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (client-state client-state) (x x))</title>
+   <text
+    x='39.960' y='77.460'
+    style='text-anchor: middle;'>client-init</text></g>
+  <text
+   x='189.900' y='39.960' style='text-anchor: middle;'>srp 646</text>
+  </svg></div>
+
+<pre>(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pval)
+    (client-state server-state locn) (a rndx) (u expt) (x u-0 rndx))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x))
+  (defstrand client 7 (s s) (client client) (server server)
+    (client-state client-state) (a a) (b u-0) (u u) (x x))
+  (defstrand server 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (defstrand server-init 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (precedes ((0 1) (3 0)) ((2 2) (1 1)) ((3 1) (2 1)) ((3 2) (1 4)))
+  (non-orig (ltk client server))
+  (uniq-gen s a x)
+  (absent (a x))
+  (leads-to ((0 0) (1 2)) ((3 1) (2 1)))
+  (rule trRl_client-init-at-0 trRl_server-init-at-1)
+  (operation generalization deleted (4 0))
+  (strand-map 0 1 2 3)
+  (traces
+    ((stor client-state (cat pt &quot;Client state&quot; s x client server))
+      (send (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))))
+    ((send client) (recv s)
+      (load client-state (cat pt &quot;Client state&quot; s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) u-0) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) u-0) (exp (gen) x)) u
+          (hash (exp (gen) (mul a u-0)) (exp (gen) (mul u x u-0)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) u-0) (exp (gen) x)) u
+            (hash (exp (gen) (mul a u-0)) (exp (gen) (mul u x u-0))))
+          (hash (exp (gen) (mul a u-0)) (exp (gen) (mul u x u-0))))))
+    ((recv client)
+      (load server-state
+        (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))
+      (send s))
+    ((recv (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))
+      (send (exp (gen) x))))
+  (label 646)
+  (parent 0)
+  (realized)
+  (shape)
+  (maps
+    ((0 1)
+      ((client client) (server server) (b u-0) (u u) (a a) (x x)
+        (client-state client-state) (s s) (s-0 s))))
+  (origs (pt-0 (3 1)) (pt (0 0)))
+  (ugens (a (1 3)) (s (0 0)) (x (0 0))))</pre>
+
+<p id="k768">Item <a href="#t0">768</a>, Parent: <a href="#k0">0</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='479.760pt' height='754.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 479.760 754.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='439.800' y1='189.960' x2='439.800' y2='339.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='339.840' y1='189.960' x2='339.840' y2='489.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='239.880' y1='189.960' x2='239.880' y2='339.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='139.920' y1='264.960' x2='139.920' y2='714.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <path
+   d='M 439.800 339.960 Q 291.734 487.617 143.667 710.274'
+   style='stroke-dasharray: 6.000,2.400; stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(exp (gen) x)</title>
+   <circle cx='439.800' cy='339.960' r='6.000'/></g>
+  <path
+   d='M 439.800 264.960 Q 342.840 227.460 245.880 264.960'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <path
+   d='M 439.800 264.960 Q 392.820 264.960 345.840 264.960'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(ch-msg server-state (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle style='fill: gray;' cx='439.800' cy='264.960' r='6.000'/></g>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))</title>
+   <circle style='fill: blue;' cx='439.800' cy='189.960' r='6.000'/></g>
+  <path
+   d='M 339.840 489.960 Q 242.689 488.906 145.538 562.853'
+   style='stroke-dasharray: 6.000,2.400; stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(cat (enc (exp (gen) u) (exp (gen) x)) u)</title>
+   <circle cx='339.840' cy='489.960' r='6.000'/></g>
+  <g><title>(exp (gen) a-0)</title>
+   <circle style='fill: blue;' cx='339.840' cy='414.960' r='6.000'/></g>
+  <g><title>s</title><circle cx='339.840' cy='339.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg server-state (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='339.840' cy='264.960' r='6.000'/>
+   </g>
+  <g><title>client</title>
+   <circle style='fill: blue;' cx='339.840' cy='189.960' r='6.000'/></g>
+  <path
+   d='M 239.880 339.960 Q 192.900 339.960 145.920 339.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>s</title><circle cx='239.880' cy='339.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg server-state (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='239.880' cy='264.960' r='6.000'/>
+   </g>
+  <g><title>client</title>
+   <circle style='fill: blue;' cx='239.880' cy='189.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) (rec u) (hash (exp (gen) (mul a u)) (exp (gen) x))) (hash (exp (gen) (mul a u)) (exp (gen) x)))</title>
+   <circle style='fill: blue;' cx='139.920' cy='714.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) (rec u) (hash (exp (gen) (mul a u)) (exp (gen) x)))</title>
+   <circle cx='139.920' cy='639.960' r='6.000'/></g>
+  <g><title>(cat (enc (exp (gen) u) (exp (gen) x)) (rec u))</title>
+   <circle style='fill: blue;' cx='139.920' cy='564.960' r='6.000'/></g>
+  <g><title>(exp (gen) a)</title>
+   <circle cx='139.920' cy='489.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg client-state (cat pt &quot;Client state&quot; s x client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='139.920' cy='414.960' r='6.000'/>
+   </g>
+  <g><title>s</title>
+   <circle style='fill: blue;' cx='139.920' cy='339.960' r='6.000'/></g>
+  <g><title>client</title><circle cx='139.920' cy='264.960' r='6.000'/>
+   </g>
+  <path
+   d='M 39.960 189.960 Q 236.880 152.460 433.800 189.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))</title>
+   <circle cx='39.960' cy='189.960' r='6.000'/></g>
+  <path
+   d='M 39.960 114.960 Q 88.992 262.114 138.023 409.268'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(ch-msg client-state (cat pt &quot;Client state&quot; s x client server))</title>
+   <circle style='fill: gray;' cx='39.960' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (x x))</title>
+   <text
+    x='439.800' y='77.460'
+    style='text-anchor: middle;'>server-init</text></g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (a a-0) (x x) (b u) (u u))</title>
+   <text
+    x='339.840' y='77.460' style='text-anchor: middle;'>server</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (x x))</title>
+   <text
+    x='239.880' y='77.460' style='text-anchor: middle;'>server</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (client-state client-state) (a a) (b u) (u (rec u)) (x x))</title>
+   <text
+    x='139.920' y='77.460' style='text-anchor: middle;'>client</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (client-state client-state) (x x))</title>
+   <text
+    x='39.960' y='77.460'
+    style='text-anchor: middle;'>client-init</text></g>
+  <text
+   x='239.880' y='39.960' style='text-anchor: middle;'>srp 768</text>
+  </svg></div>
+
+<pre>(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pval)
+    (client-state server-state locn) (a rndx) (a-0 expt) (u x rndx))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x))
+  (defstrand client 7 (s s) (client client) (server server)
+    (client-state client-state) (a a) (b u) (u (rec u)) (x x))
+  (defstrand server 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (defstrand server 5 (s s) (client client) (server server)
+    (server-state server-state) (a a-0) (x x) (b u) (u u))
+  (defstrand server-init 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (precedes ((0 1) (4 0)) ((2 2) (1 1)) ((3 4) (1 4)) ((4 1) (2 1))
+    ((4 1) (3 1)) ((4 2) (1 6)))
+  (non-orig (ltk client server))
+  (uniq-gen s a u x)
+  (absent (a x) (u a-0) (u x))
+  (leads-to ((0 0) (1 2)) ((4 1) (2 1)) ((4 1) (3 1)))
+  (rule trRl_client-init-at-0 trRl_server-init-at-1)
+  (operation generalization deleted (4 0))
+  (strand-map 0 1 2 3 5)
+  (traces
+    ((stor client-state (cat pt &quot;Client state&quot; s x client server))
+      (send (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))))
+    ((send client) (recv s)
+      (load client-state (cat pt &quot;Client state&quot; s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) u) (exp (gen) x)) (rec u)))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) (rec u)
+          (hash (exp (gen) (mul a u)) (exp (gen) x))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) (rec u)
+            (hash (exp (gen) (mul a u)) (exp (gen) x)))
+          (hash (exp (gen) (mul a u)) (exp (gen) x)))))
+    ((recv client)
+      (load server-state
+        (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))
+      (send s))
+    ((recv client)
+      (load server-state
+        (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))
+      (send s) (recv (exp (gen) a-0))
+      (send (cat (enc (exp (gen) u) (exp (gen) x)) u)))
+    ((recv (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))
+      (send (exp (gen) x))))
+  (label 768)
+  (parent 0)
+  (realized)
+  (shape)
+  (maps
+    ((0 1)
+      ((client client) (server server) (b u) (u (rec u)) (a a) (x x)
+        (client-state client-state) (s s) (s-0 s))))
+  (origs (pt-0 (4 1)) (pt (0 0)))
+  (ugens (s (0 0)) (x (0 0)) (u (3 4)) (a (1 3))))</pre>
+
+<p id="k915">Item <a href="#t0">915</a>, Parent: <a href="#k0">0</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='479.760pt' height='754.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 479.760 754.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='439.800' y1='189.960' x2='439.800' y2='339.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='339.840' y1='264.960' x2='339.840' y2='564.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='239.880' y1='189.960' x2='239.880' y2='339.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='139.920' y1='264.960' x2='139.920' y2='714.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <path
+   d='M 439.800 339.960 Q 291.734 487.617 143.667 710.274'
+   style='stroke-dasharray: 6.000,2.400; stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(exp (gen) x)</title>
+   <circle cx='439.800' cy='339.960' r='6.000'/></g>
+  <path
+   d='M 439.800 264.960 Q 342.840 227.460 245.880 264.960'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <path
+   d='M 439.800 264.960 Q 392.220 300.660 344.639 336.359'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(ch-msg server-state (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle style='fill: gray;' cx='439.800' cy='264.960' r='6.000'/></g>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))</title>
+   <circle style='fill: blue;' cx='439.800' cy='189.960' r='6.000'/></g>
+  <path
+   d='M 339.840 564.960 Q 242.880 527.460 145.920 564.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(cat (enc (exp (gen) u) (exp (gen) x)) u)</title>
+   <circle cx='339.840' cy='564.960' r='6.000'/></g>
+  <g><title>(exp (gen) a)</title>
+   <circle style='fill: blue;' cx='339.840' cy='489.960' r='6.000'/></g>
+  <g><title>s</title><circle cx='339.840' cy='414.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg server-state (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='339.840' cy='339.960' r='6.000'/>
+   </g>
+  <g><title>client</title>
+   <circle style='fill: blue;' cx='339.840' cy='264.960' r='6.000'/></g>
+  <path
+   d='M 239.880 339.960 Q 192.900 339.960 145.920 339.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>s</title><circle cx='239.880' cy='339.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg server-state (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='239.880' cy='264.960' r='6.000'/>
+   </g>
+  <g><title>client</title>
+   <circle style='fill: blue;' cx='239.880' cy='189.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) u (hash (exp (gen) (mul a u)) (exp (gen) (mul u u x)))) (hash (exp (gen) (mul a u)) (exp (gen) (mul u u x))))</title>
+   <circle style='fill: blue;' cx='139.920' cy='714.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) u (hash (exp (gen) (mul a u)) (exp (gen) (mul u u x))))</title>
+   <circle cx='139.920' cy='639.960' r='6.000'/></g>
+  <g><title>(cat (enc (exp (gen) u) (exp (gen) x)) u)</title>
+   <circle style='fill: blue;' cx='139.920' cy='564.960' r='6.000'/></g>
+  <path
+   d='M 139.920 489.960 Q 236.880 452.460 333.840 489.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(exp (gen) a)</title>
+   <circle cx='139.920' cy='489.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg client-state (cat pt &quot;Client state&quot; s x client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='139.920' cy='414.960' r='6.000'/>
+   </g>
+  <g><title>s</title>
+   <circle style='fill: blue;' cx='139.920' cy='339.960' r='6.000'/></g>
+  <g><title>client</title><circle cx='139.920' cy='264.960' r='6.000'/>
+   </g>
+  <path
+   d='M 39.960 189.960 Q 236.880 152.460 433.800 189.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))</title>
+   <circle cx='39.960' cy='189.960' r='6.000'/></g>
+  <path
+   d='M 39.960 114.960 Q 88.992 262.114 138.023 409.268'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(ch-msg client-state (cat pt &quot;Client state&quot; s x client server))</title>
+   <circle style='fill: gray;' cx='39.960' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (x x))</title>
+   <text
+    x='439.800' y='77.460'
+    style='text-anchor: middle;'>server-init</text></g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (a a) (x x) (b u) (u u))</title>
+   <text
+    x='339.840' y='77.460' style='text-anchor: middle;'>server</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (x x))</title>
+   <text
+    x='239.880' y='77.460' style='text-anchor: middle;'>server</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (client-state client-state) (a a) (b u) (u u) (x x))</title>
+   <text
+    x='139.920' y='77.460' style='text-anchor: middle;'>client</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (client-state client-state) (x x))</title>
+   <text
+    x='39.960' y='77.460'
+    style='text-anchor: middle;'>client-init</text></g>
+  <text
+   x='239.880' y='39.960' style='text-anchor: middle;'>srp 915</text>
+  </svg></div>
+
+<pre>(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pval)
+    (client-state server-state locn) (a u x rndx))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x))
+  (defstrand client 7 (s s) (client client) (server server)
+    (client-state client-state) (a a) (b u) (u u) (x x))
+  (defstrand server 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (defstrand server 5 (s s) (client client) (server server)
+    (server-state server-state) (a a) (x x) (b u) (u u))
+  (defstrand server-init 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (precedes ((0 1) (4 0)) ((1 3) (3 3)) ((2 2) (1 1)) ((3 4) (1 4))
+    ((4 1) (2 1)) ((4 1) (3 1)) ((4 2) (1 6)))
+  (non-orig (ltk client server))
+  (uniq-gen s a u x)
+  (absent (a x) (u a) (u x))
+  (leads-to ((0 0) (1 2)) ((4 1) (2 1)) ((4 1) (3 1)))
+  (rule trRl_client-init-at-0 trRl_server-init-at-1)
+  (operation generalization deleted (4 0))
+  (strand-map 0 1 2 3 5)
+  (traces
+    ((stor client-state (cat pt &quot;Client state&quot; s x client server))
+      (send (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))))
+    ((send client) (recv s)
+      (load client-state (cat pt &quot;Client state&quot; s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) u) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) u
+          (hash (exp (gen) (mul a u)) (exp (gen) (mul u u x)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) u
+            (hash (exp (gen) (mul a u)) (exp (gen) (mul u u x))))
+          (hash (exp (gen) (mul a u)) (exp (gen) (mul u u x))))))
+    ((recv client)
+      (load server-state
+        (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))
+      (send s))
+    ((recv client)
+      (load server-state
+        (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))
+      (send s) (recv (exp (gen) a))
+      (send (cat (enc (exp (gen) u) (exp (gen) x)) u)))
+    ((recv (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))
+      (send (exp (gen) x))))
+  (label 915)
+  (parent 0)
+  (realized)
+  (shape)
+  (maps
+    ((0 1)
+      ((client client) (server server) (b u) (u u) (a a) (x x)
+        (client-state client-state) (s s) (s-0 s))))
+  (origs (pt-0 (4 1)) (pt (0 0)))
+  (ugens (u (3 4)) (s (0 0)) (x (0 0)) (a (1 3))))</pre>
+
+<p id="k947">Item <a href="#t0">947</a>, Parent: <a href="#k0">0</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='479.760pt' height='754.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 479.760 754.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='439.800' y1='189.960' x2='439.800' y2='339.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='339.840' y1='189.960' x2='339.840' y2='489.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='239.880' y1='189.960' x2='239.880' y2='339.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='139.920' y1='264.960' x2='139.920' y2='714.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <path
+   d='M 439.800 339.960 Q 291.734 487.617 143.667 710.274'
+   style='stroke-dasharray: 6.000,2.400; stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(exp (gen) x)</title>
+   <circle cx='439.800' cy='339.960' r='6.000'/></g>
+  <path
+   d='M 439.800 264.960 Q 342.840 227.460 245.880 264.960'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <path
+   d='M 439.800 264.960 Q 392.820 264.960 345.840 264.960'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(ch-msg server-state (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle style='fill: gray;' cx='439.800' cy='264.960' r='6.000'/></g>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))</title>
+   <circle style='fill: blue;' cx='439.800' cy='189.960' r='6.000'/></g>
+  <path
+   d='M 339.840 489.960 Q 242.689 488.906 145.538 562.853'
+   style='stroke-dasharray: 6.000,2.400; stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(cat (enc (exp (gen) u) (exp (gen) x)) u)</title>
+   <circle cx='339.840' cy='489.960' r='6.000'/></g>
+  <g><title>(exp (gen) a-0)</title>
+   <circle style='fill: blue;' cx='339.840' cy='414.960' r='6.000'/></g>
+  <g><title>s</title><circle cx='339.840' cy='339.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg server-state (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='339.840' cy='264.960' r='6.000'/>
+   </g>
+  <g><title>client</title>
+   <circle style='fill: blue;' cx='339.840' cy='189.960' r='6.000'/></g>
+  <path
+   d='M 239.880 339.960 Q 192.900 339.960 145.920 339.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>s</title><circle cx='239.880' cy='339.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg server-state (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='239.880' cy='264.960' r='6.000'/>
+   </g>
+  <g><title>client</title>
+   <circle style='fill: blue;' cx='239.880' cy='189.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) (mul (rec u) w) (hash (exp (gen) (mul a u)) (exp (gen) (mul w x)))) (hash (exp (gen) (mul a u)) (exp (gen) (mul w x))))</title>
+   <circle style='fill: blue;' cx='139.920' cy='714.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) (mul (rec u) w) (hash (exp (gen) (mul a u)) (exp (gen) (mul w x))))</title>
+   <circle cx='139.920' cy='639.960' r='6.000'/></g>
+  <g>
+   <title>(cat (enc (exp (gen) u) (exp (gen) x)) (mul (rec u) w))</title>
+   <circle style='fill: blue;' cx='139.920' cy='564.960' r='6.000'/></g>
+  <g><title>(exp (gen) a)</title>
+   <circle cx='139.920' cy='489.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg client-state (cat pt &quot;Client state&quot; s x client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='139.920' cy='414.960' r='6.000'/>
+   </g>
+  <g><title>s</title>
+   <circle style='fill: blue;' cx='139.920' cy='339.960' r='6.000'/></g>
+  <g><title>client</title><circle cx='139.920' cy='264.960' r='6.000'/>
+   </g>
+  <path
+   d='M 39.960 189.960 Q 236.880 152.460 433.800 189.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))</title>
+   <circle cx='39.960' cy='189.960' r='6.000'/></g>
+  <path
+   d='M 39.960 114.960 Q 88.992 262.114 138.023 409.268'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(ch-msg client-state (cat pt &quot;Client state&quot; s x client server))</title>
+   <circle style='fill: gray;' cx='39.960' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (x x))</title>
+   <text
+    x='439.800' y='77.460'
+    style='text-anchor: middle;'>server-init</text></g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (a a-0) (x x) (b u) (u u))</title>
+   <text
+    x='339.840' y='77.460' style='text-anchor: middle;'>server</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (x x))</title>
+   <text
+    x='239.880' y='77.460' style='text-anchor: middle;'>server</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (client-state client-state) (a a) (b u) (u (mul (rec u) w)) (x x))</title>
+   <text
+    x='139.920' y='77.460' style='text-anchor: middle;'>client</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (client-state client-state) (x x))</title>
+   <text
+    x='39.960' y='77.460'
+    style='text-anchor: middle;'>client-init</text></g>
+  <text
+   x='239.880' y='39.960' style='text-anchor: middle;'>srp 947</text>
+  </svg></div>
+
+<pre>(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pval)
+    (client-state server-state locn) (a rndx) (a-0 expt) (u rndx)
+    (w expt) (x rndx))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x))
+  (defstrand client 7 (s s) (client client) (server server)
+    (client-state client-state) (a a) (b u) (u (mul (rec u) w)) (x x))
+  (defstrand server 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (defstrand server 5 (s s) (client client) (server server)
+    (server-state server-state) (a a-0) (x x) (b u) (u u))
+  (defstrand server-init 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (precedes ((0 1) (4 0)) ((2 2) (1 1)) ((3 4) (1 4)) ((4 1) (2 1))
+    ((4 1) (3 1)) ((4 2) (1 6)))
+  (non-orig (ltk client server))
+  (uniq-gen s a u x)
+  (absent (a x) (u a-0) (u x))
+  (leads-to ((0 0) (1 2)) ((4 1) (2 1)) ((4 1) (3 1)))
+  (rule trRl_client-init-at-0 trRl_server-init-at-1)
+  (operation generalization deleted (4 0))
+  (strand-map 0 1 2 3 5)
+  (traces
+    ((stor client-state (cat pt &quot;Client state&quot; s x client server))
+      (send (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))))
+    ((send client) (recv s)
+      (load client-state (cat pt &quot;Client state&quot; s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) u) (exp (gen) x)) (mul (rec u) w)))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x))
+          (mul (rec u) w)
+          (hash (exp (gen) (mul a u)) (exp (gen) (mul w x)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x))
+            (mul (rec u) w)
+            (hash (exp (gen) (mul a u)) (exp (gen) (mul w x))))
+          (hash (exp (gen) (mul a u)) (exp (gen) (mul w x))))))
+    ((recv client)
+      (load server-state
+        (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))
+      (send s))
+    ((recv client)
+      (load server-state
+        (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))
+      (send s) (recv (exp (gen) a-0))
+      (send (cat (enc (exp (gen) u) (exp (gen) x)) u)))
+    ((recv (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))
+      (send (exp (gen) x))))
+  (label 947)
+  (parent 0)
+  (realized)
+  (shape)
+  (maps
+    ((0 1)
+      ((client client) (server server) (b u) (u (mul (rec u) w)) (a a)
+        (x x) (client-state client-state) (s s) (s-0 s))))
+  (origs (pt-0 (4 1)) (pt (0 0)))
+  (ugens (s (0 0)) (x (0 0)) (u (3 4)) (a (1 3))))</pre>
+
+<p id="t1161">Tree <a href="#top">1161</a>, POV <a href="#k1161">1161</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='129.840pt' height='304.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 129.840 304.920' font-size='12.000'>
+  <text
+   x='89.880' y='251.040'
+   style='font-weight: bold; text-anchor: middle; fill: blue;'
+   onclick='window.open(&quot;#k1293&quot;, &quot;_self&quot;)'>1293</text>
+  <line
+   x1='39.960' y1='152.460' x2='89.880' y2='264.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <text
+   x='89.880' y='176.040'
+   style='font-weight: bold; text-anchor: middle; fill: blue;'
+   onclick='window.open(&quot;#k1180&quot;, &quot;_self&quot;)'>1180</text>
+  <line
+   x1='39.960' y1='152.460' x2='89.880' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <text
+   x='89.880' y='101.040'
+   style='font-weight: bold; text-anchor: middle; fill: blue;'
+   onclick='window.open(&quot;#k1179&quot;, &quot;_self&quot;)'>1179</text>
+  <line
+   x1='39.960' y1='152.460' x2='89.880' y2='114.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <text
+   x='89.880' y='26.040'
+   style='font-weight: bold; text-anchor: middle; fill: blue;'
+   onclick='window.open(&quot;#k1167&quot;, &quot;_self&quot;)'>1167</text>
+  <line
+   x1='39.960' y1='152.460' x2='89.880' y2='39.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <text
+   x='39.960' y='138.540' style='text-anchor: middle; fill: black;'
+   onclick='window.open(&quot;#k1161&quot;, &quot;_self&quot;)'>1161</text>
+  </svg></div>
+
+<pre>(defprotocol srp diffie-hellman
+  (defrole client-init
+    (vars (s text) (x rndx) (client server name) (client-state locn))
+    (trace (stor client-state (cat &quot;Client state&quot; s x client server))
+      (send (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))))
+    (uniq-gen s x))
+  (defrole server-init
+    (vars (s text) (x expt) (client server name) (server-state locn))
+    (trace
+      (recv (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat &quot;Server record&quot; s (exp (gen) x) client server))
+      (send (exp (gen) x))))
+  (defrole client
+    (vars (client server name) (a rndx) (b u x expt) (s text)
+      (client-state locn))
+    (trace (send client) (recv s)
+      (load client-state (cat &quot;Client state&quot; s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))))
+    (uniq-gen a)
+    (absent (a x)))
+  (defrole server
+    (vars (client server name) (a x expt) (b u rndx) (s text)
+      (server-state locn))
+    (trace (recv client)
+      (load server-state
+        (cat &quot;Server record&quot; s (exp (gen) x) client server)) (send s)
+      (recv (exp (gen) a))
+      (send (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (recv
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul x b u)))))
+      (send
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul x b u))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul x b u))))))
+    (uniq-gen b u)
+    (absent (b a) (b x) (u a) (u x)))
+  (defrule at-most-one-server-init-per-client
+    (forall ((z0 z1 strd) (client server name))
+      (implies
+        (and (p &quot;server-init&quot; z0 (idx 1)) (p &quot;server-init&quot; z1 (idx 1))
+          (p &quot;server-init&quot; &quot;client&quot; z0 client)
+          (p &quot;server-init&quot; &quot;client&quot; z1 client)
+          (p &quot;server-init&quot; &quot;server&quot; z0 server)
+          (p &quot;server-init&quot; &quot;server&quot; z1 server))
+        (= z0 z1))))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false))))
+  (defgenrule scissorsRule
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (trans z2 i2)
+          (leads-to z0 i0 z1 i1) (leads-to z0 i0 z2 i2))
+        (and (= z1 z2) (= i1 i2)))))
+  (defgenrule cakeRule
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (leads-to z0 i0 z1 i1)
+          (leads-to z0 i0 z2 i2) (prec z1 i1 z2 i2)) (false))))
+  (defgenrule no-interruption
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (leads-to z0 i0 z2 i2) (trans z1 i1)
+          (same-locn z0 i0 z1 i1) (prec z0 i0 z1 i1) (prec z1 i1 z2 i2))
+        (false))))
+  (defgenrule discreteAfter
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (trans z2 i2)
+          (leads-to z0 i0 z1 i1) (same-locn z0 i0 z2 i2)
+          (prec z0 i0 z2 i2))
+        (or (and (= z1 z2) (= i1 i2)) (prec z1 i1 z2 i2)))))
+  (defgenrule discreteBefore
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (same-locn z0 i0 z1 i1)
+          (leads-to z1 i1 z2 i2) (prec z0 i0 z2 i2))
+        (or (and (= z0 z1) (= i0 i1)) (prec z0 i0 z1 i1)))))
+  (defgenrule trRl_client-init-at-0
+    (forall ((z strd))
+      (implies (p &quot;client-init&quot; z (idx 1)) (trans z (idx 0)))))
+  (defgenrule trRl_server-init-at-1
+    (forall ((z strd))
+      (implies (p &quot;server-init&quot; z (idx 2)) (trans z (idx 1)))))
+  (defgenrule eff-client-3
+    (forall ((i indx) (z1 z strd))
+      (implies (and (p &quot;client&quot; z (idx 4)) (prec z (idx 3) z1 i))
+        (or (= z z1)
+          (and (p &quot;client&quot; z (idx 3)) (prec z (idx 2) z1 i))))))
+  (defgenrule eff-server-2
+    (forall ((i indx) (z1 z strd))
+      (implies (and (p &quot;server&quot; z (idx 3)) (prec z (idx 2) z1 i))
+        (or (= z z1)
+          (and (p &quot;server&quot; z (idx 2)) (prec z (idx 1) z1 i))))))
+  (comment
+    &quot;This version of the SRP protocol includes the leak of the verifier to the adversary,&quot;)
+  (comment
+    &quot;but does not require that b is not equal to u. This allows CPSA to explore the possibility&quot;)
+  (comment
+    &quot;that the adversary can also acquire the value b. This should only be possible if the&quot;)
+  (comment
+    &quot;authentication mechanism on the server were compromised and can be checked with listener&quot;)
+  (comment &quot;strands for b in the actual protocol without the leaks.&quot;))</pre>
+
+<p id="k1161">Item <a href="#t1161">1161</a>, Children: <a href="#k1167">1167</a> <a href="#k1179">1179</a> <a href="#k1180">1180</a> <a href="#k1293">1293</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='179.880pt' height='604.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 179.880 604.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='139.920' y1='114.960' x2='139.920' y2='564.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='264.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <g>
+   <title>(hash (exp (gen) a) (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u (hash (exp (gen) (mul b a)) (exp (gen) (mul u b x)))) (hash (exp (gen) (mul b a)) (exp (gen) (mul u b x))))</title>
+   <circle cx='139.920' cy='564.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u (hash (exp (gen) (mul b a)) (exp (gen) (mul u b x))))</title>
+   <circle style='fill: blue;' cx='139.920' cy='489.960' r='6.000'/></g>
+  <g><title>(cat (enc (exp (gen) b) (exp (gen) x)) u)</title>
+   <circle cx='139.920' cy='414.960' r='6.000'/></g>
+  <g><title>(exp (gen) a)</title>
+   <circle style='fill: blue;' cx='139.920' cy='339.960' r='6.000'/></g>
+  <g><title>s</title><circle cx='139.920' cy='264.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg server-state (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='139.920' cy='189.960' r='6.000'/>
+   </g>
+  <g><title>client</title>
+   <circle style='fill: blue;' cx='139.920' cy='114.960' r='6.000'/></g>
+  <g><title>(exp (gen) x-0)</title>
+   <circle cx='39.960' cy='264.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg server-state (cat pt &quot;Server record&quot; s (exp (gen) x-0) client server))</title>
+   <circle style='fill: gray;' cx='39.960' cy='189.960' r='6.000'/></g>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x-0) client (ltk client server))</title>
+   <circle style='fill: red;' cx='39.960' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (a a) (x x) (b b) (u u))</title>
+   <text
+    x='139.920' y='77.460' style='text-anchor: middle;'>server</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (x x-0))</title>
+   <text
+    x='39.960' y='77.460'
+    style='text-anchor: middle;'>server-init</text></g>
+  <text
+   x='89.940' y='39.960' style='text-anchor: middle;'>srp 1161</text>
+  </svg></div>
+
+<pre>(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pval) (server-state locn)
+    (u b a x rndx) (x-0 expt))
+  (defstrand server-init 3 (s s) (client client) (server server)
+    (server-state server-state) (x x-0))
+  (defstrand server 7 (s s) (client client) (server server)
+    (server-state server-state) (a a) (x x) (b b) (u u))
+  (non-orig (ltk client server))
+  (uniq-gen u b)
+  (absent (u a) (u x) (b a) (b x))
+  (traces
+    ((recv (enc &quot;Enroll&quot; s (exp (gen) x-0) client (ltk client server)))
+      (stor server-state
+        (cat pt &quot;Server record&quot; s (exp (gen) x-0) client server))
+      (send (exp (gen) x-0)))
+    ((recv client)
+      (load server-state
+        (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))
+      (send s) (recv (exp (gen) a))
+      (send (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (recv
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul b a)) (exp (gen) (mul u b x)))))
+      (send
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul b a)) (exp (gen) (mul u b x))))
+          (hash (exp (gen) (mul b a)) (exp (gen) (mul u b x)))))))
+  (label 1161)
+  (unrealized (0 0))
+  (origs (pt (0 1)))
+  (ugens (b (1 4)) (u (1 4)))
+  (comment &quot;Not closed under rules&quot;))</pre>
+
+<p id="k1167">Item <a href="#t1161">1167</a>, Parent: <a href="#k1161">1161</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='379.800pt' height='754.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 379.800 754.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='339.840' y1='189.960' x2='339.840' y2='339.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='239.880' y1='114.960' x2='239.880' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='139.920' y1='264.960' x2='139.920' y2='714.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='189.960' x2='39.960' y2='339.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <path
+   d='M 339.840 339.960 Q 242.880 302.460 145.920 339.960'
+   style='stroke-dasharray: 6.000,2.400; stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>s</title><circle cx='339.840' cy='339.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg server-state (cat pt &quot;Server record&quot; s (exp (gen) x-0) client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='339.840' cy='264.960' r='6.000'/>
+   </g>
+  <g><title>client</title>
+   <circle style='fill: blue;' cx='339.840' cy='189.960' r='6.000'/></g>
+  <path
+   d='M 239.880 189.960 Q 142.920 152.460 45.960 189.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x-0) client (ltk client server))</title>
+   <circle cx='239.880' cy='189.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg client-state (cat pt-1 &quot;Client state&quot; s x-0 client server))</title>
+   <circle style='fill: gray;' cx='239.880' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u (hash (exp (gen) (mul b a)) (exp (gen) (mul u b x)))) (hash (exp (gen) (mul b a)) (exp (gen) (mul u b x))))</title>
+   <circle cx='139.920' cy='714.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u (hash (exp (gen) (mul b a)) (exp (gen) (mul u b x))))</title>
+   <circle style='fill: blue;' cx='139.920' cy='639.960' r='6.000'/></g>
+  <g><title>(cat (enc (exp (gen) b) (exp (gen) x)) u)</title>
+   <circle cx='139.920' cy='564.960' r='6.000'/></g>
+  <g><title>(exp (gen) a)</title>
+   <circle style='fill: blue;' cx='139.920' cy='489.960' r='6.000'/></g>
+  <g><title>s</title><circle cx='139.920' cy='414.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg server-state (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='139.920' cy='339.960' r='6.000'/>
+   </g>
+  <g><title>client</title>
+   <circle style='fill: blue;' cx='139.920' cy='264.960' r='6.000'/></g>
+  <g><title>(exp (gen) x-0)</title>
+   <circle cx='39.960' cy='339.960' r='6.000'/></g>
+  <path
+   d='M 39.960 264.960 Q 186.900 227.460 333.840 264.960'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(ch-msg server-state (cat pt &quot;Server record&quot; s (exp (gen) x-0) client server))</title>
+   <circle style='fill: gray;' cx='39.960' cy='264.960' r='6.000'/></g>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x-0) client (ltk client server))</title>
+   <circle style='fill: blue;' cx='39.960' cy='189.960' r='6.000'/></g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (x x-0))</title>
+   <text
+    x='339.840' y='77.460' style='text-anchor: middle;'>server</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (client-state client-state) (x x-0))</title>
+   <text
+    x='239.880' y='77.460'
+    style='text-anchor: middle;'>client-init</text></g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (a a) (x x) (b b) (u u))</title>
+   <text
+    x='139.920' y='77.460' style='text-anchor: middle;'>server</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (x x-0))</title>
+   <text
+    x='39.960' y='77.460'
+    style='text-anchor: middle;'>server-init</text></g>
+  <text
+   x='189.900' y='39.960' style='text-anchor: middle;'>srp 1167</text>
+  </svg></div>
+
+<pre>(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pt-1 pval)
+    (server-state client-state locn) (u b a x x-0 rndx))
+  (defstrand server-init 3 (s s) (client client) (server server)
+    (server-state server-state) (x x-0))
+  (defstrand server 7 (s s) (client client) (server server)
+    (server-state server-state) (a a) (x x) (b b) (u u))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x-0))
+  (defstrand server 3 (s s) (client client) (server server)
+    (server-state server-state) (x x-0))
+  (precedes ((0 1) (3 1)) ((2 1) (0 0)) ((3 2) (1 1)))
+  (non-orig (ltk client server))
+  (uniq-gen s u b x-0)
+  (absent (u a) (u x) (b a) (b x))
+  (leads-to ((0 1) (3 1)))
+  (operation nonce-test (added-strand server 3) s (1 1)
+    (enc &quot;Enroll&quot; s (exp (gen) x-0) client (ltk client server))
+    (ch-msg server-state
+      (cat pt &quot;Server record&quot; s (exp (gen) x-0) client server))
+    (ch-msg client-state (cat pt-1 &quot;Client state&quot; s x-0 client server)))
+  (strand-map 0 1 2)
+  (traces
+    ((recv (enc &quot;Enroll&quot; s (exp (gen) x-0) client (ltk client server)))
+      (stor server-state
+        (cat pt &quot;Server record&quot; s (exp (gen) x-0) client server))
+      (send (exp (gen) x-0)))
+    ((recv client)
+      (load server-state
+        (cat pt-0 &quot;Server record&quot; s (exp (gen) x) client server))
+      (send s) (recv (exp (gen) a))
+      (send (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (recv
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul b a)) (exp (gen) (mul u b x)))))
+      (send
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul b a)) (exp (gen) (mul u b x))))
+          (hash (exp (gen) (mul b a)) (exp (gen) (mul u b x))))))
+    ((stor client-state (cat pt-1 &quot;Client state&quot; s x-0 client server))
+      (send
+        (enc &quot;Enroll&quot; s (exp (gen) x-0) client (ltk client server))))
+    ((recv client)
+      (load server-state
+        (cat pt &quot;Server record&quot; s (exp (gen) x-0) client server))
+      (send s)))
+  (label 1167)
+  (parent 1161)
+  (realized)
+  (shape)
+  (maps
+    ((0 1)
+      ((client client) (server server) (u u) (b b) (a a) (x x)
+        (server-state server-state) (s s) (x-0 x-0))))
+  (origs (pt (0 1)) (pt-1 (2 0)))
+  (ugens (s (2 0)) (x-0 (2 0)) (b (1 4)) (u (1 4))))</pre>
+
+<p id="k1179">Item <a href="#t1161">1179</a>, Parent: <a href="#k1161">1161</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='379.800pt' height='754.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 379.800 754.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='339.840' y1='264.960' x2='339.840' y2='639.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='239.880' y1='114.960' x2='239.880' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='139.920' y1='189.960' x2='139.920' y2='714.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='189.960' x2='39.960' y2='339.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <path
+   d='M 339.840 639.960 Q 242.880 602.460 145.920 639.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))</title>
+   <circle cx='339.840' cy='639.960' r='6.000'/></g>
+  <g><title>(cat (enc (exp (gen) b) (exp (gen) x)) u)</title>
+   <circle style='fill: blue;' cx='339.840' cy='564.960' r='6.000'/></g>
+  <path
+   d='M 339.840 489.960 Q 242.880 452.460 145.920 489.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(exp (gen) a)</title>
+   <circle cx='339.840' cy='489.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg client-state (cat pt-0 &quot;Client state&quot; s x client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='339.840' cy='414.960' r='6.000'/>
+   </g>
+  <g><title>s</title>
+   <circle style='fill: blue;' cx='339.840' cy='339.960' r='6.000'/></g>
+  <g><title>client</title><circle cx='339.840' cy='264.960' r='6.000'/>
+   </g>
+  <path
+   d='M 239.880 189.960 Q 142.920 152.460 45.960 189.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))</title>
+   <circle cx='239.880' cy='189.960' r='6.000'/></g>
+  <path
+   d='M 239.880 114.960 Q 288.912 262.114 337.943 409.268'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(ch-msg client-state (cat pt-0 &quot;Client state&quot; s x client server))</title>
+   <circle style='fill: gray;' cx='239.880' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x)))) (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))</title>
+   <circle cx='139.920' cy='714.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))</title>
+   <circle style='fill: blue;' cx='139.920' cy='639.960' r='6.000'/></g>
+  <path
+   d='M 139.920 564.960 Q 236.880 527.460 333.840 564.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(cat (enc (exp (gen) b) (exp (gen) x)) u)</title>
+   <circle cx='139.920' cy='564.960' r='6.000'/></g>
+  <g><title>(exp (gen) a)</title>
+   <circle style='fill: blue;' cx='139.920' cy='489.960' r='6.000'/></g>
+  <path
+   d='M 139.920 339.960 Q 236.880 302.460 333.840 339.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>s</title><circle cx='139.920' cy='339.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg server-state (cat pt &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='139.920' cy='264.960' r='6.000'/>
+   </g>
+  <g><title>client</title>
+   <circle style='fill: blue;' cx='139.920' cy='189.960' r='6.000'/></g>
+  <g><title>(exp (gen) x)</title>
+   <circle cx='39.960' cy='339.960' r='6.000'/></g>
+  <path
+   d='M 39.960 264.960 Q 86.940 264.960 133.920 264.960'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(ch-msg server-state (cat pt &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle style='fill: gray;' cx='39.960' cy='264.960' r='6.000'/></g>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))</title>
+   <circle style='fill: blue;' cx='39.960' cy='189.960' r='6.000'/></g>
+  <g>
+   <title>((s s) (client client) (server server) (client-state client-state) (a a) (b b) (u u) (x x))</title>
+   <text
+    x='339.840' y='77.460' style='text-anchor: middle;'>client</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (client-state client-state) (x x))</title>
+   <text
+    x='239.880' y='77.460'
+    style='text-anchor: middle;'>client-init</text></g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (a a) (x x) (b b) (u u))</title>
+   <text
+    x='139.920' y='77.460' style='text-anchor: middle;'>server</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (x x))</title>
+   <text
+    x='39.960' y='77.460'
+    style='text-anchor: middle;'>server-init</text></g>
+  <text
+   x='189.900' y='39.960' style='text-anchor: middle;'>srp 1179</text>
+  </svg></div>
+
+<pre>(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pval)
+    (server-state client-state locn) (a b u x rndx))
+  (defstrand server-init 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (defstrand server 7 (s s) (client client) (server server)
+    (server-state server-state) (a a) (x x) (b b) (u u))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x))
+  (defstrand client 6 (s s) (client client) (server server)
+    (client-state client-state) (a a) (b b) (u u) (x x))
+  (precedes ((0 1) (1 1)) ((1 2) (3 1)) ((1 4) (3 4)) ((2 1) (0 0))
+    ((3 3) (1 3)) ((3 5) (1 5)))
+  (non-orig (ltk client server))
+  (uniq-gen s a b u x)
+  (absent (a x) (b a) (b x) (u a) (u x))
+  (leads-to ((0 1) (1 1)) ((2 0) (3 2)))
+  (operation nonce-test (displaced 4 1 server 3) s (3 1)
+    (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))
+    (ch-msg server-state
+      (cat pt &quot;Server record&quot; s (exp (gen) x) client server))
+    (ch-msg client-state (cat pt-0 &quot;Client state&quot; s x client server)))
+  (strand-map 0 1 2 3)
+  (traces
+    ((recv (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat pt &quot;Server record&quot; s (exp (gen) x) client server))
+      (send (exp (gen) x)))
+    ((recv client)
+      (load server-state
+        (cat pt &quot;Server record&quot; s (exp (gen) x) client server)) (send s)
+      (recv (exp (gen) a))
+      (send (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (recv
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x)))))
+      (send
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))))
+    ((stor client-state (cat pt-0 &quot;Client state&quot; s x client server))
+      (send (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))))
+    ((send client) (recv s)
+      (load client-state (cat pt-0 &quot;Client state&quot; s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x)))))))
+  (label 1179)
+  (parent 1161)
+  (realized)
+  (shape)
+  (maps
+    ((0 1)
+      ((client client) (server server) (u u) (b b) (a a) (x x)
+        (server-state server-state) (s s) (x-0 x))))
+  (origs (pt (0 1)) (pt-0 (2 0)))
+  (ugens (s (2 0)) (x (2 0)) (a (3 3)) (b (1 4)) (u (1 4))))</pre>
+
+<p id="k1180">Item <a href="#t1161">1180</a>, Parent: <a href="#k1161">1161</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='479.760pt' height='754.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 479.760 754.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='439.800' y1='189.960' x2='439.800' y2='339.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='339.840' y1='264.960' x2='339.840' y2='639.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='239.880' y1='114.960' x2='239.880' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='139.920' y1='264.960' x2='139.920' y2='714.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='189.960' x2='39.960' y2='339.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <path
+   d='M 439.800 339.960 Q 392.820 339.960 345.840 339.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>s</title><circle cx='439.800' cy='339.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg server-state (cat pt &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='439.800' cy='264.960' r='6.000'/>
+   </g>
+  <g><title>client</title>
+   <circle style='fill: blue;' cx='439.800' cy='189.960' r='6.000'/></g>
+  <path
+   d='M 339.840 639.960 Q 242.880 602.460 145.920 639.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))</title>
+   <circle cx='339.840' cy='639.960' r='6.000'/></g>
+  <g><title>(cat (enc (exp (gen) b) (exp (gen) x)) u)</title>
+   <circle style='fill: blue;' cx='339.840' cy='564.960' r='6.000'/></g>
+  <path
+   d='M 339.840 489.960 Q 242.880 452.460 145.920 489.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(exp (gen) a)</title>
+   <circle cx='339.840' cy='489.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg client-state (cat pt-0 &quot;Client state&quot; s x client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='339.840' cy='414.960' r='6.000'/>
+   </g>
+  <g><title>s</title>
+   <circle style='fill: blue;' cx='339.840' cy='339.960' r='6.000'/></g>
+  <g><title>client</title><circle cx='339.840' cy='264.960' r='6.000'/>
+   </g>
+  <path
+   d='M 239.880 189.960 Q 142.920 152.460 45.960 189.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))</title>
+   <circle cx='239.880' cy='189.960' r='6.000'/></g>
+  <path
+   d='M 239.880 114.960 Q 288.912 262.114 337.943 409.268'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(ch-msg client-state (cat pt-0 &quot;Client state&quot; s x client server))</title>
+   <circle style='fill: gray;' cx='239.880' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x)))) (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))</title>
+   <circle cx='139.920' cy='714.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))</title>
+   <circle style='fill: blue;' cx='139.920' cy='639.960' r='6.000'/></g>
+  <path
+   d='M 139.920 564.960 Q 236.880 527.460 333.840 564.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(cat (enc (exp (gen) b) (exp (gen) x)) u)</title>
+   <circle cx='139.920' cy='564.960' r='6.000'/></g>
+  <g><title>(exp (gen) a)</title>
+   <circle style='fill: blue;' cx='139.920' cy='489.960' r='6.000'/></g>
+  <g><title>s</title><circle cx='139.920' cy='414.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg server-state (cat pt &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='139.920' cy='339.960' r='6.000'/>
+   </g>
+  <g><title>client</title>
+   <circle style='fill: blue;' cx='139.920' cy='264.960' r='6.000'/></g>
+  <g><title>(exp (gen) x)</title>
+   <circle cx='39.960' cy='339.960' r='6.000'/></g>
+  <path
+   d='M 39.960 264.960 Q 87.540 300.660 135.121 336.359'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <path
+   d='M 39.960 264.960 Q 236.880 227.460 433.800 264.960'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(ch-msg server-state (cat pt &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle style='fill: gray;' cx='39.960' cy='264.960' r='6.000'/></g>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))</title>
+   <circle style='fill: blue;' cx='39.960' cy='189.960' r='6.000'/></g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (x x))</title>
+   <text
+    x='439.800' y='77.460' style='text-anchor: middle;'>server</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (client-state client-state) (a a) (b b) (u u) (x x))</title>
+   <text
+    x='339.840' y='77.460' style='text-anchor: middle;'>client</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (client-state client-state) (x x))</title>
+   <text
+    x='239.880' y='77.460'
+    style='text-anchor: middle;'>client-init</text></g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (a a) (x x) (b b) (u u))</title>
+   <text
+    x='139.920' y='77.460' style='text-anchor: middle;'>server</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (x x))</title>
+   <text
+    x='39.960' y='77.460'
+    style='text-anchor: middle;'>server-init</text></g>
+  <text
+   x='239.880' y='39.960' style='text-anchor: middle;'>srp 1180</text>
+  </svg></div>
+
+<pre>(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pval)
+    (server-state client-state locn) (a b u x rndx))
+  (defstrand server-init 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (defstrand server 7 (s s) (client client) (server server)
+    (server-state server-state) (a a) (x x) (b b) (u u))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x))
+  (defstrand client 6 (s s) (client client) (server server)
+    (client-state client-state) (a a) (b b) (u u) (x x))
+  (defstrand server 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (precedes ((0 1) (1 1)) ((0 1) (4 1)) ((1 4) (3 4)) ((2 1) (0 0))
+    ((3 3) (1 3)) ((3 5) (1 5)) ((4 2) (3 1)))
+  (non-orig (ltk client server))
+  (uniq-gen s a b u x)
+  (absent (a x) (b a) (b x) (u a) (u x))
+  (leads-to ((0 1) (1 1)) ((0 1) (4 1)) ((2 0) (3 2)))
+  (operation nonce-test (added-strand server 3) s (3 1)
+    (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))
+    (ch-msg server-state
+      (cat pt &quot;Server record&quot; s (exp (gen) x) client server))
+    (ch-msg client-state (cat pt-0 &quot;Client state&quot; s x client server)))
+  (strand-map 0 1 2 3)
+  (traces
+    ((recv (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat pt &quot;Server record&quot; s (exp (gen) x) client server))
+      (send (exp (gen) x)))
+    ((recv client)
+      (load server-state
+        (cat pt &quot;Server record&quot; s (exp (gen) x) client server)) (send s)
+      (recv (exp (gen) a))
+      (send (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (recv
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x)))))
+      (send
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))))
+    ((stor client-state (cat pt-0 &quot;Client state&quot; s x client server))
+      (send (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))))
+    ((send client) (recv s)
+      (load client-state (cat pt-0 &quot;Client state&quot; s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))))
+    ((recv client)
+      (load server-state
+        (cat pt &quot;Server record&quot; s (exp (gen) x) client server))
+      (send s)))
+  (label 1180)
+  (parent 1161)
+  (realized)
+  (shape)
+  (maps
+    ((0 1)
+      ((client client) (server server) (u u) (b b) (a a) (x x)
+        (server-state server-state) (s s) (x-0 x))))
+  (origs (pt (0 1)) (pt-0 (2 0)))
+  (ugens (s (2 0)) (x (2 0)) (a (3 3)) (b (1 4)) (u (1 4))))</pre>
+
+<p id="k1293">Item <a href="#t1161">1293</a>, Parent: <a href="#k1161">1161</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='279.840pt' height='679.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 279.840 679.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='239.880' y1='114.960' x2='239.880' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='139.920' y1='189.960' x2='139.920' y2='639.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='189.960' x2='39.960' y2='339.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <path
+   d='M 239.880 189.960 Q 142.920 152.460 45.960 189.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))</title>
+   <circle cx='239.880' cy='189.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg client-state (cat pt-0 &quot;Client state&quot; s x client server))</title>
+   <circle style='fill: gray;' cx='239.880' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) u (hash (exp (gen) (mul a u)) (exp (gen) (mul u u x)))) (hash (exp (gen) (mul a u)) (exp (gen) (mul u u x))))</title>
+   <circle cx='139.920' cy='639.960' r='6.000'/></g>
+  <g>
+   <title>(hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) u (hash (exp (gen) (mul a u)) (exp (gen) (mul u u x))))</title>
+   <circle style='fill: blue;' cx='139.920' cy='564.960' r='6.000'/></g>
+  <g><title>(cat (enc (exp (gen) u) (exp (gen) x)) u)</title>
+   <circle cx='139.920' cy='489.960' r='6.000'/></g>
+  <g><title>(exp (gen) a)</title>
+   <circle style='fill: blue;' cx='139.920' cy='414.960' r='6.000'/></g>
+  <g><title>s</title><circle cx='139.920' cy='339.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg server-state (cat pt &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='139.920' cy='264.960' r='6.000'/>
+   </g>
+  <g><title>client</title>
+   <circle style='fill: blue;' cx='139.920' cy='189.960' r='6.000'/></g>
+  <path
+   d='M 39.960 339.960 Q 88.722 449.718 137.484 559.477'
+   style='stroke-dasharray: 6.000,2.400; stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(exp (gen) x)</title>
+   <circle cx='39.960' cy='339.960' r='6.000'/></g>
+  <path
+   d='M 39.960 264.960 Q 86.940 264.960 133.920 264.960'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(ch-msg server-state (cat pt &quot;Server record&quot; s (exp (gen) x) client server))</title>
+   <circle style='fill: gray;' cx='39.960' cy='264.960' r='6.000'/></g>
+  <g>
+   <title>(enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))</title>
+   <circle style='fill: blue;' cx='39.960' cy='189.960' r='6.000'/></g>
+  <g>
+   <title>((s s) (client client) (server server) (client-state client-state) (x x))</title>
+   <text
+    x='239.880' y='77.460'
+    style='text-anchor: middle;'>client-init</text></g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (a a) (x x) (b u) (u u))</title>
+   <text
+    x='139.920' y='77.460' style='text-anchor: middle;'>server</text>
+   </g>
+  <g>
+   <title>((s s) (client client) (server server) (server-state server-state) (x x))</title>
+   <text
+    x='39.960' y='77.460'
+    style='text-anchor: middle;'>server-init</text></g>
+  <text
+   x='139.920' y='39.960' style='text-anchor: middle;'>srp 1293</text>
+  </svg></div>
+
+<pre>(defskeleton srp
+  (vars (s text) (client server name) (pt pt-0 pval)
+    (server-state client-state locn) (a u x rndx))
+  (defstrand server-init 3 (s s) (client client) (server server)
+    (server-state server-state) (x x))
+  (defstrand server 7 (s s) (client client) (server server)
+    (server-state server-state) (a a) (x x) (b u) (u u))
+  (defstrand client-init 2 (s s) (client client) (server server)
+    (client-state client-state) (x x))
+  (precedes ((0 1) (1 1)) ((0 2) (1 5)) ((2 1) (0 0)))
+  (non-orig (ltk client server))
+  (uniq-gen s u x)
+  (absent (u a) (u x))
+  (leads-to ((0 1) (1 1)))
+  (rule trRl_client-init-at-0 trRl_server-init-at-1)
+  (operation generalization deleted (3 0))
+  (strand-map 0 1 2)
+  (traces
+    ((recv (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat pt &quot;Server record&quot; s (exp (gen) x) client server))
+      (send (exp (gen) x)))
+    ((recv client)
+      (load server-state
+        (cat pt &quot;Server record&quot; s (exp (gen) x) client server)) (send s)
+      (recv (exp (gen) a))
+      (send (cat (enc (exp (gen) u) (exp (gen) x)) u))
+      (recv
+        (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) u
+          (hash (exp (gen) (mul a u)) (exp (gen) (mul u u x)))))
+      (send
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) u) (exp (gen) x)) u
+            (hash (exp (gen) (mul a u)) (exp (gen) (mul u u x))))
+          (hash (exp (gen) (mul a u)) (exp (gen) (mul u u x))))))
+    ((stor client-state (cat pt-0 &quot;Client state&quot; s x client server))
+      (send (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server)))))
+  (label 1293)
+  (parent 1161)
+  (realized)
+  (shape)
+  (maps
+    ((0 1)
+      ((client client) (server server) (u u) (b u) (a a) (x x)
+        (server-state server-state) (s s) (x-0 x))))
+  (origs (pt (0 1)) (pt-0 (2 0)))
+  (ugens (u (1 4)) (s (2 0)) (x (2 0))))</pre>
+
+<p id="t1394">Tree <a href="#top">1394</a>, POV <a href="#k1394">1394</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='79.920pt' height='79.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 79.920 79.920' font-size='12.000'>
+  <text
+   x='39.960' y='26.040'
+   style='font-weight: bold; text-anchor: middle; fill: blue;'
+   onclick='window.open(&quot;#k1394&quot;, &quot;_self&quot;)'>1394</text>
+  </svg></div>
+
+<pre>(defprotocol srp diffie-hellman
+  (defrole client-init
+    (vars (s text) (x rndx) (client server name) (client-state locn))
+    (trace (stor client-state (cat &quot;Client state&quot; s x client server))
+      (send (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server))))
+    (uniq-gen s x))
+  (defrole server-init
+    (vars (s text) (x expt) (client server name) (server-state locn))
+    (trace
+      (recv (enc &quot;Enroll&quot; s (exp (gen) x) client (ltk client server)))
+      (stor server-state
+        (cat &quot;Server record&quot; s (exp (gen) x) client server))
+      (send (exp (gen) x))))
+  (defrole client
+    (vars (client server name) (a rndx) (b u x expt) (s text)
+      (client-state locn))
+    (trace (send client) (recv s)
+      (load client-state (cat &quot;Client state&quot; s x client server))
+      (send (exp (gen) a))
+      (recv (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (send
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x)))))
+      (recv
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul b u x))))))
+    (uniq-gen a)
+    (absent (a x)))
+  (defrole server
+    (vars (client server name) (a x expt) (b u rndx) (s text)
+      (server-state locn))
+    (trace (recv client)
+      (load server-state
+        (cat &quot;Server record&quot; s (exp (gen) x) client server)) (send s)
+      (recv (exp (gen) a))
+      (send (cat (enc (exp (gen) b) (exp (gen) x)) u))
+      (recv
+        (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul x b u)))))
+      (send
+        (hash (exp (gen) a)
+          (hash (exp (gen) a) (enc (exp (gen) b) (exp (gen) x)) u
+            (hash (exp (gen) (mul a b)) (exp (gen) (mul x b u))))
+          (hash (exp (gen) (mul a b)) (exp (gen) (mul x b u))))))
+    (uniq-gen b u)
+    (absent (b a) (b x) (u a) (u x)))
+  (defrule at-most-one-server-init-per-client
+    (forall ((z0 z1 strd) (client server name))
+      (implies
+        (and (p &quot;server-init&quot; z0 (idx 1)) (p &quot;server-init&quot; z1 (idx 1))
+          (p &quot;server-init&quot; &quot;client&quot; z0 client)
+          (p &quot;server-init&quot; &quot;client&quot; z1 client)
+          (p &quot;server-init&quot; &quot;server&quot; z0 server)
+          (p &quot;server-init&quot; &quot;server&quot; z1 server))
+        (= z0 z1))))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false))))
+  (defgenrule scissorsRule
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (trans z2 i2)
+          (leads-to z0 i0 z1 i1) (leads-to z0 i0 z2 i2))
+        (and (= z1 z2) (= i1 i2)))))
+  (defgenrule cakeRule
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (leads-to z0 i0 z1 i1)
+          (leads-to z0 i0 z2 i2) (prec z1 i1 z2 i2)) (false))))
+  (defgenrule no-interruption
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (leads-to z0 i0 z2 i2) (trans z1 i1)
+          (same-locn z0 i0 z1 i1) (prec z0 i0 z1 i1) (prec z1 i1 z2 i2))
+        (false))))
+  (defgenrule discreteAfter
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (trans z2 i2)
+          (leads-to z0 i0 z1 i1) (same-locn z0 i0 z2 i2)
+          (prec z0 i0 z2 i2))
+        (or (and (= z1 z2) (= i1 i2)) (prec z1 i1 z2 i2)))))
+  (defgenrule discreteBefore
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (same-locn z0 i0 z1 i1)
+          (leads-to z1 i1 z2 i2) (prec z0 i0 z2 i2))
+        (or (and (= z0 z1) (= i0 i1)) (prec z0 i0 z1 i1)))))
+  (defgenrule trRl_client-init-at-0
+    (forall ((z strd))
+      (implies (p &quot;client-init&quot; z (idx 1)) (trans z (idx 0)))))
+  (defgenrule trRl_server-init-at-1
+    (forall ((z strd))
+      (implies (p &quot;server-init&quot; z (idx 2)) (trans z (idx 1)))))
+  (defgenrule eff-client-3
+    (forall ((i indx) (z1 z strd))
+      (implies (and (p &quot;client&quot; z (idx 4)) (prec z (idx 3) z1 i))
+        (or (= z z1)
+          (and (p &quot;client&quot; z (idx 3)) (prec z (idx 2) z1 i))))))
+  (defgenrule eff-server-2
+    (forall ((i indx) (z1 z strd))
+      (implies (and (p &quot;server&quot; z (idx 3)) (prec z (idx 2) z1 i))
+        (or (= z z1)
+          (and (p &quot;server&quot; z (idx 2)) (prec z (idx 1) z1 i))))))
+  (comment
+    &quot;This version of the SRP protocol includes the leak of the verifier to the adversary,&quot;)
+  (comment
+    &quot;but does not require that b is not equal to u. This allows CPSA to explore the possibility&quot;)
+  (comment
+    &quot;that the adversary can also acquire the value b. This should only be possible if the&quot;)
+  (comment
+    &quot;authentication mechanism on the server were compromised and can be checked with listener&quot;)
+  (comment &quot;strands for b in the actual protocol without the leaks.&quot;))</pre>
+
+<p id="k1394">Item <a href="#t1394">1394</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='79.920pt' height='229.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 79.920 229.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <g><title>b</title><circle cx='39.960' cy='189.960' r='6.000'/></g>
+  <g><title>b</title>
+   <circle style='fill: blue;' cx='39.960' cy='114.960' r='6.000'/></g>
+  <text
+   x='39.960' y='39.960' style='text-anchor: middle;'>srp 1394</text>
+  </svg></div>
+
+<pre>(defskeleton srp
+  (vars (b rndx))
+  (deflistener b)
+  (traces ((recv b) (send b)))
+  (label 1394)
+  (realized)
+  (shape)
+  (maps ((0) ((b b))))
+  (origs))</pre>
+
+</body>
+</html>
